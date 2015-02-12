@@ -1,7 +1,7 @@
 var express = require('express');
 var path = require('path');
 var bodyParser = require('body-parser');
-var sendgrid = require('sendgrid')('nlokare', 'Nl110388');
+var sendgrid = require('sendgrid')('nlokare', 'Nl110388'); //store credentials as env variables
 var email = require('./server/email/email.js');
 var user = require('./server/user/userRouter.js');
 
