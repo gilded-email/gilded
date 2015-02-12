@@ -1,42 +1,37 @@
+var Promise = require('bluebird');
 var sendgrid = require('sendgrid')('nlokare', 'Nl110388');
+var formidable = require('formidable');
 var email = {};
 
-email.receive = function (req, res) {
-  res.send('Received');
-  // var envelope;
-  // var to;
-  // // var payload = request.payload;
+email.receive = function (req, res, next) {
+  var form = new formidable.IncomingForm();
+  var emailData = {};
+  form.parse(req, function(err, fields, files) {
+    if (err) {
+      res.sendStatus(400);
+    } else {
+      emailData.to = JSON.parse(fields.envelope).to;
+      emailData.from = JSON.parse(fields.envelope).from;
+      emailData.subject = fields.subject;
+      emailData.html = fields.html;
+      emailData.text = fields.text;
+      req.emailData = emailData;
+      next();
+    }
+  });
+}
 
-  // // console.log(payload);
-
-  // if (payload.envelope) {
-  //   envelope = JSON.parse(payload.envelope);
-  // }
-  // if (envelope) {
-  //   to = envelope.from;
-  // }
-
-  // var Email = sendgrid.Email;
-  // var email = new Email({
-  //   to: to,
-  //   from: "hi@sendgrid-parse-api-example.com",
-  //   subject: "[sendgrid-parse-api-example] Inbound Payload",
-  //   text: "A payload was just delivered via SendGrid's Inbound Parse API. It should be attached."
-  // });
-
-  // email.addFile({
-  //   filename: 'payload.txt',
-  //   content: new Buffer(JSON.stringify(payload))
-  // });
-
-  // sendgrid.send(email, function(err, json) {
-  //   if (err) { 
-  //     console.error(err);
-  //     request.reply({ success: false, error: {message: err.message} });
-  //   } else {
-  //     request.reply({ success: true });
-  //   }
-  // });
+email.verify = function (req, res) {
+  var emailData = req.emailData;
+  emailData.to = 'neil.lokare@gmail.com';
+  console.log("New Email: ", emailData);
+  sendgrid.send(emailData, function (err, json) {
+    if (err) {
+      return err;
+    } else {
+      console.log(json);
+    }
+  });
 }
 
 module.exports = email;
