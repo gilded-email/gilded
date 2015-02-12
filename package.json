@@ -25,5 +25,19 @@
     "mongoose": "~3.8.23",
     "formidable": "~1.0.17",
     "bluebird": "~2.9.9"
+  },
+  "devDependencies": {
+    "browserify": "^8.1.3",
+    "del": "^1.1.1",
+    "gulp": "^3.8.11",
+    "gulp-browserify": "^0.5.1",
+    "gulp-concat": "^2.4.3",
+    "gulp-jshint": "^1.9.2",
+    "gulp-load-plugins": "^0.8.0",
+    "gulp-react": "^2.0.0",
+    "gulp-shell": "^0.3.0",
+    "gulp-watch": "^4.1.1",
+    "reactify": "^1.0.0",
+    "wiredep": "^2.2.2"
   }
 }
