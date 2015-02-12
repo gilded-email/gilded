@@ -4,16 +4,34 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start" "node server.js"
+  },
+  "version": "0.0.0",
+  "description": "0.0.1",
+  "main": "server.js",
+  "scripts": {
+    "test": "mocha",
+    "start": "node server.js"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/hesitant-tapdancers/gilded.git"
+    "url": "https://github.com/nlokare/gilded.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/hesitant-tapdancers/gilded/issues"
   },
-  "homepage": "https://github.com/hesitant-tapdancers/gilded"
+  "homepage": {
+    "url": "https://github.com/nlokare/gilded/issues"
+  },
+  "homepage": "https://github.com/nlokare/gilded",
+  "dependencies": {
+    "smtp-protocol": "~2.4.6",
+    "sendgrid": "~1.6.0",
+    "express": "~4.11.2",
+    "body-parser": "~1.11.0",
+    "mongoose": "~3.8.23"
+  }
 }
