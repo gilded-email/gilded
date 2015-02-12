@@ -38,7 +38,6 @@
     "gulp-shell": "^0.3.0",
     "gulp-watch": "^4.1.1",
     "reactify": "^1.0.0",
-    "wiredep": "^2.2.2",
-    "mongoose": "~3.8.23"
+    "wiredep": "^2.2.2"
   }
 }
