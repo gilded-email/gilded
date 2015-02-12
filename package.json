@@ -22,5 +22,15 @@
     "express": "~4.11.2",
     "body-parser": "~1.11.0",
     "mongoose": "~3.8.23"
+  },
+  "devDependencies": {
+    "del": "^1.1.1",
+    "gulp": "^3.8.11",
+    "gulp-concat": "^2.4.3",
+    "gulp-jshint": "^1.9.2",
+    "gulp-load-plugins": "^0.8.0",
+    "gulp-react": "^2.0.0",
+    "gulp-watch": "^4.1.1",
+    "wiredep": "^2.2.2"
   }
 }
