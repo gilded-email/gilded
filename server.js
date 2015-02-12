@@ -16,7 +16,7 @@ app.use(bodyParser.json());
 
 app.listen(app.get('port'));
 
-app.use('/inbound', email.receive); //handle all emails to application domain;
+app.use('/inbound', email.receive, email.verify); //handle all emails to application domain;
 
 app.route('/')
   .get(function (req, res) {
