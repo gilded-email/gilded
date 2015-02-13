@@ -2,6 +2,7 @@ var gulp = require('gulp');
 var del = require('del');
 var browserify = require('browserify');
 var reactify = require('reactify');
+var source = require('vinyl-source-stream');
 var shell = require('gulp-shell');
 var $ = require('gulp-load-plugins');
 
@@ -23,7 +24,7 @@ gulp.task('compile', function () {
   b.transform(reactify);
   b.add('./client/js/main.js');
   return b.bundle()
-    .pipe(gulp.src('main.js'))
+    .pipe(source('main.js'))
     .pipe(gulp.dest('./dist/js'));
 });
 
