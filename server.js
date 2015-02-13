@@ -1,8 +1,7 @@
 var express = require('express');
 var path = require('path');
 var bodyParser = require('body-parser');
-var sendgrid = require('sendgrid')('nlokare', 'Nl110388'); //store credentials as env variables
-var email = require('./server/email/email.js');
+var email = require('./server/email/emailController.js');
 var user = require('./server/user/userRouter.js');
 
 var app = express();
@@ -15,6 +14,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 app.listen(app.get('port'));
+console.log('Server is listening on ' + app.get('host') + ':' + app.get('port'));
 
 app.use('/inbound', email.receive, email.verify); //handle all emails to application domain;
 
