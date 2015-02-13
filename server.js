@@ -9,7 +9,7 @@ var app = express();
 app.set('port', process.env.PORT || 3000);
 app.set('host', process.env.HOST || 'localhost');
 
-app.use(express.static(__dirname, '/client'));
+app.use('/', express.static(path.join(__dirname, 'dist')));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
@@ -18,22 +18,8 @@ console.log('Server is listening on ' + app.get('host') + ':' + app.get('port'))
 
 app.use('/inbound', email.receive, email.verify); //handle all emails to application domain;
 
-app.route('/')
-  .get(function (req, res) {
-    //TODO: Serve up homepage static HTML file
-  })
-  .post(function (req, res) {
-    res.sendStatus(403);
-  });
-
-app.route('/signup')
-  .get(function (req, res) {
-    //TODO: Serve the sign up HTML file
-  })
-  .post(user.signUp);
-
-app.route('/signin')
-  .get(function (req, res) {
-    //TODO: Serve the sign in HTML file
-  })
-  .post(user.signIn);
+app.post('/signup', function (req, res) {
+  // store email in database
+  console.log(req.body);
+  res.sendStatus(200);
+});
