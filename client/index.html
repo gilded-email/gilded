@@ -16,7 +16,7 @@
     <span class="pitch">Be the first to try our app!</span>
 
     <form id="signup-form" type="post">
-    <input id="email" type="email" name="email" placeholder="Enter your email">
+    <input id="email" type="email" name="email" placeholder="Enter your email" required>
     <button id="submit" type="submit">Sign Up</button>
     </form>
 
@@ -24,6 +24,7 @@
 
   <div id="thank-you" class="hide">
     <h2>Thank You</h2>
+    <span>We'll be sure to keep you posted!</span>
   </div>
 
 
@@ -31,8 +32,7 @@
 
   <script>
   $(document).ready(function() {
-    $('#submit').click( function (e) {
-      console.log();
+    $('#signup-form').submit( function (e) {
       e.preventDefault();
       var userEmail = $('#email').val();
       $.ajax({
