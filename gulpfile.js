@@ -4,6 +4,7 @@ var browserify = require('browserify');
 var reactify = require('reactify');
 var source = require('vinyl-source-stream');
 var shell = require('gulp-shell');
+var clean = require('gulp-clean');
 var livereload = require('gulp-livereload');
 
 var paths = {
@@ -14,8 +15,11 @@ var paths = {
 };
 
 gulp.task('clean', function () {
-  del([
-    'dist/js/**/*'
+  del.sync([
+    './dist/assets',
+    './dist/css',
+    './dist/js',
+    './dist/client/*.html'
     ]);
 });
 
@@ -30,45 +34,35 @@ gulp.task('compile', function () {
 });
 
 
-
-gulp.task('copy', function () {
-  gulp.src('client/*.html')
-    .pipe(gulp.dest('dist'))
-    .pipe(livereload());
-  gulp.src('client/assets/*.*')
-    .pipe(gulp.dest('dist/assets'))
-    .pipe(livereload());
-});
-
 gulp.task('html', function () {
-  gulp.src('client/*.html')
-    .pipe(gulp.dest('dist/'))
+  gulp.src('./client/*.html')
+    .pipe(gulp.dest('./dist/'))
     .pipe(livereload());
 });
 
 gulp.task('css', function () {
-  gulp.src('client/css/*.css')
-    .pipe(gulp.dest('dist/css'))
+  gulp.src('./client/css/*.css')
+    .pipe(gulp.dest('./dist/css'))
     .pipe(livereload());
 });
 
 
 gulp.task('assets', function () {
-  gulp.src('client/assets/*')
-    .pipe(gulp.dest('dist/assets'))
+  gulp.src('./client/assets/*')
+    .pipe(gulp.dest('./dist/assets'))
     .pipe(livereload());
 });
 
 gulp.task('watch', function() {
   livereload.listen();
-  gulp.watch('client/*.html', ['html']);
-  gulp.watch('client/css/*', ['css']);
-  gulp.watch('client/assets/*.*', ['assets']);
+  gulp.watch('./client/*.html', ['html']);
+  gulp.watch('./client/css/*', ['css']);
+  gulp.watch('./client/assets/*.*', ['assets']);
 });
 
 gulp.task('run', shell.task ([
   'nodemon server.js'
 ]));
 
-gulp.task('build', ['clean', 'compile', 'copy']);
+gulp.task('build', ['clean', 'compile', 'assets', 'css', 'html']);
 gulp.task('default', ['build', 'watch', 'run']);
