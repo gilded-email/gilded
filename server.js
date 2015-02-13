@@ -3,6 +3,7 @@ var path = require('path');
 var bodyParser = require('body-parser');
 var email = require('./server/email/emailController.js');
 var user = require('./server/user/userRouter.js');
+var marketing = require('./server/marketing/marketingController.js');
 
 var app = express();
 
@@ -20,8 +21,7 @@ app.use('/inbound', email.receive, email.verify); //handle all emails to applica
 
 app.post('/signup', function (req, res) {
   // store email in database
-  console.log(req.body);
-  res.sendStatus(200);
+  marketing.addSignup(req, res);
 });
 
 app.use('/pay/:id', email.release); //TODO: payments module will handle Stripe transactions and will need to run first
