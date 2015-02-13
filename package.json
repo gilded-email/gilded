@@ -4,7 +4,7 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha ./test/tests.js",
     "start": "node server.js"
   },
   "repository": {
@@ -38,6 +38,8 @@
     "gulp-watch": "^4.1.1",
     "reactify": "^1.0.0",
     "vinyl-source-stream": "^1.0.0",
-    "wiredep": "^2.2.2"
+    "wiredep": "^2.2.2",
+    "mocha": "~2.1.0",
+    "chai": "~2.0.0"
   }
 }
