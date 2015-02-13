@@ -23,18 +23,22 @@ body {
 }
 
 h1 {
-  font-size: 6em;
+  font-size: 3.3em;
   font-weight: bold;
-  letter-spacing: -.08em;
+  letter-spacing: -.02em;
   text-align: center;
   color: gold;
-  text-transform: uppercase;
   text-shadow: 5px 5px 0px #000;
   margin: 0.4em 0 0 0;
 }
 
 .hide {
   display: none;
+}
+
+.lp-copy {
+  display: block;
+  margin-top: 1em;
 }
 
 #signup, #thank-you {

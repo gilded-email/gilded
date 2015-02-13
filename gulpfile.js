@@ -4,7 +4,6 @@ var browserify = require('browserify');
 var reactify = require('reactify');
 var source = require('vinyl-source-stream');
 var shell = require('gulp-shell');
-var clean = require('gulp-clean');
 var livereload = require('gulp-livereload');
 
 var paths = {
