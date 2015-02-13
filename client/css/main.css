@@ -1,0 +1,10 @@
+body {
+  font-family: Arial;
+}
+
+.hide {
+  display: none;
+}
+.show {
+  display: block;
+}

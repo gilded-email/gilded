@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Gilded</title>
+    <link href="css/main.css" rel="stylesheet" type="text/css">
+  </head>
+
+  <body>
+
+  <h1>Gilded</h1>
+  <div id="signup">
+    <h2>Sign Up</h2>
+    <form id="signup-form" type="post">
+    <input id="email" type="text" name="email" placeholder="Enter your email">
+    <button id="submit" type="submit">Sign Up</button>
+    </form>
+  </div>
+
+  <div id="thank-you" class="hide">
+    <h2>Thank You</h2>
+  </div>
+
+
+  <script src="bower_components/jquery/dist/jquery.js"></script>
+
+  <script>
+  $(document).ready(function() {
+    $('#submit').click( function (e) {
+      console.log();
+      e.preventDefault();
+      var userEmail = $('#email').val();
+      $.ajax({
+        type: "POST",
+        url: "/signup",
+        data: { email: userEmail },
+        success: function (resp) {
+          console.log(resp);
+          $('#email').val('');
+          $('#signup').hide();
+          $('#thank-you').removeClass('hide');
+        },
+        error: function (error) {
+          console.log(error);
+        }
+      });
+    });
+
+
+  });
+  </script>
+
+  </body>
+</html>
