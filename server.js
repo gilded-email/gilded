@@ -24,4 +24,4 @@ app.post('/signup', function (req, res) {
   res.sendStatus(200);
 });
 
-app.use('/pay/:id', email.payment); //payments module will handle Stripe transactions
+app.use('/pay/:id', email.release); //TODO: payments module will handle Stripe transactions and will need to run first

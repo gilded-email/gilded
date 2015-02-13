@@ -28,7 +28,7 @@ describe('Email Module', function () {
     assert.equal(false, true);
   });
 
-  it('should be able to store emails', function () {
+  it('should be able to store emails, with recipient', function () {
     assert.equal(false, true);
   });
 
