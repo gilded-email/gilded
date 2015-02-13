@@ -12,36 +12,40 @@ body {
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
-  font-size: 30px;
   position: static;
+  font-size: 12px;
 }
 
-.hide {
-  display: none;
-}
-.show {
-  display: block;
-}
-
-#signup, #thank-you {
-  width: 30%;
-  margin: 0 auto;
-  padding: 1em 1em 2em;
-  border-radius: 10px;
-  text-align: center;
-  color: white;
-  background-color: rgba(13, 13, 13, 0.8);
+@media (min-width: 768px) {
+  body {
+    font-size: 30px;
+  }
 }
 
 h1 {
   font-size: 6em;
+  font-weight: bold;
   letter-spacing: -.08em;
   text-align: center;
   color: gold;
   text-transform: uppercase;
   text-shadow: 5px 5px 0px #000;
-  margin: 90px 0px 20px 0;
+  margin: 0.4em 0 0 0;
 }
+
+.hide {
+  display: none;
+}
+
+#signup, #thank-you {
+  margin: 0 1em;
+  padding: 1em 1em 2em;
+  border-radius: 10px;
+  text-align: center;
+  color: #eee;
+  background-color: rgba(13, 13, 13, 0.9);
+}
+
 
 input, button {
   font-size: 20px;
@@ -52,17 +56,21 @@ input, button {
   margin-top: 2em;
 }
 
+input {
+  color: #000;
+}
+
 button {
   background-color: transparent;
   border: 1px solid white;
   color: white;
-  transition: 0.4s;
+  transition: 0.5s;
   cursor: pointer;
 }
 
 button:hover {
-  border-color: 'gold';
-  transition: 0.4s;
-  color: 'gold';
+  border-color: gold;
+  transition: 1s;
+  color: gold;
 }
 
