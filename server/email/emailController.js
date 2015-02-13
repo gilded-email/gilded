@@ -14,23 +14,24 @@ var printAsyncResult = function (error, result) {
   }
 };
 
-var sendEmail = function (message) {
-  sendgrid.send(message, printAsyncResult);
-};
-
-var requestPayment = function (recipient, emailId) {
+var requestPayment = function (savedEmail) {
   var paymentInstructions = 'Your recipient requires $0.25 to receive emails. Pay here: ';
-  var paymentUrl = 'http://' + domain + '/pay/' + emailId;
-  sendEmail({
-    to: recipient,
+  var paymentUrl = 'http://' + domain + '/pay/' + savedEmail._id;
+  module.exports.sendEmail({
+    to: JSON.parse(savedEmail.email).from,
     from: 'jenkins@' + domain,
     subject: 'Payment required',
-    html: paymentInstructions + '<a href="' + paymentUrl + '" target="_blank">' + paymentUrl + '</a>.',
+    html: paymentInstructions + '<a href="' + paymentUrl + '" target="_blank">' + paymentUrl + '</a>.', // TODO: add original email for the payer
     text: paymentInstructions + paymentUrl + ' .'
   });
 };
 
 module.exports = {
+  sendEmail: function (message, callback) {
+    callback = callback || printAsyncResult;
+    sendgrid.send(message, callback);
+  },
+
   receive: function (req, res, next) {
     var form = new formidable.IncomingForm();
     var email = {};
@@ -39,7 +40,7 @@ module.exports = {
         res.sendStatus(400);
       } else {
         console.log("fields: ", fields);
-        // email = fields;
+        // email = fields; // TODO
         email.to = JSON.parse(fields.envelope).to;
         email.from = fields.from.split('<')[1].split('>')[0];
         email.subject = fields.subject;
@@ -59,16 +60,25 @@ module.exports = {
     recipients.forEach(function (recipient) {
       recipient = recipient.split('@');
       if (recipient[1] === domain) {
-        userController.isVip(recipient[0], email.from).then(function (forwardEmail) {
-          if (forwardEmail === null) {
-            Escrow.create({email: JSON.stringify(email), recipient: recipient[0]}).then(function (savedEmail) {
-              requestPayment(email.from, savedEmail._id);
-            });
+        userController.isVip(recipient[0], email.from).then(function (forwardAddress) {
+          if (forwardAddress === null) {
+            module.exports.store(email, recipient[0]);
           } else {
-            email.to = [forwardEmail];
-            sendEmail(email);
+            email.to = [forwardAddress];
+            module.exports.sendEmail(email);
           }
         });
+      }
+    });
+  },
+
+  store: function (email, recipient, callback) {
+    callback = callback || requestPayment;
+    Escrow.create({email: JSON.stringify(email), recipient: recipient}, function (error, savedEmail) {
+      if (error) {
+        console.log(error);
+      } else {
+        callback(savedEmail);
       }
     });
   },
@@ -85,7 +95,7 @@ module.exports = {
           } else {
             var email = JSON.parse(escrow.email);
             email.to = [user.forwardEmail];
-            sendEmail(email);
+            module.exports.sendEmail(email);
             Escrow.findOneAndUpdate({_id: escrowId}, {paid: true}, printAsyncResult);
             res.redirect('/'); // TODO: redirect to confirmation page
           }
