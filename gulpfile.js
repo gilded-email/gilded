@@ -4,7 +4,7 @@ var browserify = require('browserify');
 var reactify = require('reactify');
 var source = require('vinyl-source-stream');
 var shell = require('gulp-shell');
-var $ = require('gulp-load-plugins');
+var livereload = require('gulp-livereload');
 
 var paths = {
   scripts: ['./client/js/**/*.js'],
@@ -25,20 +25,45 @@ gulp.task('compile', function () {
   b.add('./client/js/main.js');
   return b.bundle()
     .pipe(source('main.js'))
-    .pipe(gulp.dest('./dist/js'));
+    .pipe(gulp.dest('./dist/js'))
+    .pipe(livereload());
 });
 
-gulp.task('copy', function() {
+
+
+gulp.task('copy', function () {
   gulp.src('client/*.html')
-    .pipe(gulp.dest('dist'));
-  gulp.src('client/css/*.css')
-    .pipe(gulp.dest('dist/css'));
+    .pipe(gulp.dest('dist'))
+    .pipe(livereload());
   gulp.src('client/assets/*.*')
-    .pipe(gulp.dest('dist/assets'));
+    .pipe(gulp.dest('dist/assets'))
+    .pipe(livereload());
+});
+
+gulp.task('html', function () {
+  gulp.src('client/css/*.css')
+    .pipe(gulp.dest('dist/css'))
+    .pipe(livereload());
+});
+
+gulp.task('css', function () {
+  gulp.src('client/css/*.css')
+    .pipe(gulp.dest('dist/css'))
+    .pipe(livereload());
+});
+
+
+gulp.task('assets', function () {
+  gulp.src('client/css/*.css')
+    .pipe(gulp.dest('dist/css'))
+    .pipe(livereload());
 });
 
 gulp.task('watch', function() {
-  gulp.watch('client/**/*', ['build']);
+  livereload.listen();
+  gulp.watch('client/*.html', ['html']);
+  gulp.watch('client/css/*', ['css']);
+  gulp.watch('client/assets/*.*', ['assets']);
 });
 
 gulp.task('run', shell.task ([

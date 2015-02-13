@@ -1,5 +1,19 @@
+@import url(http://fonts.googleapis.com/css?family=Josefin+Sans:400,700,400italic);
+
 body {
-  font-family: Arial;
+  font-family: 'Josefin Sans', sans-serif;
+  background:
+    linear-gradient(
+      rgba(0, 0, 0, 0.15),
+      rgba(0, 0, 0, 0.15)
+    ),
+    url(../assets/signup-bg.jpg) no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  font-size: 30px;
+  position: static;
 }
 
 .hide {
@@ -8,3 +22,47 @@ body {
 .show {
   display: block;
 }
+
+#signup, #thank-you {
+  width: 30%;
+  margin: 0 auto;
+  padding: 1em 1em 2em;
+  border-radius: 10px;
+  text-align: center;
+  color: white;
+  background-color: rgba(13, 13, 13, 0.8);
+}
+
+h1 {
+  font-size: 6em;
+  letter-spacing: -.08em;
+  text-align: center;
+  color: gold;
+  text-transform: uppercase;
+  text-shadow: 5px 5px 0px #000;
+  margin: 90px 0px 20px 0;
+}
+
+input, button {
+  font-size: 20px;
+  border: none;
+  padding: 0.5em 1.5em;
+  border-radius: 10px;
+  outline: none;
+  margin-top: 2em;
+}
+
+button {
+  background-color: transparent;
+  border: 1px solid white;
+  color: white;
+  transition: 0.4s;
+  cursor: pointer;
+}
+
+button:hover {
+  border-color: 'gold';
+  transition: 0.4s;
+  color: 'gold';
+}
+
