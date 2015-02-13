@@ -1,3 +1,4 @@
+[![Stories in Ready](https://badge.waffle.io/hesitant-tapdancers/gilded.png?label=ready&title=Ready)](https://waffle.io/hesitant-tapdancers/gilded)
 Gilded
 ======
 
