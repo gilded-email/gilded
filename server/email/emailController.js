@@ -3,6 +3,7 @@ var sendgrid = require('sendgrid')(process.env.SENDGRID_USER, process.env.SENDGR
 var formidable = require('formidable');
 var userController = require('../user/userController.js');
 var escrow = require('./emailModel.js');
+var domain = process.env.DOMAIN;
 
 var sendEmail = function (message) {
   sendgrid.send(message, function (error, results) {
@@ -17,10 +18,10 @@ var sendEmail = function (message) {
 var requestPayment = function (recipient, emailId) {
   sendEmail({
     to: recipient,
-    from: 'jenkins@g.mtm.gs',
+    from: 'jenkins@' + domain,
     subject: 'Payment required',
-    html: 'Your recipient requires $0.25 to receive emails. Pay here: <a href="http://' + process.env.DOMAIN + '/pay/' + emailId + '" target="_blank">http://' + process.env.DOMAIN + '/pay/' + emailId + '</a>.',
-    text: 'Your recipient requires $0.25 to receive emails. Pay here: http://' + process.env.DOMAIN + '/pay/' + emailId + ' .'
+    html: 'Your recipient requires $0.25 to receive emails. Pay here: <a href="http://' + domain + '/pay/' + emailId + '" target="_blank">http://' + domain + '/pay/' + emailId + '</a>.',
+    text: 'Your recipient requires $0.25 to receive emails. Pay here: http://' + domain + '/pay/' + emailId + ' .'
   });
 };
 
@@ -47,17 +48,21 @@ module.exports = {
 
   verify: function (req) {
     var email = req.email;
-    var recipientUsername = email.to[0].split('@')[0]; // TODO: account for more than 1 recipient
-
-    userController.isVip(recipientUsername, email.from).then(function (forwardEmail) {
-      if (forwardEmail === null) {
-        escrow.create({email: JSON.stringify(email)}).then(function (savedEmail) {
-          requestPayment(email.from, savedEmail._id);
+    var recipients = email.to;
+    recipients.forEach(function (recipient) {
+      recipient = recipient.split('@');
+      if (recipient[1] === domain) {
+        userController.isVip(recipient[0], email.from).then(function (forwardEmail) {
+          if (forwardEmail === null) {
+            escrow.create({email: JSON.stringify(email)}).then(function (savedEmail) {
+              requestPayment(email.from, savedEmail._id);
+            });
+          } else {
+            email.to = [forwardEmail];
+            sendEmail(email);
+          }
         });
-      } else {
-        email.to = [forwardEmail];
-        sendEmail(email);
       }
     });
-  },
+  }
 };
