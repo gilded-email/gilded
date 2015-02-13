@@ -7,8 +7,7 @@ module.exports = {
       userModel.findOne({username: username}, function (error, user) {
         if (error) {
           reject(error);
-        }
-        if (!user) {
+        } else if (!user) {
           reject('Looking for a user that does not exist');
         } else {
           if (user.vipList.indexOf(sender) >= 0) {
