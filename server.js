@@ -23,3 +23,5 @@ app.post('/signup', function (req, res) {
   console.log(req.body);
   res.sendStatus(200);
 });
+
+app.use('/pay/:id', email.payment); //payments module will handle Stripe transactions

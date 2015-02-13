@@ -64,5 +64,10 @@ module.exports = {
         });
       }
     });
+  },
+
+  payment: function (req, res) {
+    var escrowId = req.params.id;
+
   }
 };
