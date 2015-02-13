@@ -13,7 +13,7 @@ body {
   -o-background-size: cover;
   background-size: cover;
   position: static;
-  font-size: 12px;
+  font-size: 14px;
 }
 
 @media (min-width: 768px) {
@@ -38,7 +38,6 @@ h1 {
 }
 
 #signup, #thank-you {
-  margin: 0 1em;
   padding: 1em 1em 2em;
   border-radius: 10px;
   text-align: center;
@@ -48,7 +47,6 @@ h1 {
 
 
 input, button {
-  font-size: 20px;
   border: none;
   padding: 0.5em 1.5em;
   border-radius: 10px;
@@ -64,13 +62,14 @@ button {
   background-color: transparent;
   border: 1px solid white;
   color: white;
-  transition: 0.5s;
+  transition: 1s;
   cursor: pointer;
 }
 
 button:hover {
   border-color: gold;
-  transition: 1s;
+  transition: 0.4s;
   color: gold;
 }
+
 
