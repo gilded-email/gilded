@@ -4,6 +4,7 @@ var browserify = require('browserify');
 var reactify = require('reactify');
 var source = require('vinyl-source-stream');
 var shell = require('gulp-shell');
+var runSequence = require('run-sequence');
 var livereload = require('gulp-livereload');
 
 var paths = {
@@ -34,20 +35,20 @@ gulp.task('compile', function () {
 
 
 gulp.task('html', function () {
-  gulp.src('./client/*.html')
+  return gulp.src('./client/*.html')
     .pipe(gulp.dest('./dist/'))
     .pipe(livereload());
 });
 
 gulp.task('css', function () {
-  gulp.src('./client/css/*.css')
+  return gulp.src('./client/css/*.css')
     .pipe(gulp.dest('./dist/css'))
     .pipe(livereload());
 });
 
 
 gulp.task('assets', function () {
-  gulp.src('./client/assets/*')
+  return gulp.src('./client/assets/*')
     .pipe(gulp.dest('./dist/assets'))
     .pipe(livereload());
 });
