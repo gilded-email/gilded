@@ -3,7 +3,10 @@ var del = require('del');
 var browserify = require('browserify');
 var reactify = require('reactify');
 var source = require('vinyl-source-stream');
+var less = require('gulp-less');
+
 var shell = require('gulp-shell');
+
 var livereload = require('gulp-livereload');
 
 var paths = {
@@ -32,6 +35,12 @@ gulp.task('compile', function () {
     .pipe(livereload());
 });
 
+gulp.task('less', function() {
+  return gulp.src('./client/less/main.less')
+    .pipe(less())
+    .pipe(gulp.dest('./dist/css'))
+    .pipe(livereload());
+});
 
 gulp.task('html', function () {
   return gulp.src('./client/*.html')
@@ -58,11 +67,12 @@ gulp.task('watch', function() {
   gulp.watch('./client/*.html', ['html']);
   gulp.watch('./client/css/**/*.css', ['css']);
   gulp.watch('./client/assets/*.*', ['assets']);
+  gulp.watch('./client/less/**/*.less', ['less']);
 });
 
 gulp.task('run', ['build', 'compile'], shell.task ([
   'nodemon server.js'
 ]));
 
-gulp.task('build', ['clean', 'compile', 'assets', 'css', 'html']);
+gulp.task('build', ['clean', 'compile', 'assets', 'less', 'css', 'html']);
 gulp.task('default', ['build', 'watch', 'run']);
