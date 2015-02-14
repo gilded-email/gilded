@@ -19,7 +19,7 @@ app.listen(app.get('port'));
 console.log('Server is listening on ' + app.get('host') + ':' + app.get('port'));
 
 app.use('/inbound', email.receive, email.verify); // handle all emails to application domain;
-app.use('/pay/:id', email.release); // TODO: payments module will handle Stripe transactions and will need to run first
+app.use('/pay/:id', email.findEmailInEscrow, email.findUserFromEscrow, email.releaseFromEscrow); // TODO: payments module will handle Stripe transactions and will need to run first
 
 app.post('/signup', function (req, res) {
   marketing.addSignup(req, res);
