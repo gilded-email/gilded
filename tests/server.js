@@ -4,12 +4,13 @@ var mocha = require('mocha');
 var assert = require('chai').assert;
 var serverUrl = 'http://gilded.ngrok.com';
 require('dotenv').load();
+var domain = process.env.DOMAIN;
 
 var emailData = {
   envelope: JSON.stringify({
-    to: ['tests@g.mtm.gs']
+    to: ['tests@' + domain]
   }),
-  from: 'Tester Guy <testvip@g.mtm.gs>',
+  from: 'Tester Guy <testvip@' + domain + '>',
   subject: 'Test Email',
   html: '<h1>Testing</h1>',
   text: 'Testing'
@@ -51,18 +52,19 @@ describe('Email Module', function () {
     });
   });
 
-  xit("messages from jenkins@g.mtm.gs always go through to avoid endless email loops", function () {
+  xit("messages from jenkins@' + domain + ' always go through to avoid endless email loops", function () {
 
   });
 
   xit('should reply with a payment request email if sender is not on the VIP list', function () {
-    assert.equal(false, true);
+    // send an email to user@gilded from a non-vip address
+      // expect a 'success' response
   });
 
   it('should be able to send emails', function (done) {
     var testEmail = emailData;
     testEmail.to = 'neil.lokare@live.com';
-    testEmail.from = 'testsend@g.mtm.gs';
+    testEmail.from = 'testsend@' + domain;
     emailController.sendEmail(testEmail, function (error, result) {
       if (error) {
         console.log(error);
@@ -74,12 +76,17 @@ describe('Email Module', function () {
   });
 
   it('should be able to store and retrieve emails, with recipient', function (done) {
-    var stored;
     var recipient = emailData.to.split('@')[0];
     emailController.store(emailData, recipient, function (savedEmail) {
-      stored = savedEmail;
+      var stored = savedEmail;
       assert.equal(stored.recipient, recipient);
-      done();
+
+      emailController.release({params: {id: stored._id}}, {send: function () {}, redirect: function () {}},
+        function (error, result) {
+          if (!error) {
+            done();
+          }
+        });
     });
   });
 

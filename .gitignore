@@ -1,5 +1,6 @@
 dist
 .env
+.env.test
 
 # Logs
 logs

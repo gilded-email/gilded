@@ -9,7 +9,7 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "test": "mocha --bail --timeout 5000 ./test/tests.js",
+    "test": "NODE_ENV=test mocha --bail --timeout 5000 ./tests/server.js",
     "predeploy": "npm install -g bower && bower install && gulp build",
     "start": "node server.js"
   },
