@@ -39,6 +39,7 @@ module.exports = {
       if (error) {
         res.sendStatus(400);
       } else {
+        console.log("fields: ", fields);
         // email = fields; // TODO
         email.to = JSON.parse(fields.envelope).to;
         email.from = fields.from.split('<')[1].split('>')[0];

@@ -2,10 +2,6 @@ dist
 .env
 .env.test
 
-#SSL
-server.crt
-key.pem
-
 # Logs
 logs
 *.log
