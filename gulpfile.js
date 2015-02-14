@@ -4,7 +4,6 @@ var browserify = require('browserify');
 var reactify = require('reactify');
 var source = require('vinyl-source-stream');
 var shell = require('gulp-shell');
-var runSequence = require('run-sequence');
 var livereload = require('gulp-livereload');
 
 var paths = {
@@ -19,7 +18,7 @@ gulp.task('clean', function () {
     './dist/assets',
     './dist/css',
     './dist/js',
-    './dist/client/*.html'
+    './dist/*.html'
     ]);
 });
 
@@ -55,12 +54,13 @@ gulp.task('assets', function () {
 
 gulp.task('watch', function() {
   livereload.listen();
+  gulp.watch('./client/js/**/*.js', ['compile']);
   gulp.watch('./client/*.html', ['html']);
-  gulp.watch('./client/css/*', ['css']);
+  gulp.watch('./client/css/**/*.css', ['css']);
   gulp.watch('./client/assets/*.*', ['assets']);
 });
 
-gulp.task('run', shell.task ([
+gulp.task('run', ['build', 'compile'], shell.task ([
   'nodemon server.js'
 ]));
 
