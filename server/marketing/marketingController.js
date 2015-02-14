@@ -9,7 +9,7 @@ module.exports = {
 			if (error) {
 				console.log('marketing signup error', error);
 			}
-			res.sendStatus(200);
-		})
+			res.sendStatus(201);
+		});
 	}
 };

@@ -1,11 +1,20 @@
 {
   "name": "gilded",
-  "version": "1.0.0",
+  "subdomain": "gilded",
+  "domains": [
+    "gilded.club",
+    "www.gilded.club"
+  ],
+  "version": "1.0.0-14",
   "description": "",
   "main": "server.js",
   "scripts": {
     "test": "mocha --bail --timeout 5000 ./test/tests.js",
-    "start": "nodemon server.js"
+    "predeploy": "npm install -g bower && bower install && gulp build",
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": "0.10.x"
   },
   "repository": {
     "type": "git",
@@ -47,6 +56,7 @@
     "request": "~2.53.0",
     "run-sequence": "^1.0.2",
     "vinyl-source-stream": "^1.0.0",
-    "wiredep": "^2.2.2"
+    "wiredep": "^2.2.2",
+    "request": "~2.53.0"
   }
 }
