@@ -60,14 +60,15 @@ module.exports = {
     recipients.forEach(function (recipient) {
       recipient = recipient.split('@');
       if (recipient[1] === domain) {
-        userController.isVip(recipient[0], email.from).then(function (forwardAddress) {
-          if (forwardAddress === null) {
-            module.exports.store(email, recipient[0]);
-          } else {
-            email.to = [forwardAddress];
-            module.exports.sendEmail(email);
-          }
-        });
+        userController.isVip(recipient[0], email.from)
+          .then(function (forwardAddress) {
+            if (forwardAddress === null) {
+              module.exports.store(email, recipient[0]);
+            } else {
+              email.to = [forwardAddress];
+              module.exports.sendEmail(email);
+            }
+          });
       }
     });
   },
@@ -83,25 +84,34 @@ module.exports = {
     });
   },
 
-  release: function (req, res, callback) {
-    callback = callback || printAsyncResult;
+  findEmailInEscrow: function (req, res, next) {
     var escrowId = req.params.id;
     Escrow.findOne({_id: escrowId}, function (error, escrow) {
       if (error) {
         res.send(403);
       } else {
-        User.findOne({username: escrow.recipient}, function (error, user) {
-          if (error) {
-            res.send(403);
-          } else {
-            var email = JSON.parse(escrow.email);
-            email.to = [user.forwardEmail];
-            module.exports.sendEmail(email);
-            Escrow.findOneAndUpdate({_id: escrowId}, {paid: true}, callback);
-            res.redirect('/'); // TODO: redirect to confirmation page
-          }
-        });
+        req.escrow = escrow;
+        next();
       }
     });
+  },
+
+  findUserFromEscrow: function (req, res, next) {
+    User.findOne({username: req.escrow.recipient}, function (error, user) {
+      if (error) {
+        res.send(403);
+      } else {
+        req.user = user;
+        next();
+      }
+    });
+  },
+
+  releaseFromEscrow: function (req, res) {
+    var email = JSON.parse(req.escrow.email);
+    email.to = [req.user.forwardEmail];
+    module.exports.sendEmail(email);
+    Escrow.findOneAndUpdate({_id: req.params.id}, {paid: true}, printAsyncResult);
+    res.redirect('/');
   }
 };
