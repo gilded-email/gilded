@@ -83,7 +83,8 @@ module.exports = {
     });
   },
 
-  release: function (req, res) {
+  release: function (req, res, callback) {
+    callback = callback || printAsyncResult;
     var escrowId = req.params.id;
     Escrow.findOne({_id: escrowId}, function (error, escrow) {
       if (error) {
@@ -96,7 +97,7 @@ module.exports = {
             var email = JSON.parse(escrow.email);
             email.to = [user.forwardEmail];
             module.exports.sendEmail(email);
-            Escrow.findOneAndUpdate({_id: escrowId}, {paid: true}, printAsyncResult);
+            Escrow.findOneAndUpdate({_id: escrowId}, {paid: true}, callback);
             res.redirect('/'); // TODO: redirect to confirmation page
           }
         });
