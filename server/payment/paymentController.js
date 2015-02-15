@@ -1,5 +1,4 @@
-require('dotenv').load();
-var stripe = require("stripe")(process.env.STRIPE);
+var stripe = require('stripe')(process.env.STRIPE);
 
 var makePayment = function (card) {
   stripe.charges.create({
@@ -22,5 +21,3 @@ module.exports = {
     res.redirect('/release/' + req.params.id);
   }
 };
-
-
