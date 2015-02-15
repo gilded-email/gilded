@@ -5,7 +5,8 @@ var React = require('react');
 var mui = require('material-ui');
 var TextField = mui.TextField;
 var RaisedButton = mui.RaisedButton;
-var Paper = mui.Paper;
+var Router = require('react-router');
+var Link = Router.Link;
 
 
 var Signup = React.createClass({
@@ -22,7 +23,7 @@ var Signup = React.createClass({
   					<TextField
   					  className="signup-input" floatingLabelText="Password" />
             <RaisedButton className="signup-button" label="Sign Up" secondary={true} />
-            <a href="#" className="login-link">Already a member? Log in here.</a>
+            <Link className="login-link" to="login">Already a member? Log in here.</Link>
   				</form>
   			</div>
 		)
