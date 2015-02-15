@@ -2,6 +2,9 @@ dist
 .env
 .env.test
 
+key.pem
+server.crt
+
 # Logs
 logs
 *.log
