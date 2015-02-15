@@ -87,7 +87,7 @@ module.exports = {
     var escrowId = req.params.id;
     Escrow.findOne({_id: escrowId}, function (error, escrow) {
       if (error) {
-        res.send(403);
+        res.sendStatus(403);
       } else {
         req.escrow = escrow;
         next();
@@ -98,7 +98,7 @@ module.exports = {
   findUserFromEscrow: function (req, res, next) {
     User.findOne({username: req.escrow.recipient}, function (error, user) {
       if (error) {
-        res.send(403);
+        res.sendStatus(403);
       } else {
         req.user = user;
         next();

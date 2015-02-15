@@ -7,6 +7,7 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var user = require('./server/user/userRouter.js');
 var email = require('./server/email/emailController.js');
+var payment = require('./server/payment/paymentController.js');
 var marketing = require('./server/marketing/marketingController.js');
 
 var privateKey  = fs.readFileSync('./key.pem');
@@ -27,8 +28,14 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 app.use('/inbound', email.receive, email.verify); // handle all emails to application domain;
-app.use('/pay/:id', email.findEmailInEscrow, email.findUserFromEscrow, email.releaseFromEscrow); // TODO: payments module will handle Stripe transactions and will need to run first
+app.use('/release/:id', email.findEmailInEscrow, email.findUserFromEscrow, email.releaseFromEscrow);
 
 app.post('/signup', function (req, res) {
   marketing.addSignup(req, res);
 });
+
+app.get('/pay/:id', function (req, res) {
+  res.sendFile(path.join(__dirname, './client/payment.html'));
+});
+
+app.post('/pay/:id', payment.verification);
