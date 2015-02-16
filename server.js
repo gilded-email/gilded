@@ -5,7 +5,7 @@ var http = require('http');
 var https = require('https');
 var express = require('express');
 var bodyParser = require('body-parser');
-var user = require('./server/user/userRouter.js');
+var user = require('./server/user/userController.js');
 var email = require('./server/email/emailController.js');
 var payment = require('./server/payment/paymentController.js');
 var marketing = require('./server/marketing/marketingController.js');
@@ -22,19 +22,21 @@ app.set('host', process.env.HOST || 'localhost');
 
 http.createServer(app).listen(app.get('httpPort'));
 https.createServer(credentials, app).listen(app.get('httpsPort'));
+console.log('Server is listening on http://' + app.get('host') + ':' + app.get('httpPort') + ' and https://' + app.get('host') + ':' + app.get('httpsPort'));
 
 app.use('/', express.static(path.join(__dirname, 'dist')));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-console.log('Server is listening on http://' + app.get('host') + ':' + app.get('httpPort') + ' and https://' + app.get('host') + ':' + app.get('httpsPort') );
-
-app.use('/inbound', email.receive, email.verify); // handle all emails to application domain;
+app.use('/inbound', email.receive, email.verify);
 app.use('/release/:id', email.findEmailInEscrow, email.findAndPayUserFromEscrow, email.releaseFromEscrow);
 
 app.post('/signup', function (req, res) {
   marketing.addSignup(req, res);
 });
+
+app.post('/join', user.join);
+app.post('/signin', user.signIn);
 
 app.get('/pay/:id', function (req, res) {
   res.sendFile(path.join(__dirname, './client/payment.html'));
