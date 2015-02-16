@@ -1,8 +1,9 @@
 var stripe = require('stripe')(process.env.STRIPE);
+var Escrow = require('../email/emailModel.js');
 
-var makePayment = function (card) {
+var makePayment = function (card, cost) {
   stripe.charges.create({
-    amount: 400,
+    amount: cost,
     currency: "usd",
     card: card,
     description: "Charge for test@example.com"
@@ -16,8 +17,22 @@ var makePayment = function (card) {
 };
 
 module.exports = {
+  getDetails: function (req, res, next) {
+    Escrow.findOne({_id: req.params.id}, function (error, email) {
+      if (error) {
+        console.log(error);
+      } else if (!email) {
+        console.log('No email');
+      } else {
+        req.cost = email.cost;
+        next();
+      }
+    });
+  },
+
   verification: function (req, res) {
-    makePayment(req.body.stripeToken);
+    makePayment(req.body.stripeToken, req.cost);
+    console.log(req.body);
     res.redirect('/release/' + req.params.id);
   }
 };

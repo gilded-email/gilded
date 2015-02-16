@@ -53,10 +53,12 @@ describe('Email Module', function () {
   });
 
   xit("messages from jenkins@' + domain + ' always go through to avoid endless email loops", function () {
+    assert.equal(false, true);
 
   });
 
   xit('should reply with a payment request email if sender is not on the VIP list', function () {
+    assert.equal(false, true);
     // send an email to user@gilded from a non-vip address
       // expect a 'success' response
   });
@@ -90,6 +92,13 @@ describe('Email Module', function () {
     });
   });
 
+  it('should store emails with a cost matching the user\'s set rate', function () {
+    assert.equal(false, true);
+    // we created a user with a rate of 500
+    // then sent an email to that user
+    // and ensured it was stored in the escrow table with a cost of 500
+  });
+
   it('should be able to remove emails from escrow', function () {
     assert.equal(false, true);
   });
@@ -110,6 +119,20 @@ describe('Payments Module', function () {
 
   it('should be able to remit payments', function () {
     assert.equal(false, true);
+  });
+
+  it('should charge based on email cost', function () {
+    assert.equal(false, true);
+    // had an email with cost 500
+    // paid for it
+    // stripe db showed a $5.00 increase in revenue
+  });
+
+  it('should increment recipient balance based on email cost', function () {
+    assert.equal(false, true);
+    // paid 500 for an email
+    // users balance in db incremented by 500
+
   });
 });
 

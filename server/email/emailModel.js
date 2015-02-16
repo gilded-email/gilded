@@ -5,7 +5,8 @@ var EmailSchema = new mongoose.Schema({
   sentDate: {type: Date, default: Date.now},
   paid: {type: Boolean, default: false},
   email: String,
-  recipient: String
+  recipient: String,
+  cost: {type: Number, default: 100}
 });
 
 module.exports = mongoose.model('Escrow', EmailSchema);

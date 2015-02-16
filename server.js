@@ -29,7 +29,7 @@ app.use(bodyParser.json());
 console.log('Server is listening on ' + app.get('host') + ':' + app.get('port'));
 
 app.use('/inbound', email.receive, email.verify); // handle all emails to application domain;
-app.use('/release/:id', email.findEmailInEscrow, email.findUserFromEscrow, email.releaseFromEscrow);
+app.use('/release/:id', email.findEmailInEscrow, email.findAndPayUserFromEscrow, email.releaseFromEscrow);
 
 app.post('/signup', function (req, res) {
   marketing.addSignup(req, res);
@@ -39,4 +39,4 @@ app.get('/pay/:id', function (req, res) {
   res.sendFile(path.join(__dirname, './client/payment.html'));
 });
 
-app.post('/pay/:id', payment.verification);
+app.post('/pay/:id', payment.getDetails, payment.verification);
