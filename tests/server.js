@@ -33,6 +33,10 @@ describe('User Module', function () {
     assert.equal(false, true);
   });
 
+  xit('should be able to remove VIPs', function () {
+    assert.equal(false, true);
+  });
+
   xit('should be able to check VIP List', function () {
     assert.equal(false, true);
   });
