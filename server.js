@@ -16,17 +16,18 @@ var credentials = {key: privateKey, cert: certificate};
 
 var app = express();
 
-app.set('port', process.env.PORT || 3000);
-app.set('host', process.env.HOST || '127.0.0.1');
+app.set('httpPort', 8080);
+app.set('httpsPort', process.env.PORT || 3000);
+app.set('host', process.env.HOST || 'localhost');
 
-http.createServer(app).listen(8080);
-https.createServer(credentials, app).listen(app.get('port'));
+http.createServer(app).listen(app.get('httpPort'));
+https.createServer(credentials, app).listen(app.get('httpsPort'));
 
 app.use('/', express.static(path.join(__dirname, 'dist')));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-console.log('Server is listening on ' + app.get('host') + ':' + app.get('port'));
+console.log('Server is listening on http://' + app.get('host') + ':' + app.get('httpPort') + ' and https://' + app.get('host') + ':' + app.get('httpsPort') );
 
 app.use('/inbound', email.receive, email.verify); // handle all emails to application domain;
 app.use('/release/:id', email.findEmailInEscrow, email.findAndPayUserFromEscrow, email.releaseFromEscrow);
