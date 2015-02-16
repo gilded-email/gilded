@@ -20,5 +20,19 @@ module.exports = {
         }
       });
     });
+  },
+
+  getRate: function (username) {
+    return new Promise(function (resolve, reject) {
+      userModel.findOne({username: username}, function (error, user) {
+        if (error) {
+          reject(error);
+        } else if (!user) {
+          reject('Looking for a user that does not exist');
+        } else {
+          resolve(user.rate);
+        }
+      });
+    });
   }
 };

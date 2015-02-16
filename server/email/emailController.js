@@ -75,13 +75,16 @@ module.exports = {
 
   store: function (email, recipient, callback) {
     callback = callback || requestPayment;
-    Escrow.create({email: JSON.stringify(email), recipient: recipient}, function (error, savedEmail) {
-      if (error) {
-        console.log(error);
-      } else {
-        callback(savedEmail);
-      }
-    });
+    userController.getRate(recipient)
+      .then(function (rate) {
+        Escrow.create({email: JSON.stringify(email), recipient: recipient, cost: rate}, function (error, savedEmail) {
+          if (error) {
+            console.log(error);
+          } else {
+            callback(savedEmail);
+          }
+        });
+      });
   },
 
   findEmailInEscrow: function (req, res, next) {
@@ -96,8 +99,8 @@ module.exports = {
     });
   },
 
-  findUserFromEscrow: function (req, res, next) {
-    User.findOne({username: req.escrow.recipient}, function (error, user) {
+  findAndPayUserFromEscrow: function (req, res, next) {
+    User.findOneAndUpdate({username: req.escrow.recipient}, {$inc: {balance: req.escrow.cost}}, function (error, user) {
       if (error) {
         res.sendStatus(403);
       } else {
