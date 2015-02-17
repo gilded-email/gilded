@@ -30,7 +30,7 @@ app.use(bodyParser.json());
 
 app.use('/api/inbound', email.receive, email.verify);
 app.use('/api/release/:id', email.findEmailInEscrow, email.findAndPayUserFromEscrow, email.releaseFromEscrow);
-app.use('/api/escrow/:username/', email.fetchEscrows);
+app.use('/api/escrow/', email.fetchEscrows); // TODO: add checkSession
 app.use('/api/user/settings', user.checkSession, user.changePassword, user.updateForwardEmail, user.changeRate);
 
 app.post('/signup', function (req, res) {
