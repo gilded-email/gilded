@@ -145,6 +145,7 @@ module.exports = {
           console.log(error);
           res.status(400).send(error);
         } else {
+          req.user = user;
           next();
         }
       });
@@ -152,9 +153,7 @@ module.exports = {
   },
 
   changeRate: function (req, res) {
-    if (!req.body.rate) {
-      next();
-    } else {
+    if (req.body.rate) {
       User.findOneAndUpdate({username: req.cookies.username}, {rate: req.body.rate}, function (error, user) {
         if (error) {
           console.log(error);
@@ -163,6 +162,8 @@ module.exports = {
           res.status(201).send(user);
         }
       });
+    } else {
+      res.status(201).send(req.user);
     }
   },
 
