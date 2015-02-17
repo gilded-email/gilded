@@ -5,45 +5,90 @@ var assert = require('chai').assert;
 var serverUrl = 'http://gilded.ngrok.com';
 require('dotenv').load();
 var domain = process.env.DOMAIN;
-
-var emailData = {
-  envelope: JSON.stringify({
-    to: ['tests@' + domain]
-  }),
-  from: 'Tester Guy <testvip@' + domain + '>',
-  subject: 'Test Email',
-  html: '<h1>Testing</h1>',
-  text: 'Testing'
-};
+var User = require('../server/user/userModel.js');
 
 describe('User Module', function () {
-  xit('should be able to sign up users', function () {
-    assert.equal(false, true);
+  var testUser;
+  it('should be able to sign up users', function (done) {
+    request.post({url: serverUrl + '/join', json: true, body: {username: 'tests', password: 'secret', forwardEmail: 'gildedtest@dsernst.com'}}, function (error, httpResponse, body) {
+      if (error) {
+        console.log(error);
+      } else {
+        if (httpResponse.statusCode === 409) {
+          assert.equal(body.code, 11000);
+          done();
+        } else {
+          assert.equal(httpResponse.statusCode, 201);
+          done();
+        }
+      }
+    });
   });
 
-  xit('should hash passwords', function () {
-    assert.equal(false, true);
+  it('should hash passwords', function (done) {
+    User.findOne({username: 'tests'}, function (error, user) {
+      if (error) {
+        console.log(error);
+      }
+      testUser = user;
+      assert.notEqual(user.password, 'secret');
+      done();
+    });
   });
 
-  xit('should be able to sign in users', function () {
-    assert.equal(false, true);
+  it('should be able to sign in users', function (done) {
+    request.post({url: serverUrl + '/signin', json: true, body: {username: 'tests', password: 'secret'}}, function (error, httpResponse, body) {
+      if (error) {
+        console.log(error);
+      } else {
+        assert.equal(httpResponse.statusCode, 201);
+        assert.equal(body._id, testUser._id);
+        done();
+      }
+    });
   });
 
-  xit('should be able to add VIPs', function () {
-    assert.equal(false, true);
-  });
+  describe('VIP list', function () {
+    var vipUser = 'testVip@g.mtm.gs';
 
-  xit('should be able to remove VIPs', function () {
-    assert.equal(false, true);
-  });
+    it('should be able to add VIPs', function (done) {
+      request.put({url: serverUrl + '/user/' + testUser.id + '/vipList', json: true, body: {add: [vipUser], remove: []}}, function (error, httpResponse, body) {
+        if (error) {
+          console.log(error);
+        } else {
+          assert.equal(httpResponse.statusCode, 201);
+          assert.include(body.vipList, vipUser);
+          done();
+        }
+      });
+    });
 
-  xit('should be able to check VIP List', function () {
-    assert.equal(false, true);
+    it('should be able to remove VIPs', function (done) {
+      request.put({url: serverUrl + '/user/' + testUser.id + '/vipList', json: true, body: {add: [], remove: [vipUser]}}, function (error, httpResponse, body) {
+        if (error) {
+          console.log(error);
+        } else {
+          assert.equal(httpResponse.statusCode, 201);
+          assert.notInclude(body.vipList, vipUser);
+          done();
+        }
+      });
+    });
   });
 });
 
 describe('Email Module', function () {
   var emailController = require('../server/email/emailController.js');
+  var emailData = {
+    envelope: JSON.stringify({
+      to: ['tests@' + domain]
+    }),
+    from: 'Tester Guy <testvip@' + domain + '>',
+    subject: 'Test Email',
+    html: '<h1>Testing</h1>',
+    text: 'Testing'
+  };
+
   it('should be able to receive emails', function (done) {
     assert.equal(typeof emailController.receive, 'function');
     request.post({url: serverUrl + '/inbound', formData: emailData}, function (error, httpResponse, body) {

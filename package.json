@@ -27,6 +27,7 @@
   },
   "homepage": "https://github.com/hesitant-tapdancers/gilded",
   "dependencies": {
+    "bcrypt-nodejs": "0.0.3",
     "bluebird": "~2.9.9",
     "body-parser": "~1.11.0",
     "dotenv": "~0.5.1",
@@ -34,8 +35,8 @@
     "formidable": "~1.0.17",
     "mongoose": "~3.8.23",
     "react-tap-event-plugin": "^0.1.4",
-    "stripe": "~3.2.0",
-    "sendgrid": "~1.6.0"
+    "sendgrid": "~1.6.0",
+    "stripe": "~3.2.0"
   },
   "devDependencies": {
     "browserify": "^8.1.3",
