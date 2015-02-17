@@ -8,7 +8,7 @@ var Actions = require('../actions/actions');
 var History = React.createClass({
   render: function() {
     return (
-      <div className="History">caasdfasdfasdfasdt</div>
+      <div className="History"><h1>THIS IS WHERE THE HISTORY GOES</h1></div>
     );
   }
 });
