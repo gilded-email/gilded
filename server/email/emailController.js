@@ -116,5 +116,16 @@ module.exports = {
     module.exports.sendEmail(email);
     Escrow.findOneAndUpdate({_id: req.params.id}, {paid: true}, printAsyncResult);
     res.redirect('/');
+  },
+
+  fetchEscrows: function (req, res) {
+    Escrow.find({recipient: req.params.username}, function (error, emails) {
+      if (error) {
+        console.log(error);
+        res.status(400).send(error);
+      } else {
+        res.send(emails);
+      }
+    });
   }
 };

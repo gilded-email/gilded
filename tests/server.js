@@ -38,7 +38,7 @@ describe('User Module', function () {
   });
 
   it('should be able to sign in users', function (done) {
-    request.post({url: serverUrl + '/signin', json: true, body: {username: 'tests', password: 'secret'}}, function (error, httpResponse, body) {
+    request.post({url: serverUrl + '/login', json: true, body: {username: 'tests', password: 'secret'}}, function (error, httpResponse, body) {
       if (error) {
         console.log(error);
       } else {
@@ -49,8 +49,16 @@ describe('User Module', function () {
     });
   });
 
+  xit('should be able to generate secure sessions per user', function (done) {
+
+  });
+
+  xit('should be able to confirm user session', function (done) {
+
+  });
+
   describe('VIP list', function () {
-    var vipUser = 'testVip@g.mtm.gs';
+    var vipUser = 'testVip@' + domain;
 
     it('should be able to add VIPs', function (done) {
       request.put({url: serverUrl + '/user/' + testUser.id + '/vipList', json: true, body: {add: [vipUser], remove: []}}, function (error, httpResponse, body) {
@@ -148,6 +156,13 @@ describe('Email Module', function () {
         done();
       }});
     });
+  });
+
+  it('should return all emails in escrow for a given user', function (done) {
+    emailController.fetchEscrows({params: {username: stored.recipient}}, {send: function (emails) {
+      assert.equal(Array.isArray(emails), true);
+      done();
+    }});
   });
 });
 

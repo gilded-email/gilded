@@ -30,15 +30,15 @@ app.use(bodyParser.json());
 
 app.use('/inbound', email.receive, email.verify);
 app.use('/release/:id', email.findEmailInEscrow, email.findAndPayUserFromEscrow, email.releaseFromEscrow);
+app.use('/escrow/:username/', email.fetchEscrows);
 
 app.post('/signup', function (req, res) {
   marketing.addSignup(req, res);
 });
 
 app.post('/join', user.join);
-app.post('/signin', user.signIn);
-app.put('/user/:userId/vipList', user.editVip);
-
+app.post('/login', user.login);
+app.put('/user/:userId/vipList', user.editVip); // TODO: add checkSession without breaking test
 
 app.get('/pay/:id', function (req, res) {
   res.sendFile(path.join(__dirname, './client/payment.html'));
