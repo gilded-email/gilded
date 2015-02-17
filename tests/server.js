@@ -6,6 +6,7 @@ var serverUrl = 'http://gilded.ngrok.com';
 require('dotenv').load();
 var domain = process.env.DOMAIN;
 var User = require('../server/user/userModel.js');
+var Escrow = require('../server/email/emailModel.js');
 
 describe('User Module', function () {
   var testUser;
@@ -42,7 +43,7 @@ describe('User Module', function () {
         console.log(error);
       } else {
         assert.equal(httpResponse.statusCode, 201);
-        assert.equal(body._id, testUser._id);
+        assert.equal(body._id, testUser.id);
         done();
       }
     });
@@ -142,7 +143,7 @@ describe('Email Module', function () {
 
   it('should be able to release emails from escrow', function (done) {
     User.findOne({username: stored.recipient}, function (error, user) {
-      emailController.releaseFromEscrow({escrow: stored, params: stored._id, user: user}, {redirect: function (route) {
+      emailController.releaseFromEscrow({escrow: stored, params: stored.id, user: user}, {redirect: function (route) {
         assert.equal(route, '/');
         done();
       }});
@@ -155,15 +156,31 @@ describe('Payments Module', function () {
     assert.equal(false, true);
   });
 
-  it('should be able to calculate total earnings', function () {
-    assert.equal(false, true);
+  it('should be able to calculate total earnings', function (done) {
+    Escrow.find({recipient: 'tests'}, function (err, emails) {
+      var total = emails.reduce(function (memo, email) {
+        if (email.paid === true) {
+          return memo + email.cost;
+        }
+        return memo;
+      });
+      assert.equal(typeof total, 'number');
+      done();
+    });
   });
 
-  it('should be able to calculate current balance', function () {
-    assert.equal(false, true);
+  it('should store a current balance per user', function (done) {
+    User.findOne({username: 'tests'}, function (error, user) {
+      if (error) {
+        console.log(error);
+      } else {
+        assert.equal(typeof user.balance, 'number');
+        done();
+      }
+    });
   });
 
-  it('should be able to remit payments', function () {
+  xit('should be able to remit payments', function () {
     assert.equal(false, true);
   });
 
