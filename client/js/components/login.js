@@ -12,11 +12,14 @@ var Actions = require('../actions/actions');
 
 
 var Login = React.createClass({
+  mixins: [Router.Navigation, Router.State],
+
   handleClick: function () {
     var user = {};
     user.username = this.refs.username.getValue();
     user.password = this.refs.password.getValue();
     Actions.loginUser(user);
+    this.transitionTo('dashboard')
   },
 
 	render: function() {
