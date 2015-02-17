@@ -28,17 +28,19 @@ app.use('/', express.static(path.join(__dirname, 'dist')));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-app.use('/inbound', email.receive, email.verify);
-app.use('/release/:id', email.findEmailInEscrow, email.findAndPayUserFromEscrow, email.releaseFromEscrow);
-app.use('/escrow/:username/', email.fetchEscrows);
+app.use('/api/inbound', email.receive, email.verify);
+app.use('/api/release/:id', email.findEmailInEscrow, email.findAndPayUserFromEscrow, email.releaseFromEscrow);
+app.use('/api/escrow/:username/', email.fetchEscrows);
+app.use('/api/user/password', user.checkSession, user.changePassword);
 
 app.post('/signup', function (req, res) {
   marketing.addSignup(req, res);
 });
 
-app.post('/join', user.join);
-app.post('/login', user.login);
-app.put('/user/:userId/vipList', user.editVip); // TODO: add checkSession without breaking test
+app.post('/api/join', user.join);
+app.post('/api/login', user.login);
+app.post('/api/logout', user.logout);
+app.put('/api/user/:userId/vipList', user.editVip); // TODO: add checkSession without breaking test
 
 app.get('/pay/:id', function (req, res) {
   res.sendFile(path.join(__dirname, './client/payment.html'));
