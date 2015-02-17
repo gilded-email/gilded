@@ -6,7 +6,7 @@ var mui = require('material-ui');
 var TextField = mui.TextField;
 var RaisedButton = mui.RaisedButton;
 var Router = require('react-router');
-var MenuItem = mui.MenuItem
+var MenuItem = mui.MenuItem;
 var Link = Router.Link;
 var Actions = require('../actions/actions');
 

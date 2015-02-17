@@ -9,19 +9,20 @@ var CHANGE_EVENT = "change";
 var _loginUser = function (username, password) {
   console.log('this is the username ', username);
   console.log('this is password ', password);
-  // request
-  //   .post('') //TODO: post to login url
-  //   .send({username: username, password: password})
-  //   .end(function (error, resp) {
-  //     if (error) {
-  //       console.log('login error ', error);
-  //       return error;
-  //     }
-  //     // if login is successful
-  //       // send user to dashboard
-  //     // else if login is unsuccessful
-  //       //send user back to login page
-  //   });
+  request
+    .post('/signin')
+    .send({username: username, password: password})
+    .end(function (error, resp) {
+      if (error) {
+        console.log('login error ', error);
+        return error;
+      }
+      console.log('logged in', JSON.parse(resp.text));
+      // if login is successful
+        // send user to dashboard
+      // else if login is unsuccessful
+        //send user back to login page
+    });
 };
 
 var _signupUser = function (username, email, password) {
@@ -30,31 +31,32 @@ var _signupUser = function (username, email, password) {
   console.log('this is the password ', password);
 
   request
-    .post() //TODO: post to signup url
+    .post('/join') //TODO: post to signup url
     .send({username: username, forwardEmail: email, password: password})
     .end(function (error, resp) {
       if (error) {
         console.log('signup error ', error);
         return error;
       }
+      console.log(resp);
       // if signup is successful
         //send user either to login page OR dashboard
-      // else 
+      // else
         //send user back to signin page;
     });
 };
 
 var AppStore = _.extend({}, EventEmitter.prototype, {
   emitChange:function(){
-    this.emit(CHANGE_EVENT)
+    this.emit(CHANGE_EVENT);
   },
 
   addChangeListener:function(callback){
-    this.on(CHANGE_EVENT, callback)
+    this.on(CHANGE_EVENT, callback);
   },
 
   removeChangeListener:function(callback){
-    this.removeListener(CHANGE_EVENT, callback)
+    this.removeListener(CHANGE_EVENT, callback);
   },
 
   dispatcherIndex:AppDispatcher.register(function(payload){
@@ -73,6 +75,6 @@ var AppStore = _.extend({}, EventEmitter.prototype, {
 
     return true;
   })
-})
+});
 
 module.exports = AppStore;
