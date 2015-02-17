@@ -20,9 +20,9 @@ module.exports = {
         User.create(userData, function (error, result) {
           if (error) {
             console.log(error);
-            res.sendStatus(409);
+            res.status(409).send(error);
           } else {
-            res.redirect('/profile');
+            res.status(201).send(result);
           }
         });
       }
@@ -43,36 +43,28 @@ module.exports = {
           } else if (response === false) {
             res.status(422).send('wrong password');
           } else {
-            res.redirect('/dashboard/' + user.id);
+            res.status(201).send(user);
           }
         });
       }
     });
   },
 
-  addVip: function (username, emailAddress) {
-    return new Promise(function (resolve, reject) {
-      User.findOneAndUpdate({username: username}, {$push: {vipList: emailAddress}}, function (error, user) {
-        if (error) {
-          console.log(error);
-          reject();
-        } else {
-          resolve(user);
-        }
-      });
-    });
-  },
-
-  removeVip: function (username, emailAddress) {
-    return new Promise(function (resolve, reject) {
-      User.findOneAndUpdate({username: username}, {$pull: {vipList: emailAddress}}, function (error, user) {
-        if (error) {
-          console.log(error);
-          reject();
-        } else {
-          resolve(user);
-        }
-      });
+  editVip: function (req, res) {
+    User.findOneAndUpdate({_id: req.params.userId}, {$push: {vipList: {$each: req.body.add}}}, function (error, user) {
+      if (error) {
+        console.log(error);
+        res.sendStatus(409);
+      } else {
+        User.findOneAndUpdate({_id: user._id}, {$pullAll: {vipList: req.body.remove}}, function (error, user) {
+          if (error) {
+            console.log(error);
+            res.sendStatus(409);
+          } else {
+            res.status(201).send(user);
+          }
+        });
+      }
     });
   },
 

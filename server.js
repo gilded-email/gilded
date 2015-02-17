@@ -37,6 +37,8 @@ app.post('/signup', function (req, res) {
 
 app.post('/join', user.join);
 app.post('/signin', user.signIn);
+app.put('/user/:userId/vipList', user.editVip);
+
 
 app.get('/pay/:id', function (req, res) {
   res.sendFile(path.join(__dirname, './client/payment.html'));
