@@ -79,11 +79,12 @@ describe('User Module', function () {
 
 describe('Email Module', function () {
   var emailController = require('../server/email/emailController.js');
+  var stored;
   var emailData = {
     envelope: JSON.stringify({
       to: ['tests@' + domain]
     }),
-    from: 'Tester Guy <testvip@' + domain + '>',
+    from: 'Tester Guy <gildedtest@dsernst.com>',
     subject: 'Test Email',
     html: '<h1>Testing</h1>',
     text: 'Testing'
@@ -113,7 +114,7 @@ describe('Email Module', function () {
   });
 
   it('should be able to send emails', function (done) {
-    var testEmail = emailData;
+    var testEmail = Object.create(emailData);
     testEmail.to = 'neil.lokare@live.com';
     testEmail.from = 'testsend@' + domain;
     emailController.sendEmail(testEmail, function (error, result) {
@@ -126,30 +127,26 @@ describe('Email Module', function () {
     });
   });
 
-  it('should be able to store and retrieve emails, with recipient', function (done) {
-    var recipient = emailData.to.split('@')[0];
-    emailController.store(emailData, recipient, function (savedEmail) {
-      var stored = savedEmail;
-      assert.equal(stored.recipient, recipient);
-
-      emailController.release({params: {id: stored._id}}, {send: function () {}, redirect: function () {}},
-        function (error, result) {
-          if (!error) {
-            done();
-          }
-        });
+  it('should be able to store emails, with recipients and cost', function (done) {
+    User.findOneAndUpdate({username: 'tests'}, {rate: 500}, function (err, user) {
+      var recipient = JSON.parse(emailData.envelope).to[0].split('@')[0];
+      emailController.store(emailData, recipient, function (savedEmail) {
+        stored = savedEmail;
+        assert.equal(stored.recipient, recipient);
+        assert.equal(stored.cost, 500);
+        done();
+      });
     });
   });
 
-  it('should store emails with a cost matching the user\'s set rate', function () {
-    assert.equal(false, true);
-    // we created a user with a rate of 500
-    // then sent an email to that user
-    // and ensured it was stored in the escrow table with a cost of 500
-  });
 
-  it('should be able to remove emails from escrow', function () {
-    assert.equal(false, true);
+  it('should be able to release emails from escrow', function (done) {
+    User.findOne({username: stored.recipient}, function (error, user) {
+      emailController.releaseFromEscrow({escrow: stored, params: stored._id, user: user}, {redirect: function (route) {
+        assert.equal(route, '/');
+        done();
+      }});
+    });
   });
 });
 

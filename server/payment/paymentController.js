@@ -32,7 +32,6 @@ module.exports = {
 
   verification: function (req, res) {
     makePayment(req.body.stripeToken, req.cost);
-    console.log(req.body);
     res.redirect('/release/' + req.params.id);
   }
 };
