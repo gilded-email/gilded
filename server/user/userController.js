@@ -1,6 +1,6 @@
+var domain = process.env.DOMAIN;
 var Promise = require('bluebird');
 var User = require('./userModel.js');
-var domain = process.env.DOMAIN;
 var dispatcher = 'jenkins@' + domain;
 var bcrypt = require('bcrypt-nodejs');
 
@@ -51,7 +51,9 @@ module.exports = {
           } else {
             storeSession(user.username)
               .then(function (cookie) {
-                res.cookie(cookie);
+                res.cookie('username', cookie.username);
+                res.cookie('userExpires', cookie.userExpires);
+                res.cookie('userToken', cookie.userToken);
                 res.status(201).send(user);
               })
               .catch(function (error) {
@@ -80,7 +82,9 @@ module.exports = {
           } else {
             storeSession(user.username)
               .then(function (cookie) {
-                res.cookie(cookie);
+                res.cookie('username', cookie.username);
+                res.cookie('userExpires', cookie.userExpires);
+                res.cookie('userToken', cookie.userToken);
                 res.status(201).send(user);
               })
               .catch(function (error) {
