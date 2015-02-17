@@ -15,7 +15,8 @@ var printAsyncResult = function (error, result) {
 };
 
 var requestPayment = function (savedEmail) {
-  var paymentInstructions = 'Your recipient requires $0.25 to receive emails. Pay here: ';
+  var cost = (savedEmail.cost / 100).toFixed(2);
+  var paymentInstructions = 'Your recipient requires $' + cost + ' to receive emails. Pay here: ';
   var paymentUrl = 'http://' + domain + '/pay/' + savedEmail._id;
   module.exports.sendEmail({
     to: JSON.parse(savedEmail.email).from,
@@ -116,5 +117,16 @@ module.exports = {
     module.exports.sendEmail(email);
     Escrow.findOneAndUpdate({_id: req.params.id}, {paid: true}, printAsyncResult);
     res.redirect('/');
+  },
+
+  fetchEscrows: function (req, res) {
+    Escrow.find({recipient: req.params.username}, function (error, emails) {
+      if (error) {
+        console.log(error);
+        res.status(400).send(error);
+      } else {
+        res.send(emails);
+      }
+    });
   }
 };
