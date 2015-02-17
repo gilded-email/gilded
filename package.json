@@ -51,6 +51,7 @@
     "gulp-less": "^3.0.0",
     "gulp-livereload": "^3.7.0",
     "gulp-load-plugins": "^0.8.0",
+    "gulp-nodemon": "^1.0.5",
     "gulp-react": "^2.0.0",
     "gulp-sequence": "^0.3.2",
     "gulp-shell": "^0.3.0",
