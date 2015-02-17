@@ -4,10 +4,9 @@ var browserify = require('browserify');
 var reactify = require('reactify');
 var source = require('vinyl-source-stream');
 var less = require('gulp-less');
-
 var shell = require('gulp-shell');
-
 var livereload = require('gulp-livereload');
+var nodemon = require('gulp-nodemon');
 
 var paths = {
   scripts: ['./client/js/**/*.js'],
@@ -70,9 +69,17 @@ gulp.task('watch', function() {
   gulp.watch('./client/less/**/*.less', ['less']);
 });
 
-gulp.task('run', ['build', 'compile'], shell.task ([
-  'nodemon server.js'
-]));
+gulp.task('run', ['build'], function () {
+  nodemon({
+    script: 'server.js',
+    ext: 'js',
+    ignore: [
+    'gulpfile.js',
+    'client/**/*.js',
+    'dist/**/*.js'
+    ]
+  });
+});
 
 gulp.task('build', ['clean', 'compile', 'assets', 'less', 'css', 'html']);
 gulp.task('default', ['build', 'watch', 'run']);
