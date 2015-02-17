@@ -10,7 +10,7 @@ var _loginUser = function (username, password) {
   console.log('this is the username ', username);
   console.log('this is password ', password);
   request
-    .post('/signin')
+    .post('/api/login')
     .send({username: username, password: password})
     .end(function (error, resp) {
       if (error) {
@@ -31,7 +31,7 @@ var _signupUser = function (username, email, password) {
   console.log('this is the password ', password);
 
   request
-    .post('/join') //TODO: post to signup url
+    .post('/api/join') //TODO: post to signup url
     .send({username: username, forwardEmail: email, password: password})
     .end(function (error, resp) {
       if (error) {
