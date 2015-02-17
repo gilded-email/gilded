@@ -1,7 +1,7 @@
-var Dispatcher = require('./dispatcher.js');
-var merge  = require('react/lib/merge');
+var Dispatcher = require('./fbDispatcher.js');
+var _ = require('lodash');
 
-var AppDispatcher = merge(Dispatcher.prototype, {
+var AppDispatcher = _.extend({}, Dispatcher.prototype, {
   handleViewAction: function(action){
     console.log('action', action);
     this.dispatch({

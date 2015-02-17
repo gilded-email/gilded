@@ -7,9 +7,22 @@ var TextField = mui.TextField;
 var RaisedButton = mui.RaisedButton;
 var Router = require('react-router');
 var Link = Router.Link;
+var Actions = require('../actions/actions');
+var StoreWatchMixin = require('../mixins/StoreWatchMixin.js');
 
+var func = function() {};
 
 var Signup = React.createClass({
+  handleClick: function () {
+    //get input from refs
+    var user = {};
+    user.username = this.refs.username.getValue();
+    user.email = this.refs.email.getValue();
+    user.password = this.refs.password.getValue();
+    Actions.signupUser(user);
+  },
+
+
 	render: function() {
 		return (
   			<div className="signup-form">
@@ -17,12 +30,12 @@ var Signup = React.createClass({
           </div>
   				<form>
   					<TextField
-  					  className="signup-input" floatingLabelText="Username" />
+  					  ref="username" className="signup-input" floatingLabelText="Username" />
   					<TextField
-  					  className="signup-input" floatingLabelText="Email" />
+  					  ref="email" className="signup-input" floatingLabelText="Email" />
   					<TextField
-  					  className="signup-input" floatingLabelText="Password" />
-            <RaisedButton className="signup-button" label="Sign Up" secondary={true} />
+  					  ref="password" className="signup-input" floatingLabelText="Password" />
+            <RaisedButton onClick={this.handleClick} className="signup-button" label="Sign Up" secondary={true} />
             <Link className="login-link" to="login">Already a member? Log in here.</Link>
   				</form>
   			</div>

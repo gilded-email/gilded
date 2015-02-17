@@ -1,6 +1,6 @@
 var keyMirror = require('keymirror');
 
 module.exports = keyMirror({
-	// TODO: add Constants
-  
+  LOGIN_USER: null,
+  SIGNUP_USER: null  
 });
