@@ -5,7 +5,6 @@ var React = require('react');
 var mui = require('material-ui');
 var LeftNav = mui.LeftNav;
 var MenuItem = mui.MenuItem;
-var History = require('./history');
 var Router = require('react-router');
 var Actions = require('../actions/actions');
 
@@ -16,13 +15,12 @@ var Dashboard = React.createClass({
 
   handleClickEvent: function(e, key, payload) {
     this.transitionTo(payload.route);
-    // console.log(payload.route)
   },
 
   menuItems: [
     { route: 'history', text: 'History'},
     { route: 'settings', text: 'Settings' },
-    { route: 'vip', text: 'VIP List' },
+    { route: 'VIP', text: 'VIP List' },
     { type: MenuItem.Types.SUBHEADER, text: '' },
     { route: 'logout', text: 'Log Out'}
   ],
