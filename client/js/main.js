@@ -9,7 +9,9 @@ $(document).ready(function () {
   var Dashboard = require('./components/dashboard');
   var Router = require('react-router');
   var Route = Router.Route;
+  var Settings = require('./components/settings');
   var History = require('./components/history');
+  var VIP = require('./components/vip');
   var RouteHandler = Router.RouteHandler;
   var Link = Router.Link;
   var App = React.createClass({
@@ -33,6 +35,8 @@ $(document).ready(function () {
       <Route name="login" handler={Login}/>
       <Route name="dashboard" handler={Dashboard}>
         <Route name="history" handler={History}/>
+        <Route name="settings" handler={Settings}/>
+        <Route name="VIP" handler={VIP}/>
       </Route>
     </Route>
   );
