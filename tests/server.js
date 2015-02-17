@@ -61,6 +61,18 @@ describe('User Module', function () {
 
   });
 
+  xit('should allow users to update their password', function (done) {
+
+  });
+
+  xit('should allow users to change the forward email address', function (done) {
+
+  });
+
+  xit('should allow users to change their rate', function (done) {
+
+  });
+
   describe('VIP list', function () {
     var vipUser = 'testVip@' + domain;
 
@@ -163,7 +175,7 @@ describe('Email Module', function () {
   });
 
   it('should return all emails in escrow for a given user', function (done) {
-    emailController.fetchEscrows({params: {username: stored.recipient}}, {send: function (emails) {
+    emailController.fetchEscrows({cookies: {username: stored.recipient}}, {send: function (emails) {
       assert.equal(Array.isArray(emails), true);
       done();
     }});
