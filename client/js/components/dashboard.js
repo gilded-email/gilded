@@ -6,6 +6,7 @@ var mui = require('material-ui');
 var LeftNav = mui.LeftNav;
 var MenuItem = mui.MenuItem;
 var Router = require('react-router');
+var RouteHandler = Router.RouteHandler;
 var Actions = require('../actions/actions');
 var RouterHandler = Router.RouteHandler;
 
@@ -30,7 +31,7 @@ var Dashboard = React.createClass({
     return (
       <div>
       <LeftNav menuItems={this.menuItems} onChange={this.handleClickEvent} />
-      <RouterHandler />
+        <RouterHandler />
       </div>
       )
   }

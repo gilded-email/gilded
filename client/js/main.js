@@ -22,7 +22,8 @@ $(document).ready(function () {
           <li><Link to="signup">Sign up</Link></li>
           <li><Link to="login">Login</Link></li>
           <li><Link to="dashboard">Dashboard</Link></li>
-          <RouteHandler />
+          <li><Link to="history">History</Link></li>
+            <RouteHandler />
         </div>
       )
     }

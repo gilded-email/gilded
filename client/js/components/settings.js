@@ -8,7 +8,7 @@ var Actions = require('../actions/actions');
 var Settings = React.createClass({
   render: function() {
     return (
-      <div className="Settings">caasdfasdfasdfasdt</div>
+      <div className="Settings"><h1>THIS IS WHERE THE SETTINGS GOES</h1></div>
     );
   }
 });
