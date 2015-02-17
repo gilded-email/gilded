@@ -29,19 +29,19 @@ var _signupUser = function (username, email, password) {
   console.log('this is the email ', email);
   console.log('this is the password ', password);
 
-  // request
-  //   .post() //TODO: post to signup url
-  //   .send({username: username, email: email, password: password})
-  //   .end(function (error, resp) {
-  //     if (error) {
-  //       console.log('signup error ', error);
-  //       return error;
-  //     }
-  //     // if signup is successful
-  //       //send user either to login page OR dashboard
-  //     // else 
-  //       //send user back to signin page;
-  //   });
+  request
+    .post() //TODO: post to signup url
+    .send({username: username, forwardEmail: email, password: password})
+    .end(function (error, resp) {
+      if (error) {
+        console.log('signup error ', error);
+        return error;
+      }
+      // if signup is successful
+        //send user either to login page OR dashboard
+      // else 
+        //send user back to signin page;
+    });
 };
 
 var AppStore = _.extend({}, EventEmitter.prototype, {
