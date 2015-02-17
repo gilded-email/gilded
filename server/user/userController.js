@@ -115,21 +115,55 @@ module.exports = {
   },
 
   changePassword: function (req, res, next) {
-    bcrypt.hash(req.body.password, null, null, function (error, hash) {
-      if (error) {
-        console.log(error);
-        res.status(400).send(error);
-      } else {
-        User.findOneAndUpdate({username: req.cookies.username}, {password: hash}, function (error, user) {
-          if (error) {
-            console.log(error);
-            res.status(400).send(error);
-          } else {
-            res.status(201).send(user);
-          }
-        });
-      }
-    });
+    if (!req.body.password) {
+      next();
+    } else {
+      bcrypt.hash(req.body.password, null, null, function (error, hash) {
+        if (error) {
+          console.log(error);
+          res.status(400).send(error);
+        } else {
+          User.findOneAndUpdate({username: req.cookies.username}, {password: hash}, function (error, user) {
+            if (error) {
+              console.log(error);
+              res.status(400).send(error);
+            } else {
+              next();
+            }
+          });
+        }
+      });
+    }
+  },
+
+  updateForwardEmail: function (req, res, next) {
+    if (!req.body.forwardEmail) {
+      next();
+    } else {
+      User.findOneAndUpdate({username: req.cookies.username}, {forwardEmail: req.body.forwardEmail}, function (error, user) {
+        if (error) {
+          console.log(error);
+          res.status(400).send(error);
+        } else {
+          next();
+        }
+      });
+    }
+  },
+
+  changeRate: function (req, res) {
+    if (!req.body.rate) {
+      next();
+    } else {
+      User.findOneAndUpdate({username: req.cookies.username}, {rate: req.body.rate}, function (error, user) {
+        if (error) {
+          console.log(error);
+          res.status(400).send(error);
+        } else {
+          res.status(201).send(user);
+        }
+      });
+    }
   },
 
   editVip: function (req, res) {

@@ -31,7 +31,7 @@ app.use(bodyParser.json());
 app.use('/api/inbound', email.receive, email.verify);
 app.use('/api/release/:id', email.findEmailInEscrow, email.findAndPayUserFromEscrow, email.releaseFromEscrow);
 app.use('/api/escrow/:username/', email.fetchEscrows);
-app.use('/api/user/password', user.checkSession, user.changePassword);
+app.use('/api/user/settings', user.checkSession, user.changePassword, user.updateForwardEmail, user.changeRate);
 
 app.post('/signup', function (req, res) {
   marketing.addSignup(req, res);
