@@ -10,8 +10,6 @@ var Link = Router.Link;
 var Actions = require('../actions/actions');
 var StoreWatchMixin = require('../mixins/StoreWatchMixin.js');
 
-var func = function() {};
-
 var Signup = React.createClass({
   handleClick: function () {
     //get input from refs
