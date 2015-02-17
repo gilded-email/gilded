@@ -93,6 +93,13 @@ module.exports = {
     });
   },
 
+  logout: function (req, res) {
+    res.clearCookie('username');
+    res.clearCookie('userExpiration');
+    res.clearCookie('userToken');
+    res.redirect('/');
+  },
+
   checkSession: function (req, res, next) {
     bcrypt.compare(process.env.SECRET + req.cookies.username + req.cookies.userExpiration, req.cookies.userToken, function (error, result) {
       if (error) {
@@ -103,6 +110,24 @@ module.exports = {
         } else {
           res.redirect('/login');
         }
+      }
+    });
+  },
+
+  changePassword: function (req, res, next) {
+    bcrypt.hash(req.body.password, null, null, function (error, hash) {
+      if (error) {
+        console.log(error);
+        res.status(400).send(error);
+      } else {
+        User.findOneAndUpdate({username: req.cookies.username}, {password: hash}, function (error, user) {
+          if (error) {
+            console.log(error);
+            res.status(400).send(error);
+          } else {
+            res.status(201).send(user);
+          }
+        });
       }
     });
   },
