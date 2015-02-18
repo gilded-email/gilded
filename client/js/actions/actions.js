@@ -1,5 +1,6 @@
 var AppConstants = require('../constants/constants.js');
 var AppDispatcher = require('../dispatcher/dispatcher.js');
+var APIUtils = require('../utils/APIUtils');
 
 var AppActions = {
   loginUser: function (user) {
@@ -7,7 +8,9 @@ var AppActions = {
       actionType: AppConstants.LOGIN_USER,
       username: user.username,
       password: user.password
-    })
+    });
+
+    APIUtils.loginUser(user.username, user.password);
   },
 
   signupUser: function (user) {
@@ -16,8 +19,12 @@ var AppActions = {
       username: user.username,
       email: user.email,
       password: user.password
-    })
+    });
+
+    APIUtils.signupUser(user.username, user.email, user.password);
   }
+
 };
+
 
 module.exports = AppActions;
