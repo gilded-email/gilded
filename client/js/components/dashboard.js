@@ -10,11 +10,22 @@ var RouteHandler = Router.RouteHandler;
 var StoreWatchMixin = require('../mixins/StoreWatchMixin');
 var Actions = require('../actions/actions');
 var RouterHandler = Router.RouteHandler;
+var Store = require('../stores/store');
 
+var getInitialState = function(){
+  if (Store.isUserLoggedIn) {
+    console.log('dashboard got triggered')
+    return null;
+  }
+};
+
+// var userAuthentication = {
+//   userCheck
+// };
 
 var Dashboard = React.createClass({
 
-  mixins: [Router.Navigation, Router.State],
+  mixins: [Router.Navigation, Router.State, StoreWatchMixin(getInitialState)],
 
   handleClickEvent: function(e, key, payload) {
     this.transitionTo(payload.route);

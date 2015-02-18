@@ -5,15 +5,24 @@ var React = require('react');
 var mui = require('material-ui');
 var TextField = mui.TextField;
 var RaisedButton = mui.RaisedButton;
+var StoreWatchMixin = require('../mixins/StoreWatchMixin');
+var Store = require('../stores/store');
+
 var Actions = require('../actions/actions');
 
-var VIP = React.createClass({
-  getInitialState: function () {
+var getInitialState = function () {
+    var currentVIPs = Store.getUserVIPs();
     return {
+      currentVIPs: currentVIPs,
       add: [],
       remove: []
     }
-  },
+  }
+
+
+var VIP = React.createClass({
+
+  mixins: [StoreWatchMixin(getInitialState)],
 
   _addVipHandler: function (email) {
     this.state.add.push(this.refs.email.getValue());
