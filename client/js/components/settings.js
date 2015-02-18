@@ -10,8 +10,11 @@ var Store = require('../stores/store');
 
 var getInitialState = function() {
   var settings = Store.getUserSettings();
-  console.log(settings);
-  return settings;
+  if (settings) {
+    return settings;
+  } else {
+    return null;
+  }
 }
 
 var Settings = React.createClass({

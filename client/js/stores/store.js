@@ -48,7 +48,7 @@ var AppStore = _.extend({}, EventEmitter.prototype, {
 
   getUserHistory: function() {
     return _userHistory;
-  }
+  },
 
   dispatcherIndex:AppDispatcher.register(function(payload){
     var action = payload.action; // this is our action from handleViewAction
