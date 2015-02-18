@@ -22,6 +22,16 @@ var AppActions = {
     });
 
     APIUtils.signupUser(user.username, user.email, user.password);
+  },
+
+  updateVips: function (contacts) {
+    AppDispatcher.handleViewAction({
+      actionType: AppConstants.UPDATE_VIPS,
+      add: contacts.add,
+      remove: contacts.remove
+    });
+
+    APIUtils.updateVips(contacts.add, contacts.remove);
   }
 
 };

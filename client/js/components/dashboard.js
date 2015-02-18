@@ -7,6 +7,7 @@ var LeftNav = mui.LeftNav;
 var MenuItem = mui.MenuItem;
 var Router = require('react-router');
 var Actions = require('../actions/actions');
+var RouterHandler = Router.RouteHandler;
 
 
 var Dashboard = React.createClass({
@@ -24,11 +25,12 @@ var Dashboard = React.createClass({
     { type: MenuItem.Types.SUBHEADER, text: '' },
     { route: 'logout', text: 'Log Out'}
   ],
-  
+
   render: function() {
     return (
-      <div>cat
+      <div>
       <LeftNav menuItems={this.menuItems} onChange={this.handleClickEvent} />
+      <RouterHandler />
       </div>
       )
   }

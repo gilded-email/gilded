@@ -30,6 +30,19 @@ var api_utils = {
         }
         Actions.userLoggedIn(res.text);
       });
+  },
+
+  updateVips: function (add, remove) {
+    request
+      .put(API_ROOT + 'user/vipList')
+      .send({add: add, remove: remove})
+      .end(function (error, res) {
+        if (error) {
+          console.log('VIP update error: ', error);
+          return error;
+        }
+        Actions.updateUser(res.text);
+      });
   }
 
 };
