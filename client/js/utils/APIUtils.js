@@ -14,7 +14,6 @@ var api_utils = {
           console.log('login error ', error);
           return error;
         }
-        console.log(res);
         Actions.userLoggedIn(JSON.parse(res.text));
       });
   },
@@ -28,7 +27,7 @@ var api_utils = {
           console.log('signup error ', error);
           return error;
         }
-        Actions.userLoggedIn(res.text);
+        Actions.userLoggedIn(JSON.parse(res.text));
       });
   },
 
