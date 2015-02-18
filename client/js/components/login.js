@@ -14,7 +14,8 @@ var Actions = require('../actions/actions');
 var Login = React.createClass({
   mixins: [Router.Navigation, Router.State],
 
-  handleClick: function () {
+  handleClick: function (e) {
+    e.preventDefault();
     var user = {};
     user.username = this.refs.username.getValue();
     user.password = this.refs.password.getValue();

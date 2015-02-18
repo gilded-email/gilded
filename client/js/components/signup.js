@@ -11,8 +11,9 @@ var Actions = require('../actions/actions');
 var StoreWatchMixin = require('../mixins/StoreWatchMixin.js');
 
 var Signup = React.createClass({
-  handleClick: function () {
+  handleClick: function (e) {
     //get input from refs
+    e.preventDefault();
     var user = {};
     user.username = this.refs.username.getValue();
     user.email = this.refs.email.getValue();
