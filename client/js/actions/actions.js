@@ -11,6 +11,7 @@ var AppActions = {
     });
 
     APIUtils.loginUser(user.username, user.password);
+
   },
 
   signupUser: function (user) {
