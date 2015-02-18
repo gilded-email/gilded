@@ -12,11 +12,12 @@ var _userHistory;
 var _userSettings;
 
 var _logUserIn = function(userData) {
-  _userVIPs = userData.vipList;
+  _userHistory = userData.escrow;
+  _userVIPs = userData.user.vipList;
   _userSettings = {
-    balance: userData.balance,
-    forwardEmail: userData.forwardEmail,
-    password: userData.password
+    balance: userData.user.balance,
+    forwardEmail: userData.user.forwardEmail,
+    password: userData.user.password
   };
   _userLoggedIn = true;
 }
@@ -48,7 +49,7 @@ var AppStore = _.extend({}, EventEmitter.prototype, {
 
   getUserHistory: function() {
     return _userHistory;
-  }
+  },
 
   dispatcherIndex:AppDispatcher.register(function(payload){
     var action = payload.action; // this is our action from handleViewAction

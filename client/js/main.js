@@ -31,9 +31,9 @@ $(document).ready(function () {
   });
 
   var routes = (
-    <Route handler={App}>
+    <Route name="root" path="/" handler={App}>
       <Route name="signup" handler={Signup}/>
-      <Route name="login" handler={Login}/>
+      <Route name="login" handler={Login} />
       <Route name="dashboard" handler={Dashboard}>
         <Route name="history" handler={History}/>
         <Route name="settings" handler={Settings}/>

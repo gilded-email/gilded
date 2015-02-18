@@ -36,6 +36,7 @@ module.exports = {
             console.log(error);
             res.status(409).send(error);
           } else {
+            req.user = user;
             next();
           }
         });
@@ -66,7 +67,7 @@ module.exports = {
   },
 
   startProfile: function (req, res) {
-    res.redirect('/');
+    res.status(201).send(req.user);
   },
 
   logout: function (req, res) {

@@ -19,13 +19,19 @@ var getInitialState = function(){
   }
 };
 
-// var userAuthentication = {
-//   userCheck
-// };
+var Authentication = {
+  statics: {
+    willTransitionTo: function (event) {
+      if (!Store.isUserLoggedIn()) {
+        event.redirect('login');
+      }
+    }
+  }
+};
 
 var Dashboard = React.createClass({
 
-  mixins: [Router.Navigation, Router.State, StoreWatchMixin(getInitialState)],
+  mixins: [Router.Navigation, Router.State, StoreWatchMixin(getInitialState), Authentication],
 
   handleClickEvent: function(e, key, payload) {
     this.transitionTo(payload.route);

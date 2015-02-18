@@ -14,7 +14,6 @@ var getInitialState = function() {
 
 var History = React.createClass({
 
-  mixins: [StoreWatchMixin()]
   render: function() {
     return (
       <div className="History"><h1>THIS IS WHERE THE HISTORY GOES</h1></div>
