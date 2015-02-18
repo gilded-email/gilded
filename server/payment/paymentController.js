@@ -30,8 +30,8 @@ module.exports = {
     });
   },
 
-  verification: function (req, res) {
+  verification: function (req, res, next) {
     makePayment(req.body.stripeToken, req.cost);
-    res.redirect('/api/release/' + req.params.id);
+    next();
   }
 };
