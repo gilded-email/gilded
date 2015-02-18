@@ -31,7 +31,6 @@ app.use(bodyParser.json());
 app.use(cookieParser());
 
 app.use('/api/inbound', email.receive, email.verify);
-app.use('/api/release/:id', email.findEmailInEscrow, email.findAndPayUserFromEscrow, email.releaseFromEscrow);
 app.use('/api/escrow/', user.checkSession, email.fetchEscrows);
 app.use('/api/user/settings', user.checkSession, user.changePassword, user.updateForwardEmail, user.changeRate);
 
@@ -48,4 +47,4 @@ app.get('/pay/:id', function (req, res) {
   res.sendFile(path.join(__dirname, './client/payment.html'));
 });
 
-app.post('/pay/:id', payment.getDetails, payment.verification);
+app.post('/pay/:id', payment.getDetails, payment.verification, email.findEmailInEscrow, email.findAndPayUserFromEscrow, email.releaseFromEscrow);
