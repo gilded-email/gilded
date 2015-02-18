@@ -1,7 +1,7 @@
 var stripe = require('stripe')(process.env.STRIPE);
 var Escrow = require('../email/emailModel.js');
 
-var makePayment = function (card, cost) {
+var makePayment = function (card, cost, callback) {
   stripe.charges.create({
     amount: cost,
     currency: "usd",
@@ -12,6 +12,7 @@ var makePayment = function (card, cost) {
       console.log(error);
     } else {
       console.log("Payment received");
+      callback();
     }
   });
 };
@@ -31,7 +32,6 @@ module.exports = {
   },
 
   verification: function (req, res, next) {
-    makePayment(req.body.stripeToken, req.cost);
-    next();
+    makePayment(req.body.stripeToken, req.cost, next);
   }
 };
