@@ -8,5 +8,13 @@ module.exports = {
       actionType: AppConstants.USER_LOGGED_IN,
       userData: userData
     });
+  },
+
+  updateUser: function (userData) {
+    console.log(userData);
+    AppDispatcher.handleViewAction({
+      actionType: AppConstants.UPDATE_USER,
+      userData: userData
+    });
   }
 };

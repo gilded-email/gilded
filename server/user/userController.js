@@ -99,21 +99,24 @@ module.exports = {
 
   logout: function (req, res) {
     res.clearCookie('username');
-    res.clearCookie('userExpiration');
+    res.clearCookie('userExpires');
     res.clearCookie('userToken');
     res.redirect('/');
   },
 
   checkSession: function (req, res, next) {
-    bcrypt.compare(process.env.SECRET + req.cookies.username + req.cookies.userExpiration, req.cookies.userToken, function (error, result) {
+    bcrypt.compare(process.env.SECRET + req.cookies.username + req.cookies.userExpires, req.cookies.userToken, function (error, result) {
       if (error) {
+        console.log("compare err", error);
         res.redirect('/login');
-      } else {
-        if (req.cookies.userExpiration >= Date.now()) {
-          next();
-        } else {
+      } else if (result) {
+        if (req.cookies.userExpiration < Date.now()) {
           res.redirect('/login');
+        } else {
+          next();
         }
+      } else {
+        res.redirect('/login');
       }
     });
   },
@@ -172,7 +175,7 @@ module.exports = {
   },
 
   editVip: function (req, res) {
-    User.findOneAndUpdate({_id: req.params.userId}, {$push: {vipList: {$each: req.body.add}}}, function (error, user) {
+    User.findOneAndUpdate({username: req.cookies.username}, {$push: {vipList: {$each: req.body.add}}}, function (error, user) {
       if (error) {
         console.log(error);
         res.sendStatus(409);
