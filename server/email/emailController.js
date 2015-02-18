@@ -129,7 +129,7 @@ module.exports = {
           user: req.user,
           escrow: emails
         }
-        res.status(201).send(data); //it's caused they are changed methods
+        res.status(201).send(data);
       }
     });
   }
