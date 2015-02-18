@@ -23,9 +23,13 @@ var AppStore = _.extend({}, EventEmitter.prototype, {
     var action = payload.action; // this is our action from handleViewAction
     switch(action.actionType){
       case AppConstants.LOGIN_USER:
+        console.log('user tried logging in');
         break;
 
       case AppConstants.SIGNUP_USER:
+        break;
+      case AppConstants.USER_LOGGED_IN:
+        console.log('user was logged in');
         break;
     }
 
