@@ -7,6 +7,7 @@ var LeftNav = mui.LeftNav;
 var MenuItem = mui.MenuItem;
 var Router = require('react-router');
 var RouteHandler = Router.RouteHandler;
+var StoreWatchMixin = require('../mixins/StoreWatchMixin');
 var Actions = require('../actions/actions');
 var RouterHandler = Router.RouteHandler;
 
