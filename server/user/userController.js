@@ -16,23 +16,10 @@ var tokenGen = function (username, expiration) {
   });
 };
 
-var storeSession = function (username) {
-  var expiration = Date.now() + (100 * 60 * 62 * 24 * 30);
-  return new Promise(function (resolve, reject) {
-    tokenGen(username, expiration)
-      .then(function (token) {
-        resolve({username: username, userExpires: expiration, userToken: token});
-      })
-      .catch(function (error) {
-        console.log(error);
-        reject(error);
-      });
-  });
-};
 
 
 module.exports = {
-  join: function (req, res) {
+  join: function (req, res, next) {
     var userData = {
       username: req.body.username,
       forwardEmail: req.body.forwardEmail
@@ -49,24 +36,14 @@ module.exports = {
             console.log(error);
             res.status(409).send(error);
           } else {
-            storeSession(user.username)
-              .then(function (cookie) {
-                res.cookie('username', cookie.username);
-                res.cookie('userExpires', cookie.userExpires);
-                res.cookie('userToken', cookie.userToken);
-                res.status(201).send(user);
-              })
-              .catch(function (error) {
-                console.log(error);
-                res.sendStatus(409);
-              });
+            next();
           }
         });
       }
     });
   },
 
-  login: function (req, res) {
+  login: function (req, res, next) {
     User.findOne({username: req.body.username}, function (error, user) {
       if (error) {
         console.log(error);
@@ -80,21 +57,16 @@ module.exports = {
           } else if (response === false) {
             res.status(422).send('wrong password');
           } else {
-            storeSession(user.username)
-              .then(function (cookie) {
-                res.cookie('username', cookie.username);
-                res.cookie('userExpires', cookie.userExpires);
-                res.cookie('userToken', cookie.userToken);
-                res.status(201).send(user);
-              })
-              .catch(function (error) {
-                console.log(error);
-                res.sendStatus(409);
-              });
+            req.user = user;
+            next();
           }
         });
       }
     });
+  },
+
+  startProfile: function (req, res) {
+    res.redirect('/');
   },
 
   logout: function (req, res) {
@@ -102,6 +74,20 @@ module.exports = {
     res.clearCookie('userExpires');
     res.clearCookie('userToken');
     res.redirect('/');
+  },
+
+  storeSession: function (req, res, next) {
+    var expiration = Date.now() + (100 * 60 * 62 * 24 * 30);
+    tokenGen(req.body.username, expiration)
+      .then(function (token) {
+        res.cookie('username', req.body.username);
+        res.cookie('userExpires', expiration);
+        res.cookie('userToken', token);
+        next();
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   },
 
   checkSession: function (req, res, next) {
