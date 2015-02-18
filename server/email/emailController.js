@@ -120,12 +120,16 @@ module.exports = {
   },
 
   fetchEscrows: function (req, res) {
-    Escrow.find({recipient: req.cookies.username}, function (error, emails) {
+    Escrow.find({recipient: req.user.username}, function (error, emails) {
       if (error) {
         console.log(error);
         res.status(400).send(error);
       } else {
-        res.send(emails);
+        var data = {
+          user: req.user,
+          escrow: emails
+        }
+        res.status(201).send(data);
       }
     });
   }

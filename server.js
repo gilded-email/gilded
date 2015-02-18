@@ -38,8 +38,8 @@ app.post('/signup', function (req, res) {
   marketing.addSignup(req, res);
 });
 
-app.post('/api/join', user.join);
-app.post('/api/login', user.login);
+app.post('/api/join', user.join, user.storeSession, user.startProfile);
+app.post('/api/login', user.login, user.storeSession, email.fetchEscrows);
 app.post('/api/logout', user.logout);
 app.put('/api/user/vipList', user.checkSession, user.editVip);
 
