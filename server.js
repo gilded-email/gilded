@@ -44,7 +44,7 @@ app.post('/api/logout', user.logout);
 app.put('/api/user/vipList', user.checkSession, user.editVip);
 
 app.get('/pay/:id', function (req, res) {
-  res.sendFile(path.join(__dirname, './client/payment.html'));
+  res.sendFile(path.join(__dirname, './dist/payment.html'));
 });
 
 app.post('/pay/:id', payment.getDetails, payment.verification, email.findEmailInEscrow, email.findAndPayUserFromEscrow, email.releaseFromEscrow);
