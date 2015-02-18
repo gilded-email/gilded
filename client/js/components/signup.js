@@ -24,7 +24,8 @@ var Signup = React.createClass({
 	render: function() {
 		return (
   			<div className="signup-form">
-          <div className="mui-font-style-display-3">Sign Up
+          <div className="mui-font-style-display-3">
+          Sign Up
           </div>
   				<form>
   					<TextField
