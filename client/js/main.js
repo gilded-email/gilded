@@ -33,7 +33,7 @@ $(document).ready(function () {
   var routes = (
     <Route name="root" path="/" handler={App}>
       <Route name="signup" handler={Signup}/>
-      <Route name="login" handler={Login} addHandlerKey={true}/>
+      <Route name="login" handler={Login} />
       <Route name="dashboard" handler={Dashboard}>
         <Route name="history" handler={History}/>
         <Route name="settings" handler={Settings}/>
