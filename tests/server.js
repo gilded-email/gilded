@@ -10,6 +10,7 @@ var Escrow = require('../server/email/emailModel.js');
 
 describe('User Module', function () {
   var testUser;
+  var j = request.jar();
   it('should be able to sign up users', function (done) {
     request.post({url: serverUrl + '/api/join', json: true, body: {username: 'tests', password: 'secret', forwardEmail: 'gildedtest@dsernst.com'}}, function (error, httpResponse, body) {
       if (error) {
@@ -38,7 +39,7 @@ describe('User Module', function () {
   });
 
   it('should be able to sign in users', function (done) {
-    request.post({url: serverUrl + '/api/login', json: true, body: {username: 'tests', password: 'secret'}}, function (error, httpResponse, body) {
+    request.post({url: serverUrl + '/api/login', jar: j, json: true, body: {username: 'tests', password: 'secret'}}, function (error, httpResponse, body) {
       if (error) {
         console.log(error);
       } else {
@@ -75,9 +76,9 @@ describe('User Module', function () {
 
   describe('VIP list', function () {
     var vipUser = 'testVip@' + domain;
-
     it('should be able to add VIPs', function (done) {
-      request.put({url: serverUrl + '/api/user/' + testUser.id + '/vipList', json: true, body: {add: [vipUser], remove: []}}, function (error, httpResponse, body) {
+      var url = serverUrl + '/api/user/vipList';
+      request.put({url: url, jar: j, json: true, body: {add: [vipUser], remove: []}}, function (error, httpResponse, body) {
         if (error) {
           console.log(error);
         } else {
@@ -89,7 +90,7 @@ describe('User Module', function () {
     });
 
     it('should be able to remove VIPs', function (done) {
-      request.put({url: serverUrl + '/api/user/' + testUser.id + '/vipList', json: true, body: {add: [], remove: [vipUser]}}, function (error, httpResponse, body) {
+      request.put({url: serverUrl + '/api/user/vipList', jar: j, json: true, body: {add: [], remove: [vipUser]}}, function (error, httpResponse, body) {
         if (error) {
           console.log(error);
         } else {
