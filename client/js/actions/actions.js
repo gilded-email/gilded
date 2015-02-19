@@ -32,6 +32,33 @@ var AppActions = {
     });
 
     APIUtils.updateVips(contacts.add, contacts.remove);
+  },
+
+  updatePassword: function (password) {
+    AppDispatcher.handleViewAction({
+      actionType: AppConstants.UPDATE_PASSWORD,
+      password: password
+    })
+
+    APIUtils.updatePassword(password);
+  },
+
+  updateRate: function (rate) {
+    AppDispatcher.handleViewAction({
+      actionType: AppConstants.UPDATE_RATE,
+      rate: rate
+    })
+
+    APIUtils.updateRate(rate);
+  },
+
+  updateForwardEmail: function (newForwardEmail) {
+    AppDispatcher.handleViewAction({
+      actionType: AppConstants.UPDATE_EMAIL,
+      forwardEmail: newForwardEmail
+    })
+
+    APIUtils.updateEmail(newForwardEmail);
   }
 
 };

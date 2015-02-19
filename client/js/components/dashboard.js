@@ -12,9 +12,8 @@ var Actions = require('../actions/actions');
 var RouterHandler = Router.RouteHandler;
 var Store = require('../stores/store');
 
-var getInitialState = function(){
+var getInitialState = function(){ // needs edit
   if (Store.isUserLoggedIn) {
-    console.log('dashboard got triggered')
     return null;
   }
 };

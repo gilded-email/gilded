@@ -122,6 +122,7 @@ module.exports = {
               console.log(error);
               res.status(400).send(error);
             } else {
+              req.user = user;
               next();
             }
           });
@@ -188,7 +189,7 @@ module.exports = {
           reject('Looking for a user that does not exist');
         } else {
           if ((sender === dispatcher) || (user.vipList.indexOf(sender) >= 0)) {
-            resolve(user.forwardEmail); // TODO: change to forwardAddress
+            resolve(user.forwardEmail);
           } else {
             resolve(null);
           }
