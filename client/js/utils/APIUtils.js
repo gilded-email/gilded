@@ -32,9 +32,15 @@ var api_utils = {
   },
 
   logout: function () {
-    console.log('logging out on api');
     request
-      .post(API_ROOT + 'logout');
+      .post(API_ROOT + 'logout')
+      .end(function (error, res) {
+        if (error) {
+          console.log('logout error ', error);
+          return error;
+        }
+        Actions.userLoggedOut();
+      })
   },
 
   updateVips: function (add, remove) {

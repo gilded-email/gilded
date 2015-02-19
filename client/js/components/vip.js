@@ -50,6 +50,7 @@ var VIP = React.createClass({
                 <RaisedButton label="Add Contact" secondary={true} onClick={this.addVipHandler}/>
             </form>
             <RaisedButton label="Save" primary={true} onClick={this.updateVipsHandler}/>
+            <div>{this.state.currentVIPs}</div>
         </div>
       </div>
     );

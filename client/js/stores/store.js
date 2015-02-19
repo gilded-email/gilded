@@ -23,6 +23,13 @@ var _logUserIn = function(userData) {
   _userLoggedIn = true;
 };
 
+var _logUserOut = function() {
+  _userLoggedIn = false;
+  _userVIPs = [];
+  _userHistory = [];
+  _userSettings = {};
+};
+
 var _updateVIPList = function(VIPList) {
   _userVIPs = VIPList;
 };
@@ -37,7 +44,6 @@ var _updateUserPassword = function(password) {
 
 var _updateUserRate = function(rate) {
   _userSettings.rate = rate;
-  console.log('store settings rate', _userSettings);
 }
 var AppStore = _.extend({}, EventEmitter.prototype, {
   emitChange:function(){
@@ -95,6 +101,10 @@ var AppStore = _.extend({}, EventEmitter.prototype, {
 
       case AppConstants.UPDATE_USER_RATE:
         _updateUserRate(payload.action.rate);
+        break;
+
+      case AppConstants.USER_LOGGED_OUT:
+        _logUserOut();
         break;
     }
 

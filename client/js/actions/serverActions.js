@@ -9,6 +9,12 @@ module.exports = {
     });
   },
 
+  userLoggedOut: function() {
+    AppDispatcher.handleViewAction({
+      actionType: AppConstants.USER_LOGGED_OUT
+    });
+  },
+
   updateUserVIPs: function (userData) {
     AppDispatcher.handleViewAction({
       actionType: AppConstants.UPDATE_USER_VIPS,

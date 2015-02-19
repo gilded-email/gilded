@@ -5,11 +5,40 @@ var RaisedButton = mui.RaisedButton;
 var Router = require('react-router');
 var MenuItem = mui.MenuItem;
 var Link = Router.Link;
+var Store = require('../stores/store');
 var Actions = require('../actions/actions');
+var Store = require('../stores/store.js');
+var StoreWatchMixin = require('../mixins/StoreWatchMixin');
+
+getInitialState = function() {
+  if (Store.isUserLoggedIn()) {
+    console.log('in here')
+    Router.Navigation.transitionTo;
+  }
+  return null;
+};
 
 
 var Login = React.createClass({
+  
   mixins: [Router.Navigation, Router.State],
+
+  getInitialState:function(){
+    if (Store.isUserLoggedIn()) {
+      this.transitionTo('dashboard');
+    }
+    return null;
+  },
+  componentWillMount:function(){
+    Store.addChangeListener(this._onChange);
+  },
+  componentWillUnmount:function(){
+    Store.removeChangeListener(this._onChange);
+  },
+  _onChange:function(){
+    this.setState(this.getInitialState(this));
+  },
+
 
   handleClick: function (e) {
     e.preventDefault();

@@ -15,6 +15,7 @@ $(document).ready(function () {
   var VIP = require('./components/vip');
   var RouteHandler = Router.RouteHandler;
   var Link = Router.Link;
+  var DefaultRoute = Router.DefaultRoute;
 
   var App = React.createClass({
 
@@ -41,6 +42,7 @@ $(document).ready(function () {
         <Route name="settings" handler={Settings}/>
         <Route name="VIP" handler={VIP}/>
       </Route>
+      <DefaultRoute handler={Login} />
     </Route>
   );
 
