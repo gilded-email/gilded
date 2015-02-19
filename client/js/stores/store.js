@@ -2,11 +2,11 @@ var AppDispatcher = require('../dispatcher/dispatcher');
 var AppConstants = require('../constants/constants');
 var request = require('superagent');
 var EventEmitter = require('events').EventEmitter;
+var cookie = require('cookie')
 var _ = require('lodash');
 
 var CHANGE_EVENT = "change";
 
-var _userLoggedIn = false;
 var _userVIPs;
 var _userHistory;
 var _userSettings;
@@ -20,11 +20,9 @@ var _logUserIn = function(userData) {
     password: userData.user.password,
     rate: userData.user.rate
   };
-  _userLoggedIn = true;
 };
 
 var _logUserOut = function() {
-  _userLoggedIn = false;
   _userVIPs = [];
   _userHistory = [];
   _userSettings = {};
@@ -60,7 +58,8 @@ var AppStore = _.extend({}, EventEmitter.prototype, {
   },
 
   isUserLoggedIn: function() {
-    return _userLoggedIn;
+    var parsedCookie = cookie.parse(document.cookie);
+    return parsedCookie.userToken && parsedCookie.userExpires > Date.now();
   },
 
   getUserSettings: function() {

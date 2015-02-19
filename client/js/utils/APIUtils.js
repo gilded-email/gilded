@@ -94,7 +94,7 @@ var api_utils = {
       .send({password: password})
       .end(function (error, res) {
         if (error) {
-          console.log('email update error: ', error);
+          console.log('password update error: ', error);
           return error;
         }
         serverActions.updateUserPassword(res.body);
@@ -107,7 +107,7 @@ var api_utils = {
       .send({rate: rate})
       .end(function (error, res) {
         if (error) {
-          console.log('email update error: ', error);
+          console.log('rate update error: ', error);
           return error;
         }
         serverActions.updateUserRate(res.body);
