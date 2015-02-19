@@ -1,6 +1,3 @@
-/**
- * @jsx React.DOM
- */
 var React = require('react');
 var mui = require('material-ui');
 var TextField = mui.TextField;
@@ -19,21 +16,20 @@ var getInitialState = function () {
   };
 };
 
-
-var VIPremove = React.createClass({
-  render: function () {
-    return (
-      <button onClick={this.handleRemove}>Remove</button>
-    );
-  }
-});
-
 var VIProw = React.createClass({
+  removeVIPsHandler: function () {
+    contactToRemove = this.props.email.toString();
+    Actions.removeVIPs([this.props.email]);
+  },
+
   render: function () {
     return (
       <tr>
         <td>
-          {this.props.email} <VIPremove />
+          <button onClick={this.removeVIPsHandler}>Remove</button>
+        </td>
+        <td>
+          {this.props.email}
         </td>
       </tr>
     );
@@ -44,17 +40,17 @@ var VIPtable = React.createClass({
   render: function () {
     return (
       <table>
+        <tbody>
         {this.props.data.map(function (email) {
           return (
             <VIProw email={email} />
             )
         })}
+        </tbody>
       </table>
     );
   }
 });
-
-
 
 var VIP = React.createClass({
 
@@ -64,32 +60,37 @@ var VIP = React.createClass({
     e.preventDefault();
     this.state.add.push(this.refs.email.getValue());
     this.refs.email.setValue('');
-  },
-
-  updateVipsHandler: function (e) {
-    e.preventDefault();
     Actions.updateVips(this.state);
   },
+
+  // updateVipsHandler: function (e) {
+  //   e.preventDefault();
+  // },
 
   onChange: function () {
 
   },
 
   render: function() {
+    console.log(this.state)
+    var numberOfVIPsMessage = this.state.currentVIPs.length > 0 ? "You have " + this.state.currentVIPs.length + " VIPs in your list." : "Your VIP list is empty."
+
     return (
       <div className="dashboard">
         <div className="VIP">
           <h1>VIP List</h1>
 
-          <VIPtable data={this.state.currentVIPs} />
+            {numberOfVIPsMessage}
+
+            <VIPtable data={this.state.currentVIPs} />
 
             <form>
                 <TextField
                   ref="email" className="login-input" floatingLabelText="Add an email address"/>
                 <RaisedButton label="Add Contact" secondary={true} onClick={this.addVipHandler}/>
             </form>
-            <RaisedButton label="Save" primary={true} onClick={this.updateVipsHandler}/>
-            <div>{this.state.currentVIPs}</div>
+
+
         </div>
       </div>
     );

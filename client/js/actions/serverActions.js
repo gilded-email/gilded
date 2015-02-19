@@ -15,12 +15,16 @@ module.exports = {
     });
   },
 
+// VIPs
+
   updateUserVIPs: function (userData) {
     AppDispatcher.handleViewAction({
       actionType: AppConstants.UPDATE_USER_VIPS,
       vipList: userData.vipList
     });
   },
+
+// Settings
 
   updateUserEmail: function (userData) {
     AppDispatcher.handleViewAction({

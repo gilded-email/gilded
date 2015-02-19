@@ -17,7 +17,7 @@ var getInitialState = function() {
   } else {
     return null;
   }
-}
+};
 
 var Settings = React.createClass({
 
@@ -57,7 +57,7 @@ var Settings = React.createClass({
           <h2>Change Rate</h2>
             <span>{this.state.rate}</span>
             <TextField ref="newRate" floatingLabelText="New Rate" />
-            <RaisedButton label="Save" secondary={true} onClick={this.changeRate}/> 
+            <RaisedButton label="Save" secondary={true} onClick={this.changeRate}/>
           <h2>Current Balance</h2>
             <div className="balance">
               ${this.state.balance}

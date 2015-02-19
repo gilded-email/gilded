@@ -1,4 +1,4 @@
-var Actions = require('../actions/serverActions.js');
+var serverActions = require('../actions/serverActions.js');
 var request = require('superagent');
 
 var API_ROOT = "/api/";
@@ -14,7 +14,7 @@ var api_utils = {
           console.log('login error ', error);
           return error;
         }
-        Actions.userLoggedIn(JSON.parse(res.text));
+        serverActions.userLoggedIn(res.body);
       });
   },
 
@@ -27,7 +27,7 @@ var api_utils = {
           console.log('signup error ', error);
           return error;
         }
-        Actions.userLoggedIn(JSON.parse(res.text));
+        serverActions.userLoggedIn(res.body);
       });
   },
 
@@ -39,22 +39,41 @@ var api_utils = {
           console.log('logout error ', error);
           return error;
         }
-        Actions.userLoggedOut();
-      })
+        serverActions.userLoggedOut();
+      });
   },
 
-  updateVips: function (add, remove) {
+// VIP
+
+  updateVips: function (contacts) {
     request
-      .put(API_ROOT + 'user/vipList')
-      .send({add: add, remove: remove})
+      .post(API_ROOT + 'user/vipList')
+      .send({add: contacts})
       .end(function (error, res) {
         if (error) {
           console.log('VIP update error: ', error);
           return error;
         }
-        Actions.updateUserVIPs(JSON.parse(res.text));
+        serverActions.updateUserVIPs(res.body);
       });
   },
+
+  removeVIPs: function (contacts) {
+    request
+      .put(API_ROOT + 'user/vipList')
+      .send({remove: contacts})
+      .end(function (error, res) {
+        if (error) {
+          console.log('VIP update error: ', error);
+          return error;
+        }
+        console.log('removed ', contacts);
+        console.log(res.body);
+        serverActions.updateUserVIPs(res.body);
+      });
+  },
+
+// Settings
 
   updateEmail: function (email) {
     request
@@ -65,7 +84,7 @@ var api_utils = {
           console.log('email update error: ', error);
           return error;
         }
-        Actions.updateUserEmail(JSON.parse(res.text));
+        serverActions.updateUserEmail(res.body);
       });
   },
 
@@ -78,7 +97,7 @@ var api_utils = {
           console.log('email update error: ', error);
           return error;
         }
-        Actions.updateUserPassword(JSON.parse(res.text));
+        serverActions.updateUserPassword(res.body);
       });
   },
 
@@ -91,7 +110,7 @@ var api_utils = {
           console.log('email update error: ', error);
           return error;
         }
-        Actions.updateUserRate(JSON.parse(res.text));
+        serverActions.updateUserRate(res.body);
       });
   }
 

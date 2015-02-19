@@ -28,6 +28,8 @@ var AppActions = {
     APIUtils.logout();
   },
 
+// VIP page
+
   updateVips: function (contacts) {
     AppDispatcher.handleViewAction({
       actionType: AppConstants.UPDATE_VIPS,
@@ -37,6 +39,18 @@ var AppActions = {
 
     APIUtils.updateVips(contacts.add, contacts.remove);
   },
+
+  removeVIPs: function (contacts) {
+    AppDispatcher.handleViewAction({
+      actionType: AppConstants.REMOVE_VIPS,
+        contacts: contacts
+    });
+
+    APIUtils.removeVIPs(contacts);
+  },
+
+
+// Settings Page
 
   updatePassword: function (password) {
     AppDispatcher.handleViewAction({
