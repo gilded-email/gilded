@@ -78,7 +78,7 @@ describe('User Module', function () {
     var vipUser = 'testVip@' + domain;
     it('should be able to add VIPs', function (done) {
       var url = serverUrl + '/api/user/vipList';
-      request.put({url: url, jar: j, json: true, body: {add: [vipUser], remove: []}}, function (error, httpResponse, body) {
+      request.post({url: url, jar: j, json: true, body: {add: [vipUser]}}, function (error, httpResponse, body) {
         if (error) {
           console.log(error);
         } else {
@@ -90,7 +90,7 @@ describe('User Module', function () {
     });
 
     it('should be able to remove VIPs', function (done) {
-      request.put({url: serverUrl + '/api/user/vipList', jar: j, json: true, body: {add: [], remove: [vipUser]}}, function (error, httpResponse, body) {
+      request.put({url: serverUrl + '/api/user/vipList', jar: j, json: true, body: {remove: [vipUser]}}, function (error, httpResponse, body) {
         if (error) {
           console.log(error);
         } else {
