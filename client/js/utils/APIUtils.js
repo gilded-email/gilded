@@ -77,7 +77,7 @@ var api_utils = {
 
   updateEmail: function (email) {
     request
-      .put(API_ROOT + 'user/settings')
+      .put(API_ROOT + 'user/settings/email')
       .send({forwardEmail: email})
       .end(function (error, res) {
         if (error) {
@@ -90,7 +90,7 @@ var api_utils = {
 
   updatePassword: function (password) {
     request
-      .put(API_ROOT + 'user/settings')
+      .put(API_ROOT + 'user/settings/password')
       .send({password: password})
       .end(function (error, res) {
         if (error) {
@@ -103,14 +103,19 @@ var api_utils = {
 
   updateRate: function (rate) {
     request
-      .put(API_ROOT + 'user/settings')
+      .put(API_ROOT + 'user/settings/rate')
       .send({rate: rate})
       .end(function (error, res) {
         if (error) {
           console.log('rate update error: ', error);
           return error;
         }
+<<<<<<< HEAD
         serverActions.updateUserRate(res.body);
+=======
+        console.log('this is rate response from api utils', res.text);
+        Actions.updateUserRate(JSON.parse(res.text));
+>>>>>>> logout routing
       });
   }
 
