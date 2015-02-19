@@ -31,6 +31,12 @@ var api_utils = {
       });
   },
 
+  logout: function () {
+    console.log('logging out on api');
+    request
+      .post(API_ROOT + 'logout');
+  },
+
   updateVips: function (add, remove) {
     request
       .put(API_ROOT + 'user/vipList')

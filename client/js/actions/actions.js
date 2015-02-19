@@ -24,6 +24,10 @@ var AppActions = {
     APIUtils.signupUser(user.username, user.email, user.password);
   },
 
+  logout: function () {
+    APIUtils.logout();
+  },
+
   updateVips: function (contacts) {
     AppDispatcher.handleViewAction({
       actionType: AppConstants.UPDATE_VIPS,
@@ -38,7 +42,7 @@ var AppActions = {
     AppDispatcher.handleViewAction({
       actionType: AppConstants.UPDATE_PASSWORD,
       password: password
-    })
+    });
 
     APIUtils.updatePassword(password);
   },
@@ -47,7 +51,7 @@ var AppActions = {
     AppDispatcher.handleViewAction({
       actionType: AppConstants.UPDATE_RATE,
       rate: rate
-    })
+    });
 
     APIUtils.updateRate(rate);
   },
@@ -56,7 +60,7 @@ var AppActions = {
     AppDispatcher.handleViewAction({
       actionType: AppConstants.UPDATE_EMAIL,
       forwardEmail: newForwardEmail
-    })
+    });
 
     APIUtils.updateEmail(newForwardEmail);
   }
