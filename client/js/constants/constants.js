@@ -1,11 +1,15 @@
 var keyMirror = require('keymirror');
 
 module.exports = keyMirror({
+  // Auth
   LOGIN_USER: null,
   SIGNUP_USER: null,
   USER_LOGGED_IN: null,
   USER_LOGGED_OUT: null,
+  // VIPs
   UPDATE_VIPS: null,
+  REMOVE_VIPS: null,
+  // Setttings
   UPDATE_PASSWORD: null,
   UPDATE_EMAIL: null,
   UPDATE_USER: null,
