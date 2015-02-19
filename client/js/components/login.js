@@ -10,22 +10,13 @@ var Actions = require('../actions/actions');
 var Store = require('../stores/store.js');
 var StoreWatchMixin = require('../mixins/StoreWatchMixin');
 
-getInitialState = function() {
-  if (Store.isUserLoggedIn()) {
-    console.log('in here')
-    Router.Navigation.transitionTo;
-  }
-  return null;
-};
-
-
 var Login = React.createClass({
-  
+
   mixins: [Router.Navigation, Router.State],
 
   getInitialState:function(){
     if (Store.isUserLoggedIn()) {
-      this.transitionTo('dashboard');
+      this.transitionTo('history');
     }
     return null;
   },

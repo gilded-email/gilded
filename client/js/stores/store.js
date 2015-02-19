@@ -40,11 +40,12 @@ var _updateUserEmail = function(email) {
 
 var _updateUserPassword = function(password) {
   _userSettings.password = password;
-}
+};
 
 var _updateUserRate = function(rate) {
   _userSettings.rate = rate;
-}
+};
+
 var AppStore = _.extend({}, EventEmitter.prototype, {
   emitChange:function(){
     this.emit(CHANGE_EVENT);
