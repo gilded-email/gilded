@@ -24,11 +24,10 @@ var _logUserIn = function(userData) {
 };
 
 var _logUserOut = function() {
-  console.log('store log out being called');
-  var _userLoggedIn = false;
-  var _userVIPs = [];
-  var _userHistory = [];
-  var _userSettings = {};
+  _userLoggedIn = false;
+  _userVIPs = [];
+  _userHistory = [];
+  _userSettings = {};
 };
 
 var _updateVIPList = function(VIPList) {
@@ -45,7 +44,6 @@ var _updateUserPassword = function(password) {
 
 var _updateUserRate = function(rate) {
   _userSettings.rate = rate;
-  console.log('store settings rate', _userSettings);
 }
 var AppStore = _.extend({}, EventEmitter.prototype, {
   emitChange:function(){
