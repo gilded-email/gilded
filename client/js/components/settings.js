@@ -47,12 +47,15 @@ var Settings = React.createClass({
         <div className="dashboard">
           <h1>Settings</h1>
           <h2>Change Forwarding Email</h2>
+            <span>{this.state.forwardEmail}</span>
             <TextField ref="newEmail" floatingLabelText="New Email"/>
             <RaisedButton label="Save" secondary={true} onClick={this.changeForwardEmail}/>
           <h2>Change Password</h2>
+            <span>{this.state.password}</span>
             <TextField ref="newPassword" floatingLabelText="New Password"/>
             <RaisedButton label="Save" secondary={true} onClick={this.changePassword}/>
           <h2>Change Rate</h2>
+            <span>{this.state.rate}</span>
             <TextField ref="newRate" floatingLabelText="New Rate" />
             <RaisedButton label="Save" secondary={true} onClick={this.changeRate}/> 
           <h2>Current Balance</h2>
