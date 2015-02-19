@@ -128,7 +128,7 @@ module.exports = {
         var data = {
           user: req.user,
           escrow: emails
-        }
+        };
         res.status(201).send(data);
       }
     });
