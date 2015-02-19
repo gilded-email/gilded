@@ -10,7 +10,7 @@ body {
   color: #5a5a5a;
 }
 
-h1, h2, h3, .btn {
+h1, h2, h3, h4, .btn {
   font-family: 'Montserrat', sans-serif;
 }
 
@@ -69,6 +69,10 @@ h1, h2, h3, .btn {
   font-size: 18px;
 }
 
+.navbar-toggle .icon-bar {
+  background-color: white;
+}
+
 .nav > li > a {
   color: white;
 }
@@ -94,6 +98,7 @@ h1, h2, h3, .btn {
   left: 10%;
   right: 10%;
   text-shadow: 0 1px 2px rgba(0,0,0,.8);
+  color: #eee;
 }
 
 /* Declare heights because of positioning of img element */
@@ -102,17 +107,13 @@ h1, h2, h3, .btn {
   background-color: #000;
 }
 
-.carousel-inner {
-  margin-bottom: 25px;
-}
-
 .carousel-inner > .item > img {
   position: absolute;
   top: 0;
   left: 0;
   opacity: .5;
-  /*min-width: 100%;*/
-  /*height: 500px;*/
+  min-width: 100%;
+  min-height: 100%;
 }
 
 .carousel h1 {
@@ -120,24 +121,55 @@ h1, h2, h3, .btn {
   margin-bottom: 45px;
 }
 
-.carousel-inner
-
-
 /* MARKETING CONTENT
 -------------------------------------------------- */
 
 /* Center align the text within the three columns below the carousel */
+.marketing {
+  color: #D2D2D2;
+  width: 100%;
+  padding: 100px;
+}
+
 .marketing .col-lg-4 {
   margin-bottom: 20px;
   text-align: center;
 }
 .marketing h2 {
+  font-size: 45px;
   font-weight: normal;
   margin-bottom: 25px;
 }
 .marketing .col-lg-4 p {
   margin-right: 10px;
   margin-left: 10px;
+}
+
+.marketing.works {
+  background: rgb(19, 15, 15);
+}
+
+.marketing.time {
+  background: url('/assets/time.jpg') no-repeat;
+  background-position-x: -110px;
+}
+
+.marketing.wallet {
+  background: url('/assets/wallet.jpg') no-repeat;
+  background-position-x: -175px;
+}
+
+.marketing.vip {
+  background: rgb(19, 15, 15);
+}
+
+span.viptext {
+  color: rgb(160, 11, 14);
+}
+
+.text-muted {
+  color: inherit;
+  opacity: .7;
 }
 
 
@@ -155,9 +187,23 @@ h1, h2, h3, .btn {
   letter-spacing: -1px;
 }
 
+/* Footer
+-------------------------- */
+footer {
+  background: rgb(19, 15, 15);
+  color: #D1D1D1;
+  padding: 20px;
+}
+
 
 /* RESPONSIVE CSS
 -------------------------------------------------- */
+
+@media (max-width: 500px) {
+  .carousel h1 {
+    font-size: 3em;
+  }
+}
 
 @media (min-width: 768px) {
   /* Navbar positioning foo */
