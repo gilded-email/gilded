@@ -25,10 +25,10 @@ http.createServer(app).listen(app.get('httpPort'));
 https.createServer(credentials, app).listen(app.get('httpsPort'));
 console.log('Server is listening on http://' + app.get('host') + ':' + app.get('httpPort') + ' and https://' + app.get('host') + ':' + app.get('httpsPort'));
 
-app.use('/', express.static(path.join(__dirname, 'dist')));
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
 app.use(cookieParser());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use('/', express.static(path.join(__dirname, 'dist')));
 
 app.use('/api/inbound', email.receive, email.verify);
 app.use('/api/escrow/', user.checkSession, email.fetchEscrows);
@@ -40,11 +40,12 @@ app.post('/signup', function (req, res) {
   marketing.addSignup(req, res);
 });
 
+app.post('/api/logout', user.logout);
+app.post('/api/user/vipList', user.checkSession, user.addVip);
+app.put('/api/user/vipList', user.checkSession, user.removeVip);
+app.get('/api/user/dashboard', user.checkSession, user.getUser, email.fetchEscrows);
 app.post('/api/join', user.join, user.storeSession, email.fetchEscrows);
 app.post('/api/login', user.login, user.storeSession, email.fetchEscrows);
-app.post('/api/logout', user.logout);
-app.post('/api/user/vipList', user.checkSession, user.addVip)
-app.put('/api/user/vipList', user.checkSession, user.removeVip);
 
 app.get('/pay/:id', function (req, res) {
   res.sendFile(path.join(__dirname, './dist/payment.html'));

@@ -64,6 +64,18 @@ module.exports = {
     });
   },
 
+  getUser: function (req, res, next) {
+    User.findOne({username: req.cookies.username}, function (error, user) {
+      if (error) {
+        console.log(error);
+        res.status(400).send(error);
+      } else {
+        req.user = user;
+        next();
+      }
+    });
+  },
+
   startProfile: function (req, res) {
     res.status(201).send(req.user);
   },
@@ -158,7 +170,7 @@ module.exports = {
   },
 
   removeVip: function (req, res) {
-    User.findOneAndUpdate({_id: user._id}, {$pullAll: {vipList: req.body.remove}}, function (error, user) {
+    User.findOneAndUpdate({username: req.cookies.username}, {$pullAll: {vipList: req.body.remove}}, function (error, user) {
       if (error) {
         console.log(error);
         res.sendStatus(409);
