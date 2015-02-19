@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Gilded</title>
+    <link href="bower_components/bootstrap/dist/css/bootstrap.css" rel="stylesheet" type="text/css">
+    <link href="css/landingpage.css" rel="stylesheet" type="text/css">
+  </head>
+
+  <body>
+
+  <div class="container">
+    <h1>Get Paid to Receive Email!</h1>
+    <div class="row">
+      <div id="signup" class="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2">
+
+      <span class="lp-copy">Get an early invite for @gilded.club today.</span>
+      <form id="signup-form" type="post">
+      <input id="email" type="email" name="email" placeholder="Enter your email" required autofocus>
+      <button id="submit" type="submit">Join the Club</button>
+      </form>
+
+        <span class="lp-copy">When your Gilded address receives an unsolicited email, you'll only receive it if the sender pays.</span>
+
+        <span class="lp-copy">Take control of your attention...</span>
+        <span<em>Because your time is money.</em></span>
+      </div>
+
+      <div id="thank-you" class="hide">
+        <h2>Thank You</h2>
+        <span>We'll be sure to keep you posted!</span>
+      </div>
+    </div>
+  </div>
+
+  <script src="bower_components/jquery/dist/jquery.js"></script>
+
+  <script>
+  $(document).ready(function() {
+    $('#signup-form').submit( function (e) {
+      e.preventDefault();
+      var userEmail = $('#email').val();
+      $.ajax({
+        type: "POST",
+        url: "/signup",
+        data: { email: userEmail },
+        success: function (resp) {
+          console.log(resp);
+          $('#email').val('');
+          $('#signup').hide();
+          $('#thank-you').removeClass('hide');
+        },
+        error: function (error) {
+          console.log(error);
+        }
+      });
+    });
+
+
+  });
+  </script>
+
+  </body>
+</html>
