@@ -21,6 +21,7 @@ var getInitialState = function(){ // needs edit
 var Authentication = {
   statics: {
     willTransitionTo: function (event) {
+      console.log('willtransitionto in dashboard')
       if (!Store.isUserLoggedIn()) {
         event.redirect('login');
       }

@@ -11,7 +11,7 @@ var Logout = React.createClass({
 
   render: function() {
     return (
-      <div></div>
+      <div>u are not logged out</div>
     );
   }
 });
