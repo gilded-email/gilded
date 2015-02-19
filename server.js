@@ -32,7 +32,9 @@ app.use(cookieParser());
 
 app.use('/api/inbound', email.receive, email.verify);
 app.use('/api/escrow/', user.checkSession, email.fetchEscrows);
-app.use('/api/user/settings', user.checkSession, user.changePassword, user.updateForwardEmail, user.changeRate);
+app.use('/api/user/settings/rate', user.checkSession, user.changeRate);
+app.use('/api/user/settings/password', user.checkSession, user.changePassword);
+app.use('/api/user/settings/email', user.checkSession, user.updateForwardEmail);
 
 app.post('/signup', function (req, res) {
   marketing.addSignup(req, res);
@@ -41,7 +43,8 @@ app.post('/signup', function (req, res) {
 app.post('/api/join', user.join, user.storeSession, email.fetchEscrows);
 app.post('/api/login', user.login, user.storeSession, email.fetchEscrows);
 app.post('/api/logout', user.logout);
-app.put('/api/user/vipList', user.checkSession, user.editVip);
+app.post('/api/user/vipList', user.checkSession, user.addVip)
+app.put('/api/user/vipList', user.checkSession, user.removeVip);
 
 app.get('/pay/:id', function (req, res) {
   res.sendFile(path.join(__dirname, './dist/payment.html'));

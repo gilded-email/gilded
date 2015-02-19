@@ -16,8 +16,6 @@ var tokenGen = function (username, expiration) {
   });
 };
 
-
-
 module.exports = {
   join: function (req, res, next) {
     var userData = {
@@ -108,74 +106,64 @@ module.exports = {
     });
   },
 
-  changePassword: function (req, res, next) {
-    if (!req.body.password) {
-      next();
-    } else {
-      bcrypt.hash(req.body.password, null, null, function (error, hash) {
-        if (error) {
-          console.log(error);
-          res.status(400).send(error);
-        } else {
-          User.findOneAndUpdate({username: req.cookies.username}, {password: hash}, function (error, user) {
-            if (error) {
-              console.log(error);
-              res.status(400).send(error);
-            } else {
-              req.user = user;
-              next();
-            }
-          });
-        }
-      });
-    }
+  changePassword: function (req, res) {
+    bcrypt.hash(req.body.password, null, null, function (error, hash) {
+      if (error) {
+        console.log(error);
+        res.status(400).send(error);
+      } else {
+        User.findOneAndUpdate({username: req.cookies.username}, {password: hash}, function (error, user) {
+          if (error) {
+            console.log(error);
+            res.status(400).send(error);
+          } else {
+            res.status(201).send(user);
+          }
+        });
+      }
+    });
   },
 
-  updateForwardEmail: function (req, res, next) {
-    if (!req.body.forwardEmail) {
-      next();
-    } else {
-      User.findOneAndUpdate({username: req.cookies.username}, {forwardEmail: req.body.forwardEmail}, function (error, user) {
-        if (error) {
-          console.log(error);
-          res.status(400).send(error);
-        } else {
-          req.user = user;
-          next();
-        }
-      });
-    }
+  updateForwardEmail: function (req, res) {
+    User.findOneAndUpdate({username: req.cookies.username}, {forwardEmail: req.body.forwardEmail}, function (error, user) {
+      if (error) {
+        console.log(error);
+        res.status(400).send(error);
+      } else {
+        res.status(201).send(user);
+      }
+    });
   },
 
   changeRate: function (req, res) {
-    if (req.body.rate) {
-      User.findOneAndUpdate({username: req.cookies.username}, {rate: req.body.rate}, function (error, user) {
-        if (error) {
-          console.log(error);
-          res.status(400).send(error);
-        } else {
-          res.status(201).send(user);
-        }
-      });
-    } else {
-      res.status(201).send(req.user);
-    }
+    User.findOneAndUpdate({username: req.cookies.username}, {rate: req.body.rate}, function (error, user) {
+      if (error) {
+        console.log(error);
+        res.status(400).send(error);
+      } else {
+        res.status(201).send(user);
+      }
+    });
   },
 
-  editVip: function (req, res) {
+  addVip: function (req, res) {
     User.findOneAndUpdate({username: req.cookies.username}, {$push: {vipList: {$each: req.body.add}}}, function (error, user) {
       if (error) {
         console.log(error);
         res.sendStatus(409);
       } else {
-        User.findOneAndUpdate({_id: user._id}, {$pullAll: {vipList: req.body.remove}}, function (error, user) {
-          if (error) {
-            console.log(error);
-            res.sendStatus(409);
-          } else {
-            res.status(201).send(user);
-          }
-        });
+        res.status(201).send(user);
+      }
+    });
+  },
+
+  removeVip: function (req, res) {
+    User.findOneAndUpdate({_id: user._id}, {$pullAll: {vipList: req.body.remove}}, function (error, user) {
+      if (error) {
+        console.log(error);
+        res.sendStatus(409);
+      } else {
+        res.status(201).send(user);
       }
     });
   },
