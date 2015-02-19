@@ -16,7 +16,11 @@ var History = React.createClass({
 
   render: function() {
     return (
-      <div className="History"><h1>THIS IS WHERE THE HISTORY GOES</h1></div>
+      <div className="History">
+        <div className="dashboard">
+          <h1>History</h1>
+        </div>
+      </div>
     );
   }
 });

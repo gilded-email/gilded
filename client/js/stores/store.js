@@ -17,11 +17,28 @@ var _logUserIn = function(userData) {
   _userSettings = {
     balance: userData.user.balance,
     forwardEmail: userData.user.forwardEmail,
-    password: userData.user.password
+    password: userData.user.password,
+    rate: userData.user.rate
   };
   _userLoggedIn = true;
+};
+
+var _updateVIPList = function(VIPList) {
+  _userVIPs = VIPList;
+};
+
+var _updateUserEmail = function(email) {
+  _userSettings.forwardEmail = email;
+};
+
+var _updateUserPassword = function(password) {
+  _userSettings.password = password;
 }
 
+var _updateUserRate = function(rate) {
+  _userSettings.rate = rate;
+  console.log('store settings rate', _userSettings);
+}
 var AppStore = _.extend({}, EventEmitter.prototype, {
   emitChange:function(){
     this.emit(CHANGE_EVENT);
@@ -62,6 +79,22 @@ var AppStore = _.extend({}, EventEmitter.prototype, {
 
       case AppConstants.USER_LOGGED_IN:
         _logUserIn(payload.action.userData);
+        break;
+
+      case AppConstants.UPDATE_USER_VIPS:
+        _updateVIPList(payload.action.vipList);
+        break;
+
+      case AppConstants.UPDATE_USER_EMAIL:
+        _updateUserEmail(payload.action.forwardEmail);
+        break;
+
+      case AppConstants.UPDATE_USER_PASSWORD:
+        _updateUserPassword(payload.action.password);
+        break;
+
+      case AppConstants.UPDATE_USER_RATE:
+        _updateUserRate(payload.action.rate);
         break;
     }
 

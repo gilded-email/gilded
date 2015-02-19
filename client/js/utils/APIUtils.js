@@ -40,7 +40,46 @@ var api_utils = {
           console.log('VIP update error: ', error);
           return error;
         }
-        Actions.updateUser(res.text);
+        Actions.updateUserVIPs(JSON.parse(res.text));
+      });
+  },
+
+  updateEmail: function (email) {
+    request
+      .put(API_ROOT + 'user/settings')
+      .send({forwardEmail: email})
+      .end(function (error, res) {
+        if (error) {
+          console.log('email update error: ', error);
+          return error;
+        }
+        Actions.updateUserEmail(JSON.parse(res.text));
+      });
+  },
+
+  updatePassword: function (password) {
+    request
+      .put(API_ROOT + 'user/settings')
+      .send({password: password})
+      .end(function (error, res) {
+        if (error) {
+          console.log('email update error: ', error);
+          return error;
+        }
+        Actions.updateUserPassword(JSON.parse(res.text));
+      });
+  },
+
+  updateRate: function (rate) {
+    request
+      .put(API_ROOT + 'user/settings')
+      .send({rate: rate})
+      .end(function (error, res) {
+        if (error) {
+          console.log('email update error: ', error);
+          return error;
+        }
+        Actions.updateUserRate(JSON.parse(res.text));
       });
   }
 
