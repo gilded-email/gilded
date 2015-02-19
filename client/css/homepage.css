@@ -6,7 +6,7 @@
 @import url(//fonts.googleapis.com/css?family=Lato:700);
 
 body {
-  padding-bottom: 40px;
+  height: 100%;
   color: #5a5a5a;
 }
 
@@ -88,9 +88,13 @@ h1, h2, h3, h4, .btn {
 
 /* Carousel base class */
 .carousel {
-  height: 500px;
-  margin-bottom: 60px;
+  /*margin-bottom: 60px;*/
 }
+
+.carousel, .item, .active {
+  height: 100%;
+}
+
 /* Since positioning the image, we need to help out the caption */
 .carousel-caption {
   top: 150px;
@@ -103,12 +107,11 @@ h1, h2, h3, h4, .btn {
 
 /* Declare heights because of positioning of img element */
 .carousel .item {
-  height: 600px;
   background-color: #000;
 }
 
 .carousel-inner > .item > img {
-  position: absolute;
+  position: relative;
   top: 0;
   left: 0;
   opacity: .5;
