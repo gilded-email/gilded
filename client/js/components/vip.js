@@ -11,13 +11,49 @@ var Store = require('../stores/store');
 var Actions = require('../actions/actions');
 
 var getInitialState = function () {
-    var currentVIPs = Store.getUserVIPs();
-    return {
-      currentVIPs: currentVIPs,
-      add: [],
-      remove: []
-    }
+  var currentVIPs = Store.getUserVIPs();
+  return {
+    currentVIPs: currentVIPs,
+    add: [],
+    remove: []
+  };
+};
+
+
+var VIPremove = React.createClass({
+  render: function () {
+    return (
+      <button onClick={this.handleRemove}>Remove</button>
+    );
   }
+});
+
+var VIProw = React.createClass({
+  render: function () {
+    return (
+      <tr>
+        <td>
+          {this.props.email} <VIPremove />
+        </td>
+      </tr>
+    );
+  }
+});
+
+var VIPtable = React.createClass({
+  render: function () {
+    return (
+      <table>
+        {this.props.data.map(function (email) {
+          return (
+            <VIProw email={email} />
+            )
+        })}
+      </table>
+    );
+  }
+});
+
 
 
 var VIP = React.createClass({
@@ -44,6 +80,9 @@ var VIP = React.createClass({
       <div className="dashboard">
         <div className="VIP">
           <h1>VIP List</h1>
+
+          <VIPtable data={this.state.currentVIPs} />
+
             <form>
                 <TextField
                   ref="email" className="login-input" floatingLabelText="Add an email address"/>
