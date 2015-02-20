@@ -5,6 +5,7 @@ var domain = process.env.DOMAIN;
 var request = require('request');
 var assert = require('chai').assert;
 var serverUrl = 'http://gilded.ngrok.com';
+var cookieParser = require('cookie-parser');
 var User = require('../server/user/userModel.js');
 var Escrow = require('../server/email/emailModel.js');
 
@@ -44,7 +45,6 @@ describe('User Module', function () {
         console.log(error);
       } else {
         assert.equal(httpResponse.statusCode, 201);
-        //  assert.equal(body._id, testUser.id);
         done();
       }
     });
@@ -58,48 +58,75 @@ describe('User Module', function () {
 
   });
 
-  xit('should be able to log out users', function (done) {
-
-  });
-
-  xit('should allow users to update their password', function (done) {
-
-  });
-
-  xit('should allow users to change the forward email address', function (done) {
-
-  });
-
-  xit('should allow users to change their rate', function (done) {
-
-  });
-
-  describe('VIP list', function () {
+  it('should be able to add VIPs', function (done) {
     var vipUser = 'testVip@' + domain;
-    it('should be able to add VIPs', function (done) {
-      var url = serverUrl + '/api/user/vipList';
-      request.post({url: url, jar: j, json: true, body: {add: [vipUser]}}, function (error, httpResponse, body) {
-        if (error) {
-          console.log(error);
-        } else {
-          assert.equal(httpResponse.statusCode, 201);
-          assert.include(body.vipList, vipUser);
-          done();
-        }
-      });
+    var url = serverUrl + '/api/user/vipList';
+    request.post({url: url, jar: j, json: true, body: {add: [vipUser]}}, function (error, httpResponse, body) {
+      if (error) {
+        console.log(error);
+      } else {
+        assert.equal(httpResponse.statusCode, 201);
+        assert.include(body.vipList, vipUser);
+        done();
+      }
+    });
+  });
+
+  it('should be able to remove VIPs', function (done) {
+    var vipUser = 'testVip@' + domain;
+    request.put({url: serverUrl + '/api/user/vipList', jar: j, json: true, body: {remove: [vipUser]}}, function (error, httpResponse, body) {
+      if (error) {
+        console.log(error);
+      } else {
+        assert.equal(httpResponse.statusCode, 201);
+        assert.notInclude(body.vipList, vipUser);
+        done();
+      }
+    });
+  });
+
+  it('should allow users to change the forward email address', function (done) {
+    request.put({url: serverUrl + '/api/user/settings/email', jar: j, json: true, body: {forwardEmail: 'gildedtestforward@dsernst.com'}}, function (error, httpResponse, body) {
+      if (error) {
+        console.log(error);
+      } else {
+        assert.equal(httpResponse.statusCode, 201);
+        assert.equal(body.forwardEmail, 'gildedtestforward@dsernst.com');
+        done();
+      }
+    });
+  });
+
+  it('should allow users to change their rate', function (done) {
+    request.put({url: serverUrl + '/api/user/settings/rate', jar: j, json: true, body: {rate: 300}}, function (error, httpResponse, body) {
+      if (error) {
+        console.log(error);
+      } else {
+        assert.equal(httpResponse.statusCode, 201);
+        assert.equal(body.rate, 300);
+        done();
+      }
+    });
+  });
+
+  it('should allow users to update their password', function (done) {
+    request.post({url: serverUrl + '/api/user/settings/password', jar: j, json: true, body: {password: 'secret2'}}, function (error, httpResponse, body) {
+      if (error) {
+        console.log(error);
+      } else {
+        assert.equal(httpResponse.statusCode, 201);
+        done();
+      }
+    });
+  });
+
+  it('should be able to log out users', function (done) {
+    request.post({url: serverUrl + '/api/logout', jar: j, json: true, body: {}}, function (error, httpResponse, body) {
+      var cookies = j.getCookies(serverUrl);
+      assert.equal(cookies.length, 0);
+      done();
     });
 
-    it('should be able to remove VIPs', function (done) {
-      request.put({url: serverUrl + '/api/user/vipList', jar: j, json: true, body: {remove: [vipUser]}}, function (error, httpResponse, body) {
-        if (error) {
-          console.log(error);
-        } else {
-          assert.equal(httpResponse.statusCode, 201);
-          assert.notInclude(body.vipList, vipUser);
-          done();
-        }
-      });
-    });
   });
 });
 
@@ -238,24 +265,3 @@ describe('Payments Module', function () {
   });
 });
 
-describe('Settings Module', function () {
-  it('should be able to change forwarding email address', function () {
-    assert.equal(false, true);
-  });
-
-  it('should be able to change password', function () {
-    assert.equal(false, true);
-  });
-
-  it('should be able to add payment info', function () {
-    assert.equal(false, true);
-  });
-
-  it('should be able to remove payment info', function () {
-    assert.equal(false, true);
-  });
-
-  it('should confirm a payment has been received', function () {
-    assert.equal(false, true);
-  });
-});
