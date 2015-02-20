@@ -63,14 +63,6 @@ var VIP = React.createClass({
     Actions.updateVips(this.state);
   },
 
-  // updateVipsHandler: function (e) {
-  //   e.preventDefault();
-  // },
-
-  onChange: function () {
-
-  },
-
   render: function() {
     console.log(this.state)
     var numberOfVIPsMessage = this.state.currentVIPs.length > 0 ? "You have " + this.state.currentVIPs.length + " VIPs in your list." : "Your VIP list is empty."
@@ -80,16 +72,16 @@ var VIP = React.createClass({
         <div className="VIP">
           <h1>VIP List</h1>
 
-            {numberOfVIPsMessage}
+          {numberOfVIPsMessage}
 
-            <VIPtable data={this.state.currentVIPs} />
+          <VIPtable data={this.state.currentVIPs} />
 
-            <form>
-                <TextField
-                  ref="email" className="login-input" floatingLabelText="Add an email address"/>
-                <RaisedButton label="Add Contact" secondary={true} onClick={this.addVipHandler}/>
-            </form>
-            <RaisedButton label="Save" primary={true} onClick={this.updateVipsHandler}/>
+          <form>
+            <TextField
+              ref="email" className="login-input" floatingLabelText="Add an email address"/>
+            <RaisedButton label="Add Contact" secondary={true} onClick={this.addVipHandler}/>
+          </form>
+
         </div>
       </div>
     );
