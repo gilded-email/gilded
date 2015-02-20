@@ -11,12 +11,7 @@ var Store = require('../stores/store');
 
 
 var getInitialState = function() {
-  var settings = Store.getUserSettings();
-  if (settings) {
-    return settings;
-  } else {
-    return null;
-  }
+  return null;
 };
 
 var Settings = React.createClass({
@@ -47,20 +42,20 @@ var Settings = React.createClass({
         <div className="dashboard">
           <h1>Settings</h1>
           <h2>Change Forwarding Email</h2>
-            <span>{this.state.forwardEmail}</span>
+            <span>{this.props.settings.forwardEmail}</span>
             <TextField ref="newEmail" floatingLabelText="New Email"/>
             <RaisedButton label="Save" secondary={true} onClick={this.changeForwardEmail}/>
           <h2>Change Password</h2>
-            <span>{this.state.password}</span>
+            <span>{this.props.settings.password}</span>
             <TextField ref="newPassword" floatingLabelText="New Password"/>
             <RaisedButton label="Save" secondary={true} onClick={this.changePassword}/>
           <h2>Change Rate</h2>
-            <span>{this.state.rate}</span>
+            <span>{this.props.settings.rate}</span>
             <TextField ref="newRate" floatingLabelText="New Rate" />
             <RaisedButton label="Save" secondary={true} onClick={this.changeRate}/>
           <h2>Current Balance</h2>
             <div className="balance">
-              ${this.state.balance}
+              ${this.props.settings.balance}
             </div>
         </div>
       </div>
