@@ -26,7 +26,9 @@ var VIProw = React.createClass({
     return (
       <tr>
         <td>
-          <button onClick={this.removeVIPsHandler}>Remove</button>
+          <button className="vip-remove" onClick={this.removeVIPsHandler}>
+          &times;
+          </button>
         </td>
         <td>
           {this.props.email}
@@ -39,7 +41,7 @@ var VIProw = React.createClass({
 var VIPtable = React.createClass({
   render: function () {
     return (
-      <table>
+      <table className="vip-table">
         <tbody>
         {this.props.data.map(function (email) {
           return (
@@ -72,15 +74,16 @@ var VIP = React.createClass({
         <div className="VIP">
           <h1>VIP List</h1>
 
-          {numberOfVIPsMessage}
-
-          <VIPtable data={this.state.currentVIPs} />
-
           <form>
             <TextField
               ref="email" className="login-input" floatingLabelText="Add an email address"/>
             <RaisedButton label="Add Contact" secondary={true} onClick={this.addVipHandler}/>
           </form>
+
+          {numberOfVIPsMessage}
+
+          <VIPtable data={this.state.currentVIPs} />
+
 
         </div>
       </div>
