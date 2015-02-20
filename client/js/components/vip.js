@@ -2,6 +2,7 @@ var React = require('react');
 var mui = require('material-ui');
 var TextField = mui.TextField;
 var RaisedButton = mui.RaisedButton;
+var Paper = mui.Paper;
 var StoreWatchMixin = require('../mixins/StoreWatchMixin');
 var Store = require('../stores/store');
 
@@ -25,12 +26,12 @@ var VIProw = React.createClass({
   render: function () {
     return (
       <tr>
-        <td>
+        <td className="vip-remove-box">
           <button className="vip-remove" onClick={this.removeVIPsHandler}>
           &times;
           </button>
         </td>
-        <td>
+        <td className="vip-emails">
           {this.props.email}
         </td>
       </tr>
@@ -66,21 +67,23 @@ var VIP = React.createClass({
   },
 
   render: function() {
-    var numberOfVIPsMessage = this.props.vips.length > 0 ? "You have " + this.props.vips.length + " VIPs in your list." : "Your VIP list is empty."
+    var numberOfVIPsMessage = this.props.vips.length > 0 ? "You have " + this.props.vips.length + " contacts in your VIP list." : "Your VIP list is empty."
 
     return (
       <div className="dashboard">
         <div className="VIP">
           <h1>VIP List</h1>
 
-          <form>
+          <form className="vip-add-contact">
             <TextField
               ref="email" className="login-input" floatingLabelText="Add an email address"/>
-            <RaisedButton label="Add Contact" secondary={true} onClick={this.addVipHandler}/>
+            <RaisedButton className="vip-add-button" label="Add VIP" secondary={true} onClick={this.addVipHandler}/>
           </form>
+          <h4>{numberOfVIPsMessage}</h4>
 
-          {numberOfVIPsMessage}
-          <VIPtable data={this.props.vips} />
+          <Paper className="vip-table-container" zDepth={1} >
+            <VIPtable data={this.props.vips} />
+          </Paper>
 
         </div>
       </div>
