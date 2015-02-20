@@ -44,14 +44,13 @@
 
 .dash-content {
   margin-left: 256px;
-  padding-left: 5em;
+  padding: 2em 1em 0 5em;
 }
 
 
 // VIP
 .vip-table {
-  width: 80%;
-
+  width: 100%;
   .vip-remove {
     background: none;
     border: none;
@@ -60,8 +59,12 @@
     outline: none;
   }
 
-  .vip-remove:hover {
+  button:hover {
+    color: #e00;
+  }
 
+  .vip-remove-box {
+    width: 1em;
   }
 
   td {
@@ -70,3 +73,13 @@
   }
 }
 
+.vip-add-contact {
+  margin-bottom: 3em;
+  .vip-add-button {
+    margin-left: 1em;
+  }
+}
+
+.vip-table-container {
+  width: 80%;
+}
