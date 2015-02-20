@@ -122,7 +122,7 @@ var api_utils = {
           console.log('dashboard info error', error);
           return error;
         }
-        Actions.getUserDashboardInfo(res.body);
+        serverActions.getUserDashboardInfo(res.body);
       })
   }
 

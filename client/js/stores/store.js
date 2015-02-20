@@ -29,7 +29,6 @@ var _logUserOut = function() {
 };
 
 var _updateDashboardInfo = function(userData) {
-  console.log('this is userData', userData);
   _userHistory = userData.escrow;
   _userVIPs = userData.user.vipList;
   _userSettings = {
@@ -38,9 +37,6 @@ var _updateDashboardInfo = function(userData) {
     password: userData.user.password,
     rate: userData.user.rate
   };
-  console.log('history', _userHistory);
-  console.log('vips', _userVIPs);
-  console.log('settings', _userSettings);
 }
 
 var _updateVIPList = function(VIPList) {

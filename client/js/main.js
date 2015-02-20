@@ -21,24 +21,6 @@ $(document).ready(function () {
 
   var App = React.createClass({
 
-    getInitialState:function(){
-      if (Store.isUserLoggedIn()) {
-        Actions.getDashboardInfo();
-      }
-      console.log('this is in main and is userdata', Store.getUserData());
-      return Store.getUserData();
-    },
-    componentWillMount:function(){
-      Store.addChangeListener(this._onChange)
-    },
-    componentWillUnmount:function(){
-      Store.removeChangeListener(this._onChange)
-    },
-    _onChange:function(){
-      console.log('on change userdata', Store.getUserData());
-      this.setState(Store.getUserData());
-    },
-
     render: function () {
       return (
         <div>

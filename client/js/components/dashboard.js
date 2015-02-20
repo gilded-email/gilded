@@ -12,10 +12,6 @@ var Actions = require('../actions/actions');
 var RouterHandler = Router.RouteHandler;
 var Store = require('../stores/store');
 
-var getInitialState = function(){ // needs edit
-  // if (Store.isUserLoggedIn) {
-  return null;
-};
 
 var Authentication = {
   statics: {
@@ -29,7 +25,25 @@ var Authentication = {
 
 var Dashboard = React.createClass({
 
-  mixins: [Router.Navigation, Router.State, StoreWatchMixin(getInitialState), Authentication],
+  mixins: [Router.Navigation, Router.State, Authentication],
+
+  getInitialState:function(){
+    if (Store.isUserLoggedIn()) {
+      Actions.getDashboardInfo();
+    }
+    return Store.getUserData();
+  },
+  componentWillMount:function(){
+    Store.addChangeListener(this._onChange)
+  },
+  componentWillUnmount:function(){
+    Store.removeChangeListener(this._onChange)
+  },
+  _onChange:function(){
+    console.log('on change userdata', Store.getUserData());
+    this.setState(Store.getUserData());
+  },
+
 
   handleClickEvent: function(e, key, payload) {
     this.transitionTo(payload.route);

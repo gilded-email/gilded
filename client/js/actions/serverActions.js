@@ -15,16 +15,14 @@ module.exports = {
     });
   },
 
-<<<<<<< HEAD
-// VIPs
-=======
   getUserDashboardInfo: function(userData) {
     AppDispatcher.handleViewAction({
       actionType: AppConstants.GET_USER_DASHBOARD_INFO,
       userData: userData
     })
   },
->>>>>>> (feat) working on flux architecture
+
+// VIPs
 
   updateUserVIPs: function (userData) {
     AppDispatcher.handleViewAction({
