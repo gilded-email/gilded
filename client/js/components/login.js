@@ -16,7 +16,7 @@ var Login = React.createClass({
 
   getInitialState:function(){
     if (Store.isUserLoggedIn()) {
-      this.transitionTo('history');
+      this.transitionTo('dashboard');
     }
     return null;
   },

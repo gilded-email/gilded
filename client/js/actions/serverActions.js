@@ -15,6 +15,13 @@ module.exports = {
     });
   },
 
+  getUserDashboardInfo: function(userData) {
+    AppDispatcher.handleViewAction({
+      actionType: AppConstants.GET_USER_DASHBOARD_INFO,
+      userData: userData
+    })
+  },
+
 // VIPs
 
   updateUserVIPs: function (userData) {

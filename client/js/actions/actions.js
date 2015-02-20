@@ -24,6 +24,14 @@ var AppActions = {
     APIUtils.signupUser(user.username, user.email, user.password);
   },
 
+  getDashboardInfo: function() {
+    AppDispatcher.handleViewAction({
+      actionType: AppConstants.GET_DASHBOARD_INFO,
+    });
+
+    APIUtils.getUserDashboardInfo();
+  },
+
   logout: function () {
     APIUtils.logout();
   },

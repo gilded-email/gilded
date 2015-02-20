@@ -77,7 +77,7 @@ var api_utils = {
 
   updateEmail: function (email) {
     request
-      .put(API_ROOT + 'user/settings')
+      .put(API_ROOT + 'user/settings/email')
       .send({forwardEmail: email})
       .end(function (error, res) {
         if (error) {
@@ -90,11 +90,11 @@ var api_utils = {
 
   updatePassword: function (password) {
     request
-      .put(API_ROOT + 'user/settings')
+      .put(API_ROOT + 'user/settings/password')
       .send({password: password})
       .end(function (error, res) {
         if (error) {
-          console.log('email update error: ', error);
+          console.log('password update error: ', error);
           return error;
         }
         serverActions.updateUserPassword(res.body);
@@ -103,15 +103,27 @@ var api_utils = {
 
   updateRate: function (rate) {
     request
-      .put(API_ROOT + 'user/settings')
+      .put(API_ROOT + 'user/settings/rate')
       .send({rate: rate})
       .end(function (error, res) {
         if (error) {
-          console.log('email update error: ', error);
+          console.log('rate update error: ', error);
           return error;
         }
         serverActions.updateUserRate(res.body);
       });
+  },
+
+  getUserDashboardInfo: function() {
+    request
+      .get(API_ROOT + 'user/dashboard')
+      .end(function (error, res) {
+        if (error) {
+          console.log('dashboard info error', error);
+          return error;
+        }
+        serverActions.getUserDashboardInfo(res.body);
+      })
   }
 
 };

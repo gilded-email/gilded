@@ -89,8 +89,7 @@ var VIP = React.createClass({
                   ref="email" className="login-input" floatingLabelText="Add an email address"/>
                 <RaisedButton label="Add Contact" secondary={true} onClick={this.addVipHandler}/>
             </form>
-
-
+            <RaisedButton label="Save" primary={true} onClick={this.updateVipsHandler}/>
         </div>
       </div>
     );

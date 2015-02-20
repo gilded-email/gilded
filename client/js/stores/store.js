@@ -2,14 +2,14 @@ var AppDispatcher = require('../dispatcher/dispatcher');
 var AppConstants = require('../constants/constants');
 var request = require('superagent');
 var EventEmitter = require('events').EventEmitter;
+var cookie = require('cookie')
 var _ = require('lodash');
 
 var CHANGE_EVENT = "change";
 
-var _userLoggedIn = false;
-var _userVIPs;
-var _userHistory;
-var _userSettings;
+var _userVIPs = [];
+var _userHistory = {};
+var _userSettings = {};
 
 var _logUserIn = function(userData) {
   _userHistory = userData.escrow;
@@ -20,15 +20,24 @@ var _logUserIn = function(userData) {
     password: userData.user.password,
     rate: userData.user.rate
   };
-  _userLoggedIn = true;
 };
 
 var _logUserOut = function() {
-  _userLoggedIn = false;
   _userVIPs = [];
   _userHistory = [];
   _userSettings = {};
 };
+
+var _updateDashboardInfo = function(userData) {
+  _userHistory = userData.escrow;
+  _userVIPs = userData.user.vipList;
+  _userSettings = {
+    balance: userData.user.balance,
+    forwardEmail: userData.user.forwardEmail,
+    password: userData.user.password,
+    rate: userData.user.rate
+  };
+}
 
 var _updateVIPList = function(VIPList) {
   _userVIPs = VIPList;
@@ -60,7 +69,8 @@ var AppStore = _.extend({}, EventEmitter.prototype, {
   },
 
   isUserLoggedIn: function() {
-    return _userLoggedIn;
+    var parsedCookie = cookie.parse(document.cookie);
+    return parsedCookie.userToken && parsedCookie.userExpires > Date.now();
   },
 
   getUserSettings: function() {
@@ -73,6 +83,14 @@ var AppStore = _.extend({}, EventEmitter.prototype, {
 
   getUserHistory: function() {
     return _userHistory;
+  },
+
+  getUserData: function() {
+    var info = {};
+    info.userHistory = _userHistory;
+    info.userVIPs = _userVIPs;
+    info.userSettings = _userSettings;
+    return info;
   },
 
   dispatcherIndex:AppDispatcher.register(function(payload){
@@ -106,6 +124,10 @@ var AppStore = _.extend({}, EventEmitter.prototype, {
 
       case AppConstants.USER_LOGGED_OUT:
         _logUserOut();
+        break;
+
+      case AppConstants.GET_USER_DASHBOARD_INFO:
+        _updateDashboardInfo(payload.action.userData);
         break;
     }
 
