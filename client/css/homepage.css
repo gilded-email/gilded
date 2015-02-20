@@ -121,6 +121,7 @@ body {
   color: #D2D2D2;
   width: 100%;
   padding: 100px;
+  height: 740px;
 }
 
 .marketing .col-lg-4 {
@@ -147,11 +148,13 @@ body {
 
 .marketing.time {
   background: url('/assets/time.jpg') no-repeat center center fixed;
+  background-size:cover;
   background-position-x: -110px;
 }
 
 .marketing.wallet {
   background: url('/assets/wallet.jpg') no-repeat center center fixed;
+  background-size:cover;
   background-position-x: -175px;
 }
 

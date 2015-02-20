@@ -68,6 +68,10 @@ button:hover {
   color: rgb(255, 241, 163);
 }
 
+.arrow {
+  font-family: sans-serif;
+}
+
 .gilded {
   font-family: 'Lato', sans-serif;
   font-weight: bold;
