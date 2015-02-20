@@ -6,12 +6,18 @@
 @import url(//fonts.googleapis.com/css?family=Lato:700);
 
 body {
-  height: 100%;
+  /*height: 100%;*/
   color: #5a5a5a;
+  background-color: #000;
 }
 
-h1, h2, h3, h4, .btn {
+h1, h2, h3, h4, .btn, .nav > li > a {
   font-family: 'Montserrat', sans-serif;
+}
+
+.bg {
+  background: url('/assets/background.jpg') no-repeat center center fixed;
+  background-size:cover;
 }
 
 .btn-primary {
@@ -83,43 +89,25 @@ h1, h2, h3, h4, .btn {
 }
 
 
-/* CUSTOMIZE THE CAROUSEL
+/* CUSTOMIZE THE JUMBOTRON
 -------------------------------------------------- */
 
-/* Carousel base class */
-.carousel {
-  /*margin-bottom: 60px;*/
-}
-
-.carousel, .item, .active {
-  height: 100%;
+/* Jumbotron base class */
+.jumbotron {
+  height: 750px;
+  margin-bottom: 0px;
 }
 
 /* Since positioning the image, we need to help out the caption */
-.carousel-caption {
+.jumbotron > .container {
+  position: relative;
   top: 150px;
   z-index: 10;
-  left: 10%;
-  right: 10%;
   text-shadow: 0 1px 2px rgba(0,0,0,.8);
   color: #eee;
 }
 
-/* Declare heights because of positioning of img element */
-.carousel .item {
-  background-color: #000;
-}
-
-.carousel-inner > .item > img {
-  position: relative;
-  top: 0;
-  left: 0;
-  opacity: .5;
-  min-width: 100%;
-  min-height: 100%;
-}
-
-.carousel h1 {
+.jumbotron h1 {
   font-size: 4.2em;
   margin-bottom: 45px;
 }
@@ -139,7 +127,7 @@ h1, h2, h3, h4, .btn {
   text-align: center;
 }
 .marketing h2 {
-  font-size: 45px;
+  font-size: 48px;
   font-weight: normal;
   margin-bottom: 25px;
 }
@@ -148,8 +136,12 @@ h1, h2, h3, h4, .btn {
   margin-left: 10px;
 }
 
-.marketing.works {
-  background: rgb(19, 15, 15);
+.marketing.works, .marketing.vip {
+  background: url('/assets/texture.png');
+}
+
+.marketing.works > h2 {
+  margin-bottom: 75px;
 }
 
 .marketing.time {
@@ -162,9 +154,9 @@ h1, h2, h3, h4, .btn {
   background-position-x: -175px;
 }
 
-.marketing.vip {
+/*.marketing.vip {
   background: rgb(19, 15, 15);
-}
+}*/
 
 span.viptext {
   color: rgb(160, 11, 14);
@@ -188,6 +180,11 @@ span.viptext {
   font-weight: 300;
   line-height: 1;
   letter-spacing: -1px;
+}
+
+
+.container.testimonial {
+  width: 100%;
 }
 
 /* Footer
