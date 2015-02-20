@@ -158,8 +158,12 @@ body {
   background-position-x: -175px;
 }
 
+.lead {
+  margin-bottom: 0px;
+}
+
 span.viptext {
-  color: rgb(160, 11, 14);
+  color: rgb(128, 0, 18);
 }
 
 .text-muted {
