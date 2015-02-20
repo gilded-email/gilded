@@ -8,17 +8,18 @@ var StoreWatchMixin = require('../mixins/StoreWatchMixin');
 var Store = require('../stores/store');
 
 var getInitialState = function() {
-  var history = Store.getUserHistory();
-  return history;
+  return null;
 };
 
 var History = React.createClass({
+
+  mixins: [StoreWatchMixin(getInitialState)],
 
   render: function() {
     return (
       <div className="History">
         <div className="dashboard">
-          <h1>History</h1>
+          <h1>History {this.props.vips}</h1>
         </div>
       </div>
     );

@@ -66,8 +66,7 @@ var VIP = React.createClass({
   },
 
   render: function() {
-    console.log(this.state)
-    var numberOfVIPsMessage = this.state.currentVIPs.length > 0 ? "You have " + this.state.currentVIPs.length + " VIPs in your list." : "Your VIP list is empty."
+    var numberOfVIPsMessage = this.props.vips.length > 0 ? "You have " + this.props.vips.length + " VIPs in your list." : "Your VIP list is empty."
 
     return (
       <div className="dashboard">
@@ -81,9 +80,7 @@ var VIP = React.createClass({
           </form>
 
           {numberOfVIPsMessage}
-
-          <VIPtable data={this.state.currentVIPs} />
-
+          <VIPtable data={this.props.vips} />
 
         </div>
       </div>
