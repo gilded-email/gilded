@@ -35,8 +35,11 @@ var Signup = React.createClass({
   					  ref="email" className="signup-input" floatingLabelText="Email" />
   					<TextField
   					  ref="password" className="signup-input" floatingLabelText="Password" />
-            <RaisedButton onClick={this.handleClick} className="signup-button" label="Sign Up" secondary={true} />
+
+            <RaisedButton onClick={this.handleClick} className="signup-button" label="Join the Club" secondary={true} />
+
             <Link className="login-link" to="login">Already a member? Log in here.</Link>
+
   				</form>
   			</div>
 		)
