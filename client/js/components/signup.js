@@ -8,9 +8,29 @@ var RaisedButton = mui.RaisedButton;
 var Router = require('react-router');
 var Link = Router.Link;
 var Actions = require('../actions/actions');
+var Store = require('../stores/store.js');
 var StoreWatchMixin = require('../mixins/StoreWatchMixin.js');
 
 var Signup = React.createClass({
+
+  mixins: [Router.Navigation, Router.State],
+
+  getInitialState:function(){
+    if (Store.isUserLoggedIn()) {
+      this.transitionTo('dashboard');
+    }
+    return null;
+  },
+  componentWillMount:function(){
+    Store.addChangeListener(this._onChange);
+  },
+  componentWillUnmount:function(){
+    Store.removeChangeListener(this._onChange);
+  },
+  _onChange:function(){
+    this.setState(this.getInitialState(this));
+  },
+
   handleClick: function (e) {
     //get input from refs
     e.preventDefault();

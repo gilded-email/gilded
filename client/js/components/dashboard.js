@@ -53,7 +53,6 @@ var Dashboard = React.createClass({
     { route: 'history', text: 'History'},
     { route: 'settings', text: 'Settings' },
     { route: 'VIP', text: 'VIP List' },
-    { type: MenuItem.Types.SUBHEADER, text: '' },
     { route: 'logout', text: 'Log Out'}
   ],
 
