@@ -114,7 +114,7 @@
         <div class="col-md-7"></div>
         <div class="col-md-5">
           <h2 class="featurette-heading"><span class="text-muted">Fill Your </span>Wallet</h2>
-          <p class="lead">Keep the money you earn from senders willing to pay your price.</p>
+          <p class="lead">Keep the money you earn from senders who pay your price.</p>
         </div>
       </div>
     </div>
@@ -141,5 +141,15 @@
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script>!function(n){n.fn.parallax=function(o){var t=n(window).height(),e=n.extend({speed:.15},o);return this.each(function(){var o=n(this);n(document).scroll(function(){var r=n(window).scrollTop(),i=o.offset().top,c=o.outerHeight();if(!(r>=i+c||i>=r+t)){var a=Math.round((i-r)*e.speed);o.css("background-position","center "+a+"px")}})})}}(jQuery);
+
+      $('.jumbotron').parallax({
+        speed : 0.35
+      });
+
+      $('.time, .wallet').parallax({
+        speed : 0.25
+      });
+    </script>
   </body>
 </html>
