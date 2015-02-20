@@ -17,8 +17,8 @@ var marketing = require('./server/marketing/marketingController.js');
 
 var app = express();
 
-app.set('httpPort', 8080);
-app.set('httpsPort', process.env.PORT || 3000);
+app.set('httpPort', process.env.PORT || 8080);
+// app.set('httpsPort', 3000);
 app.set('host', process.env.HOST || 'localhost');
 
 http.createServer(app).listen(app.get('httpPort'));
