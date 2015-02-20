@@ -184,6 +184,10 @@ describe('Email Module', function () {
       }}
     }});
   });
+
+  it('should email back User Does Not Exist message for bad addresses', function () {
+    assert.equal(false, true);
+  });
 });
 
 describe('Payments Module', function () {

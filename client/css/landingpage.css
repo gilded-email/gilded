@@ -1,16 +1,9 @@
-@import url(//fonts.googleapis.com/css?family=Josefin+Sans:400,700,400italic);
+@import url(//fonts.googleapis.com/css?family=Montserrat);
+@import url(//fonts.googleapis.com/css?family=Lato:700);
 
 body {
-  font-family: 'Josefin Sans', sans-serif;
-  background:
-    linear-gradient(
-      rgba(0, 0, 0, 0.15),
-      rgba(0, 0, 0, 0.15)
-    ),
-    url(../assets/signup-bg.jpg) no-repeat center center fixed;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
+  font-family: 'Montserrat', sans-serif;
+  background: url('/assets/signup-bg.jpg') no-repeat center center fixed;
   background-size: cover;
   position: static;
   font-size: 14px;
@@ -23,13 +16,13 @@ body {
 }
 
 h1 {
-  font-size: 3.3em;
+  font-size: 2.5em;
   font-weight: bold;
   letter-spacing: -.02em;
   text-align: center;
-  color: gold;
-  text-shadow: 5px 5px 0px #000;
-  margin: 0.4em 0 0 0;
+  color: rgb(255, 241, 163);
+  text-shadow: 1px 2px 2px rgb(79, 67, 3);
+  margin: 0.4em 0 10px 0;
 }
 
 .hide {
@@ -43,19 +36,18 @@ h1 {
 
 #signup, #thank-you {
   padding: 1em 1em 2em;
-  border-radius: 10px;
+  border-radius: 5px;
   text-align: center;
   color: #eee;
   background-color: rgba(13, 13, 13, 0.9);
 }
 
-
 input, button {
   border: none;
-  padding: 0.5em 1.5em;
-  border-radius: 10px;
+  padding: 0.3em .5em;
+  border-radius: 5px;
   outline: none;
-  margin-top: 2em;
+  margin: 2em 0;
 }
 
 input {
@@ -66,14 +58,20 @@ button {
   background-color: transparent;
   border: 1px solid white;
   color: white;
-  transition: 1s;
+  transition: .5s;
   cursor: pointer;
 }
 
 button:hover {
-  border-color: gold;
+  border-color: rgb(255, 241, 163);
   transition: 0.4s;
-  color: gold;
+  color: rgb(255, 241, 163);
 }
 
-
+.gilded {
+  font-family: 'Lato', sans-serif;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: rgb(255, 241, 163);
+  text-shadow: 1px 2px 6px rgb(79, 67, 3);
+}

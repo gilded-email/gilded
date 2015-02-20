@@ -41,9 +41,8 @@
             </div>
             <div id="navbar" class="navbar-collapse collapse">
               <ul class="nav navbar-nav">
-                <!-- <li class="active"><a href="#">Home</a></li> -->
                 <li><a href="#about">About</a></li>
-                <li><a href="/app/#/signup">Join</a></li>
+                <li><a href="/signup.html">Join</a></li>
                 <li><a href="/app/#/login">Login</a></li>
               </ul>
             </div>
@@ -59,7 +58,7 @@
       <div class="container text-center">
         <h1>Take Back Control of Your Inbox</h1>
         <p>Redefined email to put you in the driver seat of your time and money</p>
-        <p><a class="btn btn-lg btn-primary" href="#" role="button">Join the club</a></p>
+        <p><a class="btn btn-lg btn-primary" href="/signup.html" role="button">Join the club</a></p>
       </div>
     </div><!-- /.jumbotron -->
 
@@ -67,7 +66,7 @@
     ================================================== -->
     <!-- Wrap the rest of the page in another container to center all the content. -->
 
-    <div class="container marketing works">
+    <div class="container marketing works"><a name="about"></a>
       <h2 class="text-center">How It Works</h2>
       <!-- Three columns of text below the carousel -->
       <div class="row">
@@ -119,14 +118,18 @@
       </div>
     </div>
     <div class="container bg testimonial">
-      <blockquote class="blockquote-reverse">
-        <p>"I no longer worry about spammers finding my email address. Now I <em>want</em> people to email me."</p>
+      <blockquote>
+        <p>"I no longer worry about spammers finding my email address. <br>Now I <em>want</em> people to email me."</p>
         <footer><cite>Eric Schmidt</cite></footer>
       </blockquote>
-      <p><a class="btn btn-lg btn-primary" href="#" role="button">Join the club</a></p>
+      <blockquote class="blockquote-reverse">
+        <p>"Finally, I can stop worrying about stalkers."</p>
+        <footer><cite>Jacky Chan</cite></footer>
+      </blockquote>
+      <p class="text-center"><a class="btn btn-lg btn-primary" href="/signup.html" role="button">Join the club</a></p>
+
     </div>
 
-    <!-- <hr class="featurette-divider"> -->
     <!-- /END THE FEATURETTES -->
 
 
@@ -150,6 +153,7 @@
       $('.time, .wallet').parallax({
         speed : 0.25
       });
+      $(function(){$("a[href*=#]:not([href=#])").click(function(){if(location.pathname.replace(/^\//,"")==this.pathname.replace(/^\//,"")&&location.hostname==this.hostname){var t=$(this.hash);if(t=t.length?t:$("[name="+this.hash.slice(1)+"]"),t.length)return $("html,body").animate({scrollTop:t.offset().top},600),!1}})});
     </script>
   </body>
 </html>
