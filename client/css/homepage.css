@@ -6,18 +6,9 @@
 @import url(//fonts.googleapis.com/css?family=Lato:700);
 
 body {
-  /*height: 100%;*/
   color: #5a5a5a;
-  background-color: #000;
-}
-
-h1, h2, h3, h4, .btn, .nav > li > a {
+  background-color: #1a1a1a;
   font-family: 'Montserrat', sans-serif;
-}
-
-.bg {
-  background: url('/assets/background.jpg') no-repeat center center fixed;
-  background-size:cover;
 }
 
 .btn-primary {
@@ -94,7 +85,9 @@ h1, h2, h3, h4, .btn, .nav > li > a {
 
 /* Jumbotron base class */
 .jumbotron {
-  height: 750px;
+  background: url('/assets/background.jpg') no-repeat center center fixed;
+  background-size: cover;
+  height: 850px;
   margin-bottom: 0px;
 }
 
@@ -145,18 +138,14 @@ h1, h2, h3, h4, .btn, .nav > li > a {
 }
 
 .marketing.time {
-  background: url('/assets/time.jpg') no-repeat;
+  background: url('/assets/time.jpg') no-repeat center center fixed;
   background-position-x: -110px;
 }
 
 .marketing.wallet {
-  background: url('/assets/wallet.jpg') no-repeat;
+  background: url('/assets/wallet.jpg') no-repeat center center fixed;
   background-position-x: -175px;
 }
-
-/*.marketing.vip {
-  background: rgb(19, 15, 15);
-}*/
 
 span.viptext {
   color: rgb(160, 11, 14);
