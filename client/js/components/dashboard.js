@@ -13,9 +13,8 @@ var RouterHandler = Router.RouteHandler;
 var Store = require('../stores/store');
 
 var getInitialState = function(){ // needs edit
-  if (Store.isUserLoggedIn) {
-    return null;
-  }
+  // if (Store.isUserLoggedIn) {
+  return null;
 };
 
 var Authentication = {

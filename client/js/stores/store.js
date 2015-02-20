@@ -7,9 +7,9 @@ var _ = require('lodash');
 
 var CHANGE_EVENT = "change";
 
-var _userVIPs;
-var _userHistory;
-var _userSettings;
+var _userVIPs = [];
+var _userHistory = {};
+var _userSettings = {};
 
 var _logUserIn = function(userData) {
   _userHistory = userData.escrow;
@@ -27,6 +27,21 @@ var _logUserOut = function() {
   _userHistory = [];
   _userSettings = {};
 };
+
+var _updateDashboardInfo = function(userData) {
+  console.log('this is userData', userData);
+  _userHistory = userData.escrow;
+  _userVIPs = userData.user.vipList;
+  _userSettings = {
+    balance: userData.user.balance,
+    forwardEmail: userData.user.forwardEmail,
+    password: userData.user.password,
+    rate: userData.user.rate
+  };
+  console.log('history', _userHistory);
+  console.log('vips', _userVIPs);
+  console.log('settings', _userSettings);
+}
 
 var _updateVIPList = function(VIPList) {
   _userVIPs = VIPList;
@@ -74,6 +89,14 @@ var AppStore = _.extend({}, EventEmitter.prototype, {
     return _userHistory;
   },
 
+  getUserData: function() {
+    var info = {};
+    info.userHistory = _userHistory;
+    info.userVIPs = _userVIPs;
+    info.userSettings = _userSettings;
+    return info;
+  },
+
   dispatcherIndex:AppDispatcher.register(function(payload){
     var action = payload.action; // this is our action from handleViewAction
     switch(action.actionType){
@@ -105,6 +128,10 @@ var AppStore = _.extend({}, EventEmitter.prototype, {
 
       case AppConstants.USER_LOGGED_OUT:
         _logUserOut();
+        break;
+
+      case AppConstants.GET_USER_DASHBOARD_INFO:
+        _updateDashboardInfo(payload.action.userData);
         break;
     }
 

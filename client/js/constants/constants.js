@@ -14,8 +14,10 @@ module.exports = keyMirror({
   UPDATE_EMAIL: null,
   UPDATE_USER: null,
   UPDATE_RATE: null,
+  GET_DASHBOARD_INFO: null,
   UPDATE_USER_EMAIL: null,
   UPDATE_USER_PASSWORD: null,
   UPDATE_USER_VIPS: null,
-  UPDATE_USER_RATE: null
+  UPDATE_USER_RATE: null,
+  GET_USER_DASHBOARD_INFO: null
 });

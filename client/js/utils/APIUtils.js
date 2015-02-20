@@ -110,13 +110,20 @@ var api_utils = {
           console.log('rate update error: ', error);
           return error;
         }
-<<<<<<< HEAD
         serverActions.updateUserRate(res.body);
-=======
-        console.log('this is rate response from api utils', res.text);
-        Actions.updateUserRate(JSON.parse(res.text));
->>>>>>> logout routing
       });
+  },
+
+  getUserDashboardInfo: function() {
+    request
+      .get(API_ROOT + 'user/dashboard')
+      .end(function (error, res) {
+        if (error) {
+          console.log('dashboard info error', error);
+          return error;
+        }
+        Actions.getUserDashboardInfo(res.body);
+      })
   }
 
 };
