@@ -60,8 +60,12 @@ var Dashboard = React.createClass({
   render: function() {
     return (
       <div>
-      <LeftNav menuItems={this.menuItems} onChange={this.handleClickEvent} />
+      <div className="dash-menu">
+          <LeftNav menuItems={this.menuItems} onChange={this.handleClickEvent} />
+      </div>
+      <div className="dash-content">
         <RouterHandler />
+      </div>
       </div>
       )
   }

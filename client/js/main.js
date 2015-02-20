@@ -1,6 +1,3 @@
-/**
- * @jsx React.DOM
- */
 $(document).ready(function () {
 
   var React = require('react');
@@ -23,12 +20,7 @@ $(document).ready(function () {
 
     render: function () {
       return (
-        <div>
-          <li><Link to="signup">Sign up</Link></li>
-          <li><Link to="login">Login</Link></li>
-          <li><Link to="dashboard">Dashboard</Link></li>
-            <RouteHandler />
-        </div>
+        <RouteHandler />
       )
     }
 
@@ -36,13 +28,14 @@ $(document).ready(function () {
 
   var routes = (
     <Route name="root" path="/" handler={App}>
-      <Route name="signup" handler={Signup}/>
+      <DefaultRoute handler={Signup} />
+      <Route name="signup" handler={Signup} />
       <Route name="login" handler={Login} />
       <Route name="logout" handler={Logout} />
       <Route name="dashboard" handler={Dashboard}>
-        <Route name="history" handler={History}/>
-        <Route name="settings" handler={Settings}/>
-        <Route name="VIP" handler={VIP}/>
+        <Route name="history" handler={History} />
+        <Route name="settings" handler={Settings} />
+        <Route name="VIP" handler={VIP} />
       </Route>
     </Route>
   );

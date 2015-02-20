@@ -1,13 +1,8 @@
 /* material-ui */
 @import "node_modules/material-ui/src/less/scaffolding.less";
-
-
 @import "node_modules/material-ui/src/less/components.less";
 
-//Your custom app styles
-#app {
-}
-
+// Auth
 .login-link, .signup-link {
 	float: right;
 }
@@ -25,11 +20,34 @@
 	margin: 0 auto;
 }
 
-.dashboard {
-  float: right;
-  width: 80%;
+// Dashboard
+//====================
+
+.dash-content {
+  margin-left: 256px;
+  padding-left: 5em;
 }
 
-VIP {
-  float: left;
+
+// VIP
+.vip-table {
+  width: 80%;
+
+  .vip-remove {
+    background: none;
+    border: none;
+    font-size: 2em;
+    color: #900;
+    outline: none;
+  }
+
+  .vip-remove:hover {
+
+  }
+
+  td {
+    padding: 1em;
+    border-bottom: 1px solid #eee;
+  }
 }
+
