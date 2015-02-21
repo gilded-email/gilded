@@ -3,6 +3,7 @@ var Promise = require('bluebird');
 var User = require('./userModel.js');
 var dispatcher = 'jenkins@' + domain;
 var bcrypt = require('bcrypt-nodejs');
+var stripe = require('stripe')(process.env.STRIPE);
 
 var tokenGen = function (username, expiration) {
   return new Promise(function (resolve, reject) {
@@ -18,24 +19,34 @@ var tokenGen = function (username, expiration) {
 
 module.exports = {
   join: function (req, res, next) {
-    var userData = {
-      username: req.body.username,
-      forwardEmail: req.body.forwardEmail
-    };
-
-    bcrypt.hash(req.body.password, null, null, function (error, hash) {
+    stripe.customers.create({
+      description: 'Customer for test@example.com',
+      email: req.body.forwardEmail
+    }, function (error, customer) {
       if (error) {
         console.log(error);
-        res.sendStatus(409);
       } else {
-        userData.password = hash;
-        User.create(userData, function (error, user) {
+        var userData = {
+          username: req.body.username,
+          forwardEmail: req.body.forwardEmail,
+          stripeId: customer.id
+        };
+
+        bcrypt.hash(req.body.password, null, null, function (error, hash) {
           if (error) {
             console.log(error);
-            res.status(409).send(error);
+            res.sendStatus(409);
           } else {
-            req.user = user;
-            next();
+            userData.password = hash;
+            User.create(userData, function (error, user) {
+              if (error) {
+                console.log(error);
+                res.status(409).send(error);
+              } else {
+                req.user = user;
+                next();
+              }
+            });
           }
         });
       }
@@ -207,6 +218,59 @@ module.exports = {
           reject('Looking for a user that does not exist');
         } else {
           resolve(user.rate);
+        }
+      });
+    });
+  },
+
+  addCard: function (req, res) {
+    User.findOne({username: req.cookies.username}, function (error, user) {
+      if (error) {
+        console.log(error);
+      } else {
+        stripe.customers.createCard(user.stripeId, {
+          card: {
+            number: req.body.cardNumber,
+            exp_month: req.body.expMonth,
+            exp_year: req.body.expYear,
+            cvc: req.body.cvc,
+            name: req.body.cardHolderName
+          }
+        }, function (error, card) {
+          if (error) {
+            console.log(error);
+            res.status(400).send(error);
+          } else {
+            res.sendStatus(201);
+          }
+        });
+      }
+    });
+  },
+
+  cashOut: function (req, res) {
+    User.findOne({username: req.cookies.username}, function (error, user) {
+      if (user.balance === 0) {
+        res.status(200).send(user);
+      }
+      stripe.transfers.create({
+        amount: user.balance * 0.70,
+        currency: 'usd',
+        recipient: user.stripeId,
+        description: 'Gilded.club balance'
+      }, function (error, transfer) {
+        if (error) {
+          console.log(error);
+          res.status(400).send(error);
+        } else {
+          User.findOneAndUpdate({_id: user.id}, {balance: 0}, function (error, updatedUser) {
+            if (error) {
+              console.log(error);
+              res.status(400).send(error);
+            } else {
+              res.send(201).send(updatedUser);
+            }
+          });
         }
       });
     });

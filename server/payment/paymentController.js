@@ -32,6 +32,7 @@ module.exports = {
   },
 
   verification: function (req, res, next) {
-    makePayment(req.body.stripeToken, req.cost, next);
+    var cost = (req.cost * 1.029) + 30; //Rate + (Rate * 2.9% fee) + Stripe Base Fee of $0.30
+    makePayment(req.body.stripeToken, cost, next);
   }
 };

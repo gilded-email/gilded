@@ -7,7 +7,8 @@ var UserSchema = new mongoose.Schema({
   forwardEmail: {type: String, unique: true, required: true}, // TODO: rename forwardAddress
   vipList: {type: Array, default: []},
   balance: {type: Number, default: 0},
-  rate: {type: Number, default: 100}
+  rate: {type: Number, default: 100},
+  stripeId: {type: String, unique: true}
 });
 
 module.exports = mongoose.model('User', UserSchema);

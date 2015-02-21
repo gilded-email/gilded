@@ -15,7 +15,8 @@ var printAsyncResult = function (error, result) {
 };
 
 var requestPayment = function (savedEmail) {
-  var cost = (savedEmail.cost / 100).toFixed(2);
+  var emailRateAndStripe = (savedEmail.cost * 1.029) + 30;
+  var cost = (emailRateAndStripe / 100).toFixed(2);
   var paymentInstructions = 'Your recipient requires $' + cost + ' to receive emails. Pay here: ';
   var paymentUrl = 'http://' + domain + '/pay/' + savedEmail._id;
   module.exports.sendEmail({
