@@ -1,137 +1,26 @@
-/* material-ui */
+/**********************************************\
+*  ██████╗ ██╗██╗     ██████╗ ███████╗██████╗  *
+* ██╔════╝ ██║██║     ██╔══██╗██╔════╝██╔══██╗ *
+* ██║  ███╗██║██║     ██║  ██║█████╗  ██║  ██║ *
+* ██║   ██║██║██║     ██║  ██║██╔══╝  ██║  ██║ *
+* ╚██████╔╝██║███████╗██████╔╝███████╗██████╔╝ *
+*  ╚═════╝ ╚═╝╚══════╝╚═════╝ ╚══════╝╚═════╝  *
+\**********************************************/
+
+// Material UI
 @import "node_modules/material-ui/src/less/scaffolding.less";
 @import "node_modules/material-ui/src/less/components.less";
 
-body {
-  background-image: radial-gradient(farthest-side ellipse at 10% 0, rgba(102,105,104,0.9),rgba(93,112,119,0.89),rgba(160,174,150,0.9));
-  background-attachment: local;
-}
+// Base Styles
+@import (less) "base";
 
-//====================
-// Auth
-//====================
+// Signup and Login
+@import (less) "auth";
 
-.signup-form, .login-form {
-	margin: 1em auto 0;
-  padding: 1em;
-  @media screen and (min-width: 768px) {
-    max-width:40%;
-  }
-  .signup-input, .login-input {
-    width: 100%;
-  }
-
-  .signup-button, .login-button {
-    width: 100%;
-    display: block;
-    margin: 5em auto 7em;
-  }
-
-  .mui-raised-button-container {
-    padding: 1em;
-    margin-bottom: 2em;
-  }
-  .mui-raised-button-label {
-    font-size: 2em;
-  }
-
-  a {
-    float: right;
-    color: #999;
-    font-size: 1.4em;
-  }
-
-}
-
-//====================
 // Dashboard
-//====================
+@import (less) "dashboard/dashboard";
 
-.dash-content {
-  margin-left: 256px;
-  padding: 2em;
-}
-
-.dashboard {
-  max-width: 800px;
-  h1 {
-    color: white;
-  }
-}
-// Settings
-.dashboard-title {
-  h1 {
-    margin-bottom: 0;
-    color: white;
-  }
-}
-
-.dashboard-subcontent {
-  font-size: 2em;
-  background-color: white;
-  max-width: 600px;
-  margin: 1.5em 0;
-}
-
-
-.dashboard-subheading {
-  padding: 1em 0 0 1em;
-}
-
-.dashboard-subheading-content {
-  padding: 1em;
-}
-
-// VIP
-
-.VIP h4 {
-  padding: 1em 0 0 1em;
-  color: white;
-}
-.vip-table {
-  width: 100%;
-  background-color: #fff;
-  .vip-remove {
-    background: none;
-    border: none;
-    font-size: 2em;
-    color: #900;
-    outline: none;
-  }
-
-  button:hover {
-    color: #e00;
-  }
-
-  .vip-remove-box {
-    width: 1em;
-  }
-
-  td {
-    padding: 1em;
-    border-bottom: 1px solid #ccc;
-  }
-}
-
-.vip-add-contact {
-  .vip-add-button {
-  }
-}
-
-.vip-table-container {
-  max-width: 600px;
-}
-
-// Emails
-.emails {
-  table {
-
-  }
-  td, th {
-    padding: 1em;
-  }
-  th {
-    font-weight: bold;
-  }
-}
-
+// Dashboard Pages
+@import (less) "dashboard/emails";
+@import (less) "dashboard/settings";
+@import (less) "dashboard/vip";

@@ -27,11 +27,12 @@ var Escrows = React.createClass({
         <tbody>
           {this.props.data.map(function (escrow, i) {
             var email = JSON.parse(escrow.email);
+            email.index = i + 1;
             email.paid = escrow.paid ? "Paid" : "Unpaid";
             email.cost = dollarString.fromCents(escrow.cost);
             email.sentDate = moment(escrow.sentDate).format('MMM DD');
             return (
-              <Email {...email} index={i + 1}/>
+              <Email {...email} />
               )
           })}
         </tbody>
