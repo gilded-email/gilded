@@ -23,7 +23,7 @@ app.set('host', process.env.HOST || 'localhost');
 
 http.createServer(app).listen(app.get('httpPort'));
 // https.createServer(credentials, app).listen(app.get('httpsPort'));
-console.log('Server is listening on http://' + app.get('host') + ':' + app.get('httpPort') + ' and https://' + app.get('host') + ':' + app.get('httpsPort'));
+console.log('Server is listening on http://' + app.get('host') + ':' + app.get('httpPort')); // + ' and https://' + app.get('host') + ':' + app.get('httpsPort'));
 
 app.use(cookieParser());
 app.use(bodyParser.json());
@@ -36,9 +36,7 @@ app.use('/api/user/settings/rate', user.checkSession, user.changeRate);
 app.use('/api/user/settings/password', user.checkSession, user.changePassword);
 app.use('/api/user/settings/email', user.checkSession, user.updateForwardEmail);
 
-app.post('/signup', function (req, res) {
-  marketing.addSignup(req, res);
-});
+app.post('/signup', marketing.signup);
 
 app.post('/api/logout', user.logout);
 app.post('/api/user/vipList', user.checkSession, user.addVip);

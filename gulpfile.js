@@ -22,7 +22,7 @@ gulp.task('clean', function () {
     './dist/css',
     './dist/js',
     './dist/*.html'
-    ]);
+  ]);
 });
 
 gulp.task('compile', ['lint'], function () {
@@ -37,15 +37,15 @@ gulp.task('compile', ['lint'], function () {
 
 gulp.task('lint', function () {
   return gulp.src([
-      './*.js',
-      './server/**/*.js',
-      './client/**/*.js'
-    ])
+    './*.js',
+    './server/**/*.js',
+    './client/**/*.js'
+  ])
     .pipe(jshint())
     .pipe(jshint.reporter('jshint-stylish'));
 });
 
-gulp.task('less', function() {
+gulp.task('less', function () {
   return gulp.src('./client/less/main.less')
     .pipe(less())
     .pipe(gulp.dest('./dist/css'))
@@ -71,7 +71,7 @@ gulp.task('assets', function () {
     .pipe(livereload());
 });
 
-gulp.task('watch', ['build'], function() {
+gulp.task('watch', ['build'], function () {
   livereload.listen();
   gulp.watch('./client/*.html', ['html']);
   gulp.watch('./client/css/**/*.css', ['css']);
@@ -81,17 +81,18 @@ gulp.task('watch', ['build'], function() {
   gulp.watch([
     './*.js',
     './server/*.js'
-    ], ['lint']);
+  ], ['lint']);
 });
 
 gulp.task('run', ['build'], function () {
   nodemon({
     script: 'server.js',
+    env: { 'NODE_ENV': 'test' },
     ext: 'js',
     ignore: [
-    'gulpfile.js',
-    'client/**/*.js',
-    'dist/**/*.js'
+      'gulpfile.js',
+      'client/**/*.js',
+      'dist/**/*.js'
     ]
   });
 });

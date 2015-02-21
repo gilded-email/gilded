@@ -215,6 +215,11 @@ describe('Email Module', function () {
   it('should email back User Does Not Exist message for bad addresses', function () {
     assert.equal(false, true);
   });
+
+  xit('should send a Welcome email when users put their name on the waiting list', function () {
+    assert.equal(false, true);
+  });
+
 });
 
 describe('Payments Module', function () {
