@@ -74,14 +74,16 @@ var VIP = React.createClass({
         <div className="VIP">
           <h1>VIP List</h1>
 
-          <form className="vip-add-contact">
-            <TextField
-              ref="email" className="login-input" floatingLabelText="Add an email address"/>
-            <RaisedButton className="vip-add-button" label="Add VIP" secondary={true} onClick={this.addVipHandler}/>
-          </form>
-          <h4>{numberOfVIPsMessage}</h4>
+          <Paper className="dashboard-subcontent">
+            <div className="dashboard-subheading">Add VIP</div>
+              <div className="dashboard-subheading-content">
+              <TextField ref="email" className="login-input" floatingLabelText="Add an email address"/>
+              <RaisedButton className="vip-add-button" label="Add VIP" secondary={true} onClick={this.addVipHandler}/>
+              </div>
+          </Paper>
+          <Paper className="vip-table-container" zDepth={4} >
 
-          <Paper className="vip-table-container" zDepth={1} >
+          <h4>{numberOfVIPsMessage}</h4>
             <VIPtable data={this.props.vips} />
           </Paper>
 
