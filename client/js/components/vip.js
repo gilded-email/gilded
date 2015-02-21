@@ -74,7 +74,7 @@ var VIP = React.createClass({
         <div className="VIP">
           <h1>VIP List</h1>
 
-          <Paper className="dashboard-subcontent">
+          <Paper className="dashboard-subcontent" zDepth={4}>
             <div className="dashboard-subheading">Add VIP</div>
               <div className="dashboard-subheading-content">
               <TextField ref="email" className="login-input" floatingLabelText="Add an email address"/>

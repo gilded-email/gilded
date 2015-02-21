@@ -23,7 +23,8 @@ $(document).ready(function () {
   var Login = require('./components/login');
   var Logout = require('./components/logout');
   var Dashboard = require('./components/dashboard');
-  var Settings = require('./components/settings');
+  var Account = require('./components/account');
+  var Payments = require('./components/payments')
   var Emails = require('./components/emails');
   var VIP = require('./components/vip');
   var Store = require('./stores/store.js');
@@ -47,8 +48,10 @@ $(document).ready(function () {
       <Route name="logout" handler={Logout} />
       <Route name="dashboard" handler={Dashboard}>
         <Route name="emails" handler={Emails} />
-        <Route name="settings" handler={Settings} />
         <Route name="VIP" handler={VIP} />
+        <Route name="account" handler={Account} />
+        <Route name="payments" handler={Payments} />
+
       </Route>
     </Route>
   );
