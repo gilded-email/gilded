@@ -69,33 +69,33 @@ var Settings = React.createClass({
           <div className="dashboard-title">
             <h1>Account Settings</h1>
           </div>
-          <div className="dashboard-subcontent">
-            <div className="dashboard-subheading">Forward Email</div>
-              <div className="dashboard-subheading-content">
-                <TextField ref="newEmail" className="new-email" floatingLabelText={this.props.settings.forwardEmail} />
-                <RaisedButton className="new-email-save" label="Update Email" secondary={true} onClick={this.changeForwardEmail} />
-              </div>
-          </div>
-          <div className="dashboard-subcontent">
-            <div className="dashboard-subheading">Password</div>
-              <div className="dashboard-subheading-content">
-                <TextField ref="newPassword" className="new-password" floatingLabelText="Enter new password" />
-                <RaisedButton className="new-password-save" label="Change Password" secondary={true} onClick={this.changePassword} />
-              </div>
-          </div>
-          <div className="dashboard-subcontent">
-            <div className="dashboard-subheading">Update Rate</div>
-              <div className="dashboard-subheading-content">
-                <TextField ref="newRate" className="new-rate" hintText="$" floatingLabelText={this.getRate()} />
-                <RaisedButton className="new-rate-save" label="Change Rate" secondary={true} onClick={this.changeRate} />
-              </div>
-          </div>
-          <div className="dashboard-subcontent">
-            <div className="dashboard-subheading">Current Balance</div>
-              <div className="dashboard-subheading-content">
-                {this.getBalance()}
-              </div>
-          </div>
+            <Paper className="dashboard-subcontent">
+              <div className="dashboard-subheading">Forward Email</div>
+                <div className="dashboard-subheading-content">
+                  <TextField ref="newEmail" className="new-email" floatingLabelText={this.props.settings.forwardEmail} />
+                  <RaisedButton className="new-email-save" label="Update Email" secondary={true} onClick={this.changeForwardEmail} />
+                </div>
+            </Paper>
+            <Paper className="dashboard-subcontent">
+              <div className="dashboard-subheading">Change Password</div>
+                <div className="dashboard-subheading-content">
+                  <TextField ref="newPassword" className="new-password" floatingLabelText="Enter new password" />
+                  <RaisedButton className="new-password-save" label="Change Password" secondary={true} onClick={this.changePassword} />
+                </div>
+            </Paper>
+            <Paper className="dashboard-subcontent">
+              <div className="dashboard-subheading">Update Rate</div>
+                <div className="dashboard-subheading-content">
+                  <TextField ref="newRate" className="new-rate" hintText="$" floatingLabelText={this.getRate()} />
+                  <RaisedButton className="new-rate-save" label="Change Rate" secondary={true} onClick={this.changeRate} />
+                </div>
+            </Paper>
+            <Paper className="dashboard-subcontent">
+              <div className="dashboard-subheading">Current Balance</div>
+                <div className="dashboard-subheading-content">
+                  {this.getBalance()}
+                </div>
+            </Paper>
         </div>
     )
   }

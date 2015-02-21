@@ -2,6 +2,11 @@
 @import "node_modules/material-ui/src/less/scaffolding.less";
 @import "node_modules/material-ui/src/less/components.less";
 
+body {
+  background-image: radial-gradient(farthest-side ellipse at 10% 0, rgba(102,105,104,0.9),rgba(93,112,119,0.89),rgba(160,174,150,0.9));
+  background-attachment: local;
+}
+
 //====================
 // Auth
 //====================
@@ -44,33 +49,48 @@
 
 .dash-content {
   margin-left: 256px;
-  padding: 2em 1em 0 5em;
+  padding: 2em;
 }
 
+.dashboard {
+  max-width: 800px;
+  h1 {
+    color: white;
+  }
+}
 // Settings
 .dashboard-title {
   h1 {
-    color: black;
     margin-bottom: 0;
-    opacity: 1.0;
+    color: white;
   }
-  border-bottom: solid;
-  border-bottom-width: .2em;
-  opacity: 0.4;
 }
 
 .dashboard-subcontent {
-  margin: 3em 0;
   font-size: 2em;
+  background-color: white;
+  max-width: 600px;
+  margin: 1.5em 0;
 }
 
+
 .dashboard-subheading {
-  margin-bottom: .5em;
+  padding: 1em 0 0 1em;
+}
+
+.dashboard-subheading-content {
+  padding: 1em;
 }
 
 // VIP
+
+.VIP h4 {
+  padding: 1em 0 0 1em;
+  color: white;
+}
 .vip-table {
   width: 100%;
+  background-color: #fff;
   .vip-remove {
     background: none;
     border: none;
@@ -89,19 +109,17 @@
 
   td {
     padding: 1em;
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid #ccc;
   }
 }
 
 .vip-add-contact {
-  margin-bottom: 3em;
   .vip-add-button {
-    margin-left: 1em;
   }
 }
 
 .vip-table-container {
-  width: 80%;
+  max-width: 600px;
 }
 
 // Emails
@@ -116,3 +134,4 @@
     font-weight: bold;
   }
 }
+
