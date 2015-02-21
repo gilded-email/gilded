@@ -123,7 +123,7 @@ var api_utils = {
           return error;
         }
         serverActions.getUserDashboardInfo(res.body);
-      })
+      });
   }
 
 };

@@ -1,15 +1,15 @@
-/**
- * @jsx React.DOM
- */
 var React = require('react');
+
 var mui = require('material-ui');
 var LeftNav = mui.LeftNav;
 var MenuItem = mui.MenuItem;
+
 var Router = require('react-router');
 var RouteHandler = Router.RouteHandler;
+var RouterHandler = Router.RouteHandler;
+
 var StoreWatchMixin = require('../mixins/StoreWatchMixin');
 var Actions = require('../actions/actions');
-var RouterHandler = Router.RouteHandler;
 var Store = require('../stores/store');
 
 
@@ -34,13 +34,12 @@ var Dashboard = React.createClass({
     return Store.getUserData();
   },
   componentWillMount:function(){
-    Store.addChangeListener(this._onChange)
+    Store.addChangeListener(this._onChange);
   },
   componentWillUnmount:function(){
-    Store.removeChangeListener(this._onChange)
+    Store.removeChangeListener(this._onChange);
   },
   _onChange:function(){
-    console.log('on change userdata', Store.getUserData());
     this.setState(Store.getUserData());
   },
 
@@ -50,7 +49,7 @@ var Dashboard = React.createClass({
   },
 
   menuItems: [
-    { route: 'history', text: 'History'},
+    { route: 'emails', text: 'Emails'},
     { route: 'settings', text: 'Settings' },
     { route: 'VIP', text: 'VIP List' },
     { route: 'logout', text: 'Log Out'}

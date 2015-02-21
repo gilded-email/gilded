@@ -2,17 +2,17 @@ var AppDispatcher = require('../dispatcher/dispatcher');
 var AppConstants = require('../constants/constants');
 var request = require('superagent');
 var EventEmitter = require('events').EventEmitter;
-var cookie = require('cookie')
+var cookie = require('cookie');
 var _ = require('lodash');
 
 var CHANGE_EVENT = "change";
 
 var _userVIPs = [];
-var _userHistory = {};
+var _userEmails = {};
 var _userSettings = {};
 
 var _logUserIn = function(userData) {
-  _userHistory = userData.escrow;
+  _userEmails = userData.escrow;
   _userVIPs = userData.user.vipList;
   _userSettings = {
     balance: userData.user.balance,
@@ -24,12 +24,12 @@ var _logUserIn = function(userData) {
 
 var _logUserOut = function() {
   _userVIPs = [];
-  _userHistory = [];
+  _userEmails = [];
   _userSettings = {};
 };
 
 var _updateDashboardInfo = function(userData) {
-  _userHistory = userData.escrow;
+  _userEmails = userData.escrow;
   _userVIPs = userData.user.vipList;
   _userSettings = {
     balance: userData.user.balance,
@@ -37,7 +37,7 @@ var _updateDashboardInfo = function(userData) {
     password: userData.user.password,
     rate: userData.user.rate
   };
-}
+};
 
 var _updateVIPList = function(VIPList) {
   _userVIPs = VIPList;
@@ -81,13 +81,13 @@ var AppStore = _.extend({}, EventEmitter.prototype, {
     return _userVIPs;
   },
 
-  getUserHistory: function() {
-    return _userHistory;
+  getUserEmails: function() {
+    return _userEmails;
   },
 
   getUserData: function() {
     var info = {};
-    info.userHistory = _userHistory;
+    info.userEmails = _userEmails;
     info.userVIPs = _userVIPs;
     info.userSettings = _userSettings;
     return info;

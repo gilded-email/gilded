@@ -1,20 +1,33 @@
+/**********************************************\
+*  ██████╗ ██╗██╗     ██████╗ ███████╗██████╗  *
+* ██╔════╝ ██║██║     ██╔══██╗██╔════╝██╔══██╗ *
+* ██║  ███╗██║██║     ██║  ██║█████╗  ██║  ██║ *
+* ██║   ██║██║██║     ██║  ██║██╔══╝  ██║  ██║ *
+* ╚██████╔╝██║███████╗██████╔╝███████╗██████╔╝ *
+*  ╚═════╝ ╚═╝╚══════╝╚═════╝ ╚══════╝╚═════╝  *
+\**********************************************/
+
 $(document).ready(function () {
 
+  console.log('\u2588\u2588\u2588\u2588\u2588\u2588\u2557 \u2588\u2588\u2557\u2588\u2588\u2557     \u2588\u2588\u2588\u2588\u2588\u2588\u2557 \u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2557\u2588\u2588\u2588\u2588\u2588\u2588\u2557 \r\n\u2588\u2588\u2554\u2550\u2550\u2550\u2550\u255D \u2588\u2588\u2551\u2588\u2588\u2551     \u2588\u2588\u2554\u2550\u2550\u2588\u2588\u2557\u2588\u2588\u2554\u2550\u2550\u2550\u2550\u255D\u2588\u2588\u2554\u2550\u2550\u2588\u2588\u2557\r\n\u2588\u2588\u2551  \u2588\u2588\u2588\u2557\u2588\u2588\u2551\u2588\u2588\u2551     \u2588\u2588\u2551  \u2588\u2588\u2551\u2588\u2588\u2588\u2588\u2588\u2557  \u2588\u2588\u2551  \u2588\u2588\u2551\r\n\u2588\u2588\u2551   \u2588\u2588\u2551\u2588\u2588\u2551\u2588\u2588\u2551     \u2588\u2588\u2551  \u2588\u2588\u2551\u2588\u2588\u2554\u2550\u2550\u255D  \u2588\u2588\u2551  \u2588\u2588\u2551\r\n\u255A\u2588\u2588\u2588\u2588\u2588\u2588\u2554\u255D\u2588\u2588\u2551\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2557\u2588\u2588\u2588\u2588\u2588\u2588\u2554\u255D\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2557\u2588\u2588\u2588\u2588\u2588\u2588\u2554\u255D\r\n \u255A\u2550\u2550\u2550\u2550\u2550\u255D \u255A\u2550\u255D\u255A\u2550\u2550\u2550\u2550\u2550\u2550\u255D\u255A\u2550\u2550\u2550\u2550\u2550\u255D \u255A\u2550\u2550\u2550\u2550\u2550\u2550\u255D\u255A\u2550\u2550\u2550\u2550\u2550\u255D \r\n');
+
   var React = require('react');
+
+  var Router = require('react-router');
+  var Link = Router.Link;
+  var Route = Router.Route;
+  var RouteHandler = Router.RouteHandler;
+  var DefaultRoute = Router.DefaultRoute;
+
   var Signup = require('./components/signup');
   var Login = require('./components/login');
   var Logout = require('./components/logout');
   var Dashboard = require('./components/dashboard');
-  var Router = require('react-router');
-  var Store = require('./stores/store.js');
-  var Route = Router.Route;
   var Settings = require('./components/settings');
-  var History = require('./components/history');
+  var Emails = require('./components/emails');
   var VIP = require('./components/vip');
+  var Store = require('./stores/store.js');
   var Actions = require('./actions/actions');
-  var RouteHandler = Router.RouteHandler;
-  var Link = Router.Link;
-  var DefaultRoute = Router.DefaultRoute;
 
   var App = React.createClass({
 
@@ -33,7 +46,7 @@ $(document).ready(function () {
       <Route name="login" handler={Login} />
       <Route name="logout" handler={Logout} />
       <Route name="dashboard" handler={Dashboard}>
-        <Route name="history" handler={History} />
+        <Route name="emails" handler={Emails} />
         <Route name="settings" handler={Settings} />
         <Route name="VIP" handler={VIP} />
       </Route>
