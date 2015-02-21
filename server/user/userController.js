@@ -22,7 +22,7 @@ module.exports = {
     stripe.customers.create({
       description: 'Customer for test@example.com',
       email: req.body.forwardEmail
-    }, function (err, customer) {
+    }, function (error, customer) {
       if (error) {
         console.log(error);
       } else {
@@ -218,6 +218,59 @@ module.exports = {
           reject('Looking for a user that does not exist');
         } else {
           resolve(user.rate);
+        }
+      });
+    });
+  },
+
+  addCard: function (req, res) {
+    User.findOne({username: req.cookies.username}, function (error, user) {
+      if (error) {
+        console.log(error);
+      } else {
+        stripe.customers.createCard(user.stripeId, {
+          card: {
+            number: req.body.cardNumber,
+            exp_month: req.body.expMonth,
+            exp_year: req.body.expYear,
+            cvc: req.body.cvc,
+            name: req.body.cardHolderName
+          }
+        }, function (error, card) {
+          if (error) {
+            console.log(error);
+            res.status(400).send(error);
+          } else {
+            res.sendStatus(201);
+          }
+        });
+      }
+    });
+  },
+
+  cashOut: function (req, res) {
+    User.findOne({username: req.cookies.username}, function (error, user) {
+      if (user.balance === 0) {
+        res.status(200).send(user);
+      }
+      stripe.transfers.create({
+        amount: user.balance * 0.70,
+        currency: 'usd',
+        recipient: user.stripeId,
+        description: 'Gilded.club balance'
+      }, function (error, transfer) {
+        if (error) {
+          console.log(error);
+          res.status(400).send(error);
+        } else {
+          User.findOneAndUpdate({_id: user.id}, {balance: 0}, function (error, updatedUser) {
+            if (error) {
+              console.log(error);
+              res.status(400).send(error);
+            } else {
+              res.send(201).send(updatedUser);
+            }
+          });
         }
       });
     });
