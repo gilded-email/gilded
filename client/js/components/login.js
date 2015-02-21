@@ -1,31 +1,35 @@
 var React = require('react');
+
 var mui = require('material-ui');
 var TextField = mui.TextField;
 var RaisedButton = mui.RaisedButton;
-var Router = require('react-router');
 var MenuItem = mui.MenuItem;
+
+var Router = require('react-router');
 var Link = Router.Link;
-var Store = require('../stores/store');
+
 var Actions = require('../actions/actions');
-var Store = require('../stores/store.js');
-var StoreWatchMixin = require('../mixins/StoreWatchMixin');
+var Store = require('../stores/store');
 
 var Login = React.createClass({
 
   mixins: [Router.Navigation, Router.State],
 
   getInitialState:function(){
+    return null;
+  },
+
+  componentWillMount: function(){
     if (Store.isUserLoggedIn()) {
       this.transitionTo('dashboard');
     }
-    return null;
-  },
-  componentWillMount:function(){
     Store.addChangeListener(this._onChange);
   },
+
   componentWillUnmount:function(){
     Store.removeChangeListener(this._onChange);
   },
+
   _onChange:function(){
     this.setState(this.getInitialState(this));
   },
@@ -37,10 +41,6 @@ var Login = React.createClass({
     user.username = this.refs.username.getValue();
     user.password = this.refs.password.getValue();
     Actions.loginUser(user);
-  },
-
-  logout: function () {
-    Actions.logout();
   },
 
 	render: function() {
