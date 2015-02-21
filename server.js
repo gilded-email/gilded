@@ -11,19 +11,19 @@ var email = require('./server/email/emailController.js');
 var payment = require('./server/payment/paymentController.js');
 var marketing = require('./server/marketing/marketingController.js');
 
-var privateKey = fs.readFileSync('./key.pem');
-var certificate = fs.readFileSync('./server.crt');
-var credentials = {key: privateKey, cert: certificate};
+// var privateKey = fs.readFileSync('./key.pem');
+// var certificate = fs.readFileSync('./server.crt');
+// var credentials = {key: privateKey, cert: certificate};
 
 var app = express();
 
-app.set('httpPort', 8080);
-app.set('httpsPort', process.env.PORT || 3000);
+app.set('httpPort', process.env.PORT || 8080);
+// app.set('httpsPort', 3000);
 app.set('host', process.env.HOST || 'localhost');
 
 http.createServer(app).listen(app.get('httpPort'));
-https.createServer(credentials, app).listen(app.get('httpsPort'));
-console.log('Server is listening on http://' + app.get('host') + ':' + app.get('httpPort') + ' and https://' + app.get('host') + ':' + app.get('httpsPort'));
+// https.createServer(credentials, app).listen(app.get('httpsPort'));
+console.log('Server is listening on http://' + app.get('host') + ':' + app.get('httpPort')); // + ' and https://' + app.get('host') + ':' + app.get('httpsPort'));
 
 app.use(cookieParser());
 app.use(bodyParser.json());
@@ -36,9 +36,7 @@ app.use('/api/user/settings/rate', user.checkSession, user.changeRate);
 app.use('/api/user/settings/password', user.checkSession, user.changePassword);
 app.use('/api/user/settings/email', user.checkSession, user.updateForwardEmail);
 
-app.post('/signup', function (req, res) {
-  marketing.addSignup(req, res);
-});
+app.post('/signup', marketing.signup);
 
 app.post('/api/logout', user.logout);
 app.post('/api/user/vipList', user.checkSession, user.addVip);
