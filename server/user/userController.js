@@ -22,30 +22,34 @@ module.exports = {
     stripe.customers.create({
       description: 'Customer for test@example.com',
       email: req.body.forwardEmail
-    }, function(err, customer) {
-      var userData = {
-        username: req.body.username,
-        forwardEmail: req.body.forwardEmail,
-        stripeId: customer.id
-      };
+    }, function (err, customer) {
+      if (error) {
+        console.log(error);
+      } else {
+        var userData = {
+          username: req.body.username,
+          forwardEmail: req.body.forwardEmail,
+          stripeId: customer.id
+        };
 
-      bcrypt.hash(req.body.password, null, null, function (error, hash) {
-        if (error) {
-          console.log(error);
-          res.sendStatus(409);
-        } else {
-          userData.password = hash;
-          User.create(userData, function (error, user) {
-            if (error) {
-              console.log(error);
-              res.status(409).send(error);
-            } else {
-              req.user = user;
-              next();
-            }
-          });
-        }
-      });
+        bcrypt.hash(req.body.password, null, null, function (error, hash) {
+          if (error) {
+            console.log(error);
+            res.sendStatus(409);
+          } else {
+            userData.password = hash;
+            User.create(userData, function (error, user) {
+              if (error) {
+                console.log(error);
+                res.status(409).send(error);
+              } else {
+                req.user = user;
+                next();
+              }
+            });
+          }
+        });
+      }
     });
   },
 
