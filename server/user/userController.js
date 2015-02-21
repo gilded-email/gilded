@@ -99,7 +99,7 @@ module.exports = {
   },
 
   storeSession: function (req, res, next) {
-    var expiration = Date.now() + (100 * 60 * 62 * 24 * 30);
+    var expiration = Date.now() + (1000 * 60 * 60 * 24 * 30);
     tokenGen(req.body.username, expiration)
       .then(function (token) {
         res.cookie('username', req.body.username);
