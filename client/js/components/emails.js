@@ -1,11 +1,11 @@
 var React = require('react');
 var moment = require('moment');
+var dollarString = require('dollar-string');
 var mui = require('material-ui');
 var Menu = mui.Menu;
 var Actions = require('../actions/actions');
-var StoreWatchMixin = require('../mixins/StoreWatchMixin');
 var Store = require('../stores/store');
-var dollarString = require('dollar-string');
+var StoreWatchMixin = require('../mixins/StoreWatchMixin');
 
 var getInitialState = function() {
   return {"escrow":[{"_id":"54e67b9b65379647526ddc60","email":"{\"to\":[\"tests@g.mtm.gs\"],\"from\":\"gildedtest@dsernst.com\",\"subject\":\"Test Email\",\"html\":\"<h1>Testing</h1>\",\"text\":\"Testing\"}","recipient":"tests","__v":0,"cost":100,"paid":false,"sentDate":"2015-02-20T00:11:07.123Z"},{"_id":"54e67b9be60a837653ab668f","email":"{\"envelope\":\"{\\\"to\\\":[\\\"tests@g.mtm.gs\\\"]}\",\"from\":\"Tester Guy <gildedtest@dsernst.com>\",\"subject\":\"Test Email\",\"html\":\"<h1>Testing</h1>\",\"text\":\"Testing\"}","recipient":"tests","__v":0,"cost":500,"paid":false,"sentDate":"2015-02-20T00:11:07.359Z"}]};
@@ -54,18 +54,14 @@ var Email = React.createClass({
   }
 });
 
-var History = React.createClass({
+var Emails = React.createClass({
   mixins: [StoreWatchMixin(getInitialState)],
   render: function () {
-    console.log(this.state.escrow);
-
-
     return (
-
-      <div className="history">
+      <div className="emails">
 
         <div className="dashboard">
-          <h1>History</h1>
+          <h1>Emails</h1>
 
           <Escrows data={this.state.escrow} />
 
@@ -75,4 +71,4 @@ var History = React.createClass({
   }
 });
 
-module.exports = History;
+module.exports = Emails;

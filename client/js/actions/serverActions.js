@@ -19,7 +19,7 @@ module.exports = {
     AppDispatcher.handleViewAction({
       actionType: AppConstants.GET_USER_DASHBOARD_INFO,
       userData: userData
-    })
+    });
   },
 
 // VIPs
