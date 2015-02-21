@@ -16,13 +16,13 @@ var Login = React.createClass({
   mixins: [Router.Navigation, Router.State],
 
   getInitialState:function(){
+    if (Store.isUserLoggedIn()) {
+      this.transitionTo('dashboard');
+    }
     return null;
   },
 
   componentWillMount: function(){
-    if (Store.isUserLoggedIn()) {
-      this.transitionTo('dashboard');
-    }
     Store.addChangeListener(this._onChange);
   },
 
