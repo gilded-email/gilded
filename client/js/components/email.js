@@ -10,23 +10,24 @@ var Actions = require('../actions/actions');
 var Store = require('../stores/store');
 var StoreWatchMixin = require('../mixins/StoreWatchMixin');
 
-var getInitialState = function() {
-  return null;
-};
-
 var Email = React.createClass({
-  mixins: [Router.State, StoreWatchMixin(getInitialState)],
+  mixins: [Router.State],
+
+  emailData: function () {
+    var emailId = this.getParams().emailId;
+    return this.props.escrow[emailId]; //.userData.escrow[this.getParams().emailId].email);
+
+  },
+
   render: function () {
-    console.log('im running')
-
     console.log(this.props);
+
     return (
-      <div className="emails">
-
+      <div className="email">
         <div className="dashboard">
-
-        {this.props.emailId}
-
+          <pre>
+            {this.emailData()}
+          </pre>
         </div>
       </div>
     );
