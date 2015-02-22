@@ -1,0 +1,15 @@
+{
+  "ecmaFeatures": {
+    "jsx": true
+  },
+  "env": {
+    "browser": true,
+    "node": true,
+    "jquery": true
+  },
+  "rules": {
+    "strict": 0,
+    "no-underscore-dangle": 0,
+    "quotes": [1, 'single'],
+  }
+}
