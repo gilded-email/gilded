@@ -31,8 +31,13 @@ module.exports = {
     });
   },
 
+  paymentRequest: function (req, res) {
+    var cost = Math.ceil((req.cost * 1.029) + 30);
+    res.render('payment', {name: 'Gilded Club Payment', amount: cost});
+  },
+
   verification: function (req, res, next) {
-    var cost = (req.cost * 1.029) + 30; //Rate + (Rate * 2.9% fee) + Stripe Base Fee of $0.30
+    var cost = Math.ceil((req.cost * 1.029) + 30); //Rate + (Rate * 2.9% fee) + Stripe Base Fee of $0.30
     makePayment(req.body.stripeToken, cost, next);
   }
 };

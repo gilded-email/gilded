@@ -36,6 +36,9 @@ app.use('/api/user/settings/rate', user.checkSession, user.changeRate);
 app.use('/api/user/settings/password', user.checkSession, user.changePassword);
 app.use('/api/user/settings/email', user.checkSession, user.updateForwardEmail);
 
+app.set('views', './views');
+app.set('view engine', 'jade');
+
 app.post('/signup', marketing.signup);
 
 app.post('/api/logout', user.logout);
@@ -45,8 +48,5 @@ app.get('/api/user/dashboard', user.checkSession, user.getUser, email.fetchEscro
 app.post('/api/join', user.join, user.storeSession, email.fetchEscrows);
 app.post('/api/login', user.login, user.storeSession, email.fetchEscrows);
 
-app.get('/pay/:id', function (req, res) {
-  res.sendFile(path.join(__dirname, './dist/payment.html'));
-});
-
+app.get('/pay/:id', payment.getDetails, payment.paymentRequest);
 app.post('/pay/:id', payment.getDetails, payment.verification, email.findEmailInEscrow, email.findAndPayUserFromEscrow, email.releaseFromEscrow);
