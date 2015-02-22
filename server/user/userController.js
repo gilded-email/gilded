@@ -87,7 +87,7 @@ module.exports = {
     });
   },
 
-  startProfile: function (req, res) {
+  sendConfirmation: function (req, res) {
     res.status(201).send(req.user);
   },
 
