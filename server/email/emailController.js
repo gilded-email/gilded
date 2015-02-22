@@ -120,18 +120,35 @@ module.exports = {
     res.redirect('/');
   },
 
+  // fetchEscrows: function (req, res) {
+  //   Escrow.find({recipient: req.user.username}, function (error, emails) {
+  //     if (error) {
+  //       console.log(error);
+  //       res.status(400).send(error);
+  //     } else {
+  //       var data = {
+  //         user: req.user,
+  //         escrow: emails
+  //       };
+  //       res.status(201).send(data);
+  //     }
+  //   });
+  // }
+
+
+
+  //=========================================
+  // FAKE DATA for developing client
   fetchEscrows: function (req, res) {
-    Escrow.find({recipient: req.user.username}, function (error, emails) {
-      if (error) {
-        console.log(error);
-        res.status(400).send(error);
-      } else {
-        var data = {
-          user: req.user,
-          escrow: emails
-        };
-        res.status(201).send(data);
-      }
-    });
+    var data = {
+      user: req.user,
+      escrow: [
+        {"_id":"54e67b9b65379647526ddc60","email":"{\"to\":[\"tests@g.mtm.gs\"],\"from\":\"gildedtest@dsernst.com\",\"subject\":\"Test Email\",\"html\":\"<h1>Testing</h1>\",\"text\":\"Testing\"}","recipient":"tests","__v":0,"cost":100,"paid":false,"sentDate":"2015-02-20T00:11:07.123Z"},
+        {"_id":"54e67b9be60a837653ab668f","email":"{\"envelope\":\"{\\\"to\\\":[\\\"tests@g.mtm.gs\\\"]}\",\"from\":\"Tester Guy <gildedtest@dsernst.com>\",\"subject\":\"Test Email\",\"html\":\"<h1>Testing</h1>\",\"text\":\"Testing\"}","recipient":"tests","__v":0,"cost":500,"paid":false,"sentDate":"2015-02-20T00:11:07.359Z"}
+      ]
+    };
+    res.status(201).send(data);
   }
+  //=========================================
+
 };
