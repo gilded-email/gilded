@@ -59,6 +59,8 @@ var VIP = React.createClass({
 
   mixins: [StoreWatchMixin(getInitialState)],
 
+  
+
   addVipHandler: function (e) {
     e.preventDefault();
     this.state.add.push(this.refs.email.getValue());

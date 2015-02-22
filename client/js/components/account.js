@@ -10,6 +10,7 @@ var TextField = mui.TextField;
 var RaisedButton = mui.RaisedButton;
 var Paper = mui.Paper;
 var dollarString = require('dollar-string');
+var Snackbar = mui.Snackbar 
 
 var getInitialState = function() {
   return null;
@@ -42,6 +43,15 @@ var Settings = React.createClass({
     Actions.updatePassword(newPassword);
   },
 
+  componentWillUpdate: function(nextProps, nextState) {
+    if (nextProps !== this.props && this.props.settings.forwardEmail !== undefined) {
+      this.refs.snackbar.show();
+      setTimeout(function() {
+        this.refs.snackbar.dismiss();
+      }.bind(this), 1000);
+    }
+  },
+
 
   render: function() {
     return (
@@ -59,10 +69,11 @@ var Settings = React.createClass({
             <Paper className="dashboard-subcontent" zDepth={4}>
               <div className="dashboard-subheading">Change Password</div>
                 <div className="dashboard-subheading-content">
-                  <TextField ref="newPassword" className="new-password" floatingLabelText="Enter new password" />
+                  <TextField ref="newPassword" className="new-password" type={"password"} floatingLabelText="Enter new password" />
                   <RaisedButton className="new-password-save" label="Change Password" secondary={true} onClick={this.changePassword} />
                 </div>
             </Paper>
+            <Snackbar ref="snackbar" message="User Settings Saved" />
         </div>
     )
   }
