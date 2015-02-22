@@ -1,0 +1,40 @@
+doctype html
+html
+  head
+    meta(charset='utf-8')
+    title!= name
+    meta(name='viewport', content='initial-scale=1', maximum-scale='1', user-scalable='no')
+    link(href="../bower_components/bootstrap/dist/css/bootstrap.min.css", rel="stylesheet")
+    link(href="../css/payment.css", rel="stylesheet")
+  body
+    div(class="container")
+      div(class="navbar-wrapper")
+        div(class="container")
+          nav(class="navbar navbar-static-top")
+            div(class="container")
+              div(class="navbar-header")
+                button(type="button", class="navbar-toggle collapsed", data-toggle="collapse", data-target="#navbar", aria-expanded="false", aria-controls="navbar")
+                  span(class="sr-only") Toggle navigation
+                  span(class="icon-bar")
+                  span(class="icon-bar")
+                  span(class="icon-bar")
+                a(class="navbar-brand", href="#") GILDED
+              div(id="navbar", class="navbar-collapse collapse")
+                ul(class="nav navbar-nav")
+                  li
+                    a(href="/") Learn More
+                  li
+                    a(href="/signup.html") Join
+                  li
+                    a(href="/app/#/login") Login
+    div(class="container")
+      div(class="jumbotron")
+        div(class="container")
+          h1(class="text-center") Welcome
+          p Your recipient's inbox is protected. In order to reach them, they are requesting a fee.
+          p Don't worry, we are holding your message in escrow for a week. It will be immediately forwarded to them once payment is complete.
+        div(class="payment")
+            form(method="post")
+              script(src="https://checkout.stripe.com/checkout.js", class="stripe-button", data-key="pk_test_8kvjMq55qMQ1JwQ73W73C8no", data-amount!= amount, data-name="Gilded Club", data-description!= '$' + (amount/100).toFixed(2), data-image="/assets/icon-128x128.png")
+    script(src="../bower_components/jquery/dist/jquery.min.js")
+    script(src="../bower_components/bootstrap/dist/js/bootstrap.min.js")
