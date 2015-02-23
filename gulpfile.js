@@ -1,20 +1,14 @@
+"use strict";
+
 var gulp = require('gulp');
 var del = require('del');
 var browserify = require('browserify');
 var reactify = require('reactify');
 var source = require('vinyl-source-stream');
-var jshint = require('gulp-jshint');
 var less = require('gulp-less');
-var shell = require('gulp-shell');
 var livereload = require('gulp-livereload');
 var nodemon = require('gulp-nodemon');
-
-var paths = {
-  scripts: ['./client/js/**/*.js'],
-  html: ['public/**/*.html'],
-  server: ['server/**/*.js'],
-  test: ['specs/**/*.js']
-};
+var eslint = require('gulp-eslint');
 
 gulp.task('clean', function () {
   del.sync([
@@ -39,17 +33,17 @@ gulp.task('lint-client', function () {
   return gulp.src([
     './client/**/*.js'
     ])
-    .pipe(jshint())
-    .pipe(jshint.reporter('jshint-stylish'));
+    .pipe(eslint())
+    .pipe(eslint.format());
 });
 
 gulp.task('lint-server', function () {
   return gulp.src([
     './*.js',
-    './server/**/*.js',
+    './server/**/*.js'
     ])
-    .pipe(jshint())
-    .pipe(jshint.reporter('jshint-stylish'));
+    .pipe(eslint())
+    .pipe(eslint.format());
 });
 
 
