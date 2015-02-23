@@ -226,6 +226,12 @@ body > footer > p {
   .jumbotron h1 {
     font-size: 3em;
   }
+
+  .navbar-nav {
+    background-color: rgba(0, 0, 0, .6);
+    border-radius: 5px;
+  }
+
 }
 
 @media (min-width: 768px) {
