@@ -58,11 +58,11 @@ describe('User Module', function () {
   });
 
   xit('should be able to generate secure sessions per user', function (done) {
-
+    assert.equal(false, true);
   });
 
   xit('should be able to confirm user session', function (done) {
-
+    assert.equal(false, true);
   });
 
   it('should be able to add VIPs', function (done) {
@@ -215,7 +215,7 @@ describe('Email Module', function () {
       return {send: function (data) {
         assert.equal(Array.isArray(data.escrow), true);
         done();
-      }}
+      }};
     }});
   });
 
@@ -235,13 +235,13 @@ describe('Payments Module', function () {
   });
 
   it('should be able to calculate total earnings', function (done) {
-    Escrow.find({recipient: 'tests'}, function (err, emails) {
+    Escrow.find({recipient: 'tests'}, function (error, emails) {
       var total = emails.reduce(function (memo, email) {
         if (email.paid === true) {
           return memo + email.cost;
         }
         return memo;
-      });
+      }, 0);
       assert.equal(typeof total, 'number');
       done();
     });
