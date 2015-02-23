@@ -91,7 +91,8 @@ gulp.task('run', ['build'], function () {
     ignore: [
       'gulpfile.js',
       'client/**/*.js',
-      'dist/**/*.js'
+      'dist/**/*.js',
+      'node_modules'
     ]
   });
 });
