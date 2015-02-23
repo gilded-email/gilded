@@ -4,6 +4,7 @@ var mui = require('material-ui');
 var TextField = mui.TextField;
 var RaisedButton = mui.RaisedButton;
 var MenuItem = mui.MenuItem;
+var Paper = mui.Paper;
 
 var Router = require('react-router');
 var Link = Router.Link;
@@ -45,7 +46,7 @@ var Login = React.createClass({
 
 	render: function() {
 		return (
-  			<div className="login-form">
+  			<Paper className="login-form">
           <div className="mui-font-style-display-3">Log In</div>
   				<form>
   					<TextField
@@ -55,7 +56,7 @@ var Login = React.createClass({
             <RaisedButton onClick={this.handleClick} className="login-button" label="Log In" secondary={true} />
             <Link className="signup-link" to="signup">Not a member? Sign up here.</Link>
   				</form>
-  			</div>
+  			</Paper>
 		)
 	}
 })
