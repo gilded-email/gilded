@@ -4,6 +4,7 @@ var User = require('./userModel.js');
 var dispatcher = 'jenkins@' + domain;
 var bcrypt = require('bcrypt-nodejs');
 var stripe = require('stripe')(process.env.STRIPE);
+var payoutRatio = 0.7;
 
 var tokenGen = function (username, expiration) {
   return new Promise(function (resolve, reject) {
@@ -113,18 +114,19 @@ module.exports = {
   },
 
   checkSession: function (req, res, next) {
-    bcrypt.compare(process.env.SECRET + req.cookies.username + req.cookies.userExpires, req.cookies.userToken, function (error, result) {
+    var checkToken = process.env.SECRET + req.cookies.username + req.cookies.userExpires;
+    bcrypt.compare(checkToken, req.cookies.userToken, function (error, result) {
       if (error) {
         console.log("compare err", error);
         res.redirect('/login');
-      } else if (result) {
+      } else if (!result) {
+        res.redirect('/login');
+      } else {
         if (req.cookies.userExpiration < Date.now()) {
           res.redirect('/login');
         } else {
           next();
         }
-      } else {
-        res.redirect('/login');
       }
     });
   },
@@ -254,7 +256,7 @@ module.exports = {
         res.status(200).send(user);
       }
       stripe.transfers.create({
-        amount: user.balance * 0.70,
+        amount: user.balance * payoutRatio,
         currency: 'usd',
         recipient: user.stripeId,
         description: 'Gilded.club balance'
