@@ -4,14 +4,14 @@ var Escrow = require('../email/emailModel.js');
 var makePayment = function (card, cost, callback) {
   stripe.charges.create({
     amount: cost,
-    currency: "usd",
+    currency: 'usd',
     card: card,
-    description: "Charge for test@example.com"
+    description: 'Charge for test@example.com'
   }, function (error, charge) {
     if (error) {
       console.log(error);
     } else {
-      console.log("Payment received");
+      console.log('Payment received');
       callback();
     }
   });
