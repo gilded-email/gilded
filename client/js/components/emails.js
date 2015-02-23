@@ -13,25 +13,8 @@ var Actions = require('../actions/actions');
 var Store = require('../stores/store');
 var StoreWatchMixin = require('../mixins/StoreWatchMixin');
 
-
-/**
-[
-  {"_id":"54e67b9b65379647526ddc60","email":"{\"to\":[\"tests@g.mtm.gs\"],\"from\":\"gildedtest@dsernst.com\",\"subject\":\"Test Email\",\"html\":\"<h1>Testing</h1>\",\"text\":\"Testing\"}","recipient":"tests","__v":0,"cost":100,"paid":false,"sentDate":"2015-02-20T00:11:07.123Z"},
-  {"_id":"54e67b9be60a837653ab668f","email":"{\"envelope\":\"{\\\"to\\\":[\\\"tests@g.mtm.gs\\\"]}\",\"from\":\"Tester Guy <gildedtest@dsernst.com>\",\"subject\":\"Test Email\",\"html\":\"<h1>Testing</h1>\",\"text\":\"Testing\"}","recipient":"tests","__v":0,"cost":500,"paid":false,"sentDate":"2015-02-20T00:11:07.359Z"}
-]
-**/
-
-var fakeData = [
-  {"_id":"54e67b9b65379647526ddc60","email":"{\"to\":[\"tests@g.mtm.gs\"],\"from\":\"gildedtest@dsernst.com\",\"subject\":\"Test Email\",\"html\":\"<h1>Testing</h1>\",\"text\":\"Testing\"}","recipient":"tests","__v":0,"cost":100,"paid":false,"sentDate":"2015-02-20T00:11:07.123Z"},
-  {"_id":"54e67b9be60a837653ab668f","email":"{\"envelope\":\"{\\\"to\\\":[\\\"tests@g.mtm.gs\\\"]}\",\"from\":\"Tester Guy <gildedtest@dsernst.com>\",\"subject\":\"Test Email\",\"html\":\"<h1>Testing</h1>\",\"text\":\"Testing\"}","recipient":"tests","__v":0,"cost":500,"paid":false,"sentDate":"2015-02-20T00:11:07.359Z"}
-]
-
 var getInitialState = function() {
-  // var data = [];
-  // data = Store.getUserEmails();
-  return {
-    escrow: fakeData
-  };
+  return null;
 };
 
 var Escrows = React.createClass({
@@ -72,9 +55,11 @@ var Escrows = React.createClass({
 
 var Email = React.createClass({
   mixins: [Router.Navigation],
+
   viewEmail: function () {
     this.transitionTo('email', {emailId: this.props.emailId});
   },
+
   render: function () {
     return (
       <tr onClick={this.viewEmail}>
@@ -98,7 +83,7 @@ var Emails = React.createClass({
         <div className="dashboard">
           <h1>Emails</h1>
 
-          <Escrows data={fakeData} />
+          <Escrows data={this.props.escrow} />
 
         </div>
       </div>

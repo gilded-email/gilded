@@ -11,8 +11,17 @@ var _userVIPs = [];
 var _userEmails = {};
 var _userSettings = {};
 
+/*eslint-disable */
+var fakeEmails = [
+  {"_id":"1","email":"{\"to\":[\"you@gilded.club\"],\"from\":\"welcome@gilded.club\",\"subject\":\"Welcome to Gilded\",\"html\":\"<h1>Welcome to Gilded!</h1>\",\"text\":\"Thanks for signing up with Gilded. Enjoy!\"}","recipient":"welcome","__v":0,"cost":1,"paid":true,"sentDate":"2015-02-22T00:11:07.123Z"},
+  {"_id":"54e67b9b65379647526ddc60","email":"{\"to\":[\"tests@g.mtm.gs\"],\"from\":\"gildedtest@dsernst.com\",\"subject\":\"Test Email\",\"html\":\"<h1>Testing</h1>\",\"text\":\"Testing\"}","recipient":"tests","__v":0,"cost":100,"paid":false,"sentDate":"2015-02-20T00:11:07.123Z"},
+  {"_id":"54e67b9be60a837653ab668f","email":"{\"envelope\":\"{\\\"to\\\":[\\\"tests@g.mtm.gs\\\"]}\",\"from\":\"Tester Guy <gildedtest@dsernst.com>\",\"subject\":\"Test Email\",\"html\":\"<h1>Testing</h1>\",\"text\":\"Testing\"}","recipient":"tests","__v":0,"cost":500,"paid":false,"sentDate":"2015-02-20T00:11:07.359Z"}
+];
+/*eslint-enable */
+
+
 var _logUserIn = function(userData) {
-  _userEmails = userData.escrow;
+  _userEmails = fakeEmails; // userData.escrow;
   _userVIPs = userData.user.vipList;
   _userSettings = {
     balance: userData.user.balance,
@@ -29,7 +38,8 @@ var _logUserOut = function() {
 };
 
 var _updateDashboardInfo = function(userData) {
-  _userEmails = userData.escrow;
+  // Concating Fake Data for testing
+  _userEmails = userData.escrow.concat(fakeEmails);
   _userVIPs = userData.user.vipList;
   _userSettings = {
     balance: userData.user.balance,
