@@ -5,6 +5,7 @@ var React = require('react');
 var mui = require('material-ui');
 var TextField = mui.TextField;
 var RaisedButton = mui.RaisedButton;
+var Paper = mui.Paper;
 var Router = require('react-router');
 var Link = Router.Link;
 var Actions = require('../actions/actions');
@@ -44,7 +45,7 @@ var Signup = React.createClass({
 
 	render: function() {
 		return (
-  			<div className="signup-form">
+  			<Paper zDepth={4} className="signup-form">
           <div className="mui-font-style-display-3">
           Sign Up
           </div>
@@ -61,7 +62,7 @@ var Signup = React.createClass({
             <Link className="login-link" to="login">Already a member? Log in here.</Link>
 
   				</form>
-  			</div>
+  			</Paper>
 		)
 	}
 })

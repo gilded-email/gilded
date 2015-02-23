@@ -3,8 +3,10 @@ var mui = require('material-ui');
 var TextField = mui.TextField;
 var RaisedButton = mui.RaisedButton;
 var Paper = mui.Paper;
+var Snackbar = mui.Snackbar 
 var StoreWatchMixin = require('../mixins/StoreWatchMixin');
 var Store = require('../stores/store');
+var validator = require('email-validator');
 
 var Actions = require('../actions/actions');
 
@@ -59,13 +61,27 @@ var VIP = React.createClass({
 
   mixins: [StoreWatchMixin(getInitialState)],
 
+
   
 
   addVipHandler: function (e) {
     e.preventDefault();
-    this.state.add.push(this.refs.email.getValue());
-    this.refs.email.setValue('');
-    Actions.updateVips(this.state);
+    var validated = validator.validate(this.refs.email.getValue());
+    if (!validated) {
+      this.refs.invalidEmail.show();
+      setTimeout(function() {
+        this.refs.invalidEmail.dismiss();
+      }.bind(this), 1000);
+    } else if (this.props.vips.indexOf(this.refs.email.getValue()) > -1){
+      this.refs.duplicateEmail.show();
+      setTimeout(function() {
+        this.refs.duplicateEmail.dismiss();
+      }.bind(this), 1000);
+    } else {
+      this.state.add.push(this.refs.email.getValue());
+      this.refs.email.setValue('');
+      Actions.updateVips(this.state); 
+    }
   },
 
   render: function() {
@@ -90,6 +106,9 @@ var VIP = React.createClass({
           </Paper>
 
         </div>
+        <Snackbar ref="duplicateEmail" message="VIP contact already exists" />
+        <Snackbar ref="invalidEmail" message="Please enter a valid email" />
+        <Snackbar ref="validEmail" message="Contact was added to VIP list" />
       </div>
     );
   }

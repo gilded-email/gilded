@@ -48,6 +48,7 @@
     "cookie": "^0.1.2",
     "del": "^1.1.1",
     "dollar-string": "0.0.1",
+    "email-validator": "^1.0.1",
     "es6-promise": "^2.0.1",
     "gulp": "^3.8.11",
     "gulp-browserify": "^0.5.1",
