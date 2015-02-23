@@ -46,22 +46,24 @@ var Signup = React.createClass({
 	render: function() {
 		return (
   			<Paper zDepth={4} className="signup-form">
-          <div className="mui-font-style-display-3">
-          Sign Up
+          <div className="signup-content">
+            <div className="mui-font-style-display-3">
+            Sign Up
+            </div>
+    				<form>
+    					<TextField
+    					  ref="username" className="signup-input" floatingLabelText="Username" />
+    					<TextField
+    					  ref="email" className="signup-input" floatingLabelText="Email" />
+    					<TextField
+    					  ref="password" className="signup-input" floatingLabelText="Password" />
+
+              <RaisedButton onClick={this.handleClick} className="signup-button" label="Join the Club" secondary={true} />
+
+              <Link className="login-link" to="login">Already a member? Log in here.</Link>
+
+    				</form>
           </div>
-  				<form>
-  					<TextField
-  					  ref="username" className="signup-input" floatingLabelText="Username" />
-  					<TextField
-  					  ref="email" className="signup-input" floatingLabelText="Email" />
-  					<TextField
-  					  ref="password" className="signup-input" floatingLabelText="Password" />
-
-            <RaisedButton onClick={this.handleClick} className="signup-button" label="Join the Club" secondary={true} />
-
-            <Link className="login-link" to="login">Already a member? Log in here.</Link>
-
-  				</form>
   			</Paper>
 		)
 	}

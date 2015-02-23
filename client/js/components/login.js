@@ -47,15 +47,17 @@ var Login = React.createClass({
 	render: function() {
 		return (
   			<Paper className="login-form">
-          <div className="mui-font-style-display-3">Log In</div>
-  				<form>
-  					<TextField
-  					  ref="username" className="login-input" floatingLabelText="Username" />
-  					<TextField
-  					  ref="password" className="login-input" floatingLabelText="Password" />
-            <RaisedButton onClick={this.handleClick} className="login-button" label="Log In" secondary={true} />
-            <Link className="signup-link" to="signup">Not a member? Sign up here.</Link>
-  				</form>
+          <div className="login-content">
+            <div className="mui-font-style-display-3">Log In</div>
+    				<form>
+    					<TextField
+    					  ref="username" className="login-input" floatingLabelText="Username" />
+    					<TextField
+    					  ref="password" className="login-input" floatingLabelText="Password" />
+              <RaisedButton onClick={this.handleClick} className="login-button" label="Log In" secondary={true} />
+              <Link className="signup-link" to="signup">Not a member? Sign up here.</Link>
+    				</form>
+          </div>
   			</Paper>
 		)
 	}
