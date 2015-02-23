@@ -1,8 +1,8 @@
 require('dotenv').load();
-var fs = require('fs');
+// var fs = require('fs');
 var path = require('path');
 var http = require('http');
-var https = require('https');
+// var https = require('https');
 var express = require('express');
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');

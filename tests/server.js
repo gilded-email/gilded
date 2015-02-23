@@ -10,6 +10,13 @@ var User = require('../server/user/userModel.js');
 var Escrow = require('../server/email/emailModel.js');
 
 describe('User Module', function () {
+
+  User.remove({ username: 'tests' }, function (error) {
+    if (error) {
+      console.log(error);
+    }
+  });
+
   var testUser;
   var j = request.jar();
   it('should be able to sign up users', function (done) {
@@ -212,7 +219,7 @@ describe('Email Module', function () {
     }});
   });
 
-  it('should email back User Does Not Exist message for bad addresses', function () {
+  xit('should email back User Does Not Exist message for bad addresses', function () {
     assert.equal(false, true);
   });
 
@@ -223,7 +230,7 @@ describe('Email Module', function () {
 });
 
 describe('Payments Module', function () {
-  it('should be able to receive payments', function () {
+  xit('should be able to receive payments', function () {
     assert.equal(false, true);
   });
 
@@ -255,14 +262,14 @@ describe('Payments Module', function () {
     assert.equal(false, true);
   });
 
-  it('should charge based on email cost', function () {
+  xit('should charge based on email cost', function () {
     assert.equal(false, true);
     // had an email with cost 500
     // paid for it
     // stripe db showed a $5.00 increase in revenue
   });
 
-  it('should increment recipient balance based on email cost', function () {
+  xit('should increment recipient balance based on email cost', function () {
     assert.equal(false, true);
     // paid 500 for an email
     // users balance in db incremented by 500

@@ -117,7 +117,7 @@ module.exports = {
     var checkToken = process.env.SECRET + req.cookies.username + req.cookies.userExpires;
     bcrypt.compare(checkToken, req.cookies.userToken, function (error, result) {
       if (error) {
-        console.log("compare err", error);
+        console.log('Compare error: ', error);
         res.redirect('/login');
       } else if (!result) {
         res.redirect('/login');
