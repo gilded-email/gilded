@@ -53,7 +53,7 @@ var Login = React.createClass({
     					<TextField
     					  ref="username" className="login-input" floatingLabelText="Username" />
     					<TextField
-    					  ref="password" className="login-input" floatingLabelText="Password" />
+    					  ref="password" type={"password"} className="login-input" floatingLabelText="Password" />
               <RaisedButton onClick={this.handleClick} className="login-button" label="Log In" secondary={true} />
               <Link className="signup-link" to="signup">Not a member? Sign up here.</Link>
     				</form>
