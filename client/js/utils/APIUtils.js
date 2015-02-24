@@ -114,7 +114,7 @@ var api_utils = {
       });
   },
 
-  getUserDashboardInfo: function() {
+  getUserDashboardInfo: function () {
     request
       .get(API_ROOT + 'user/dashboard')
       .end(function (error, res) {
@@ -123,6 +123,19 @@ var api_utils = {
           return error;
         }
         serverActions.getUserDashboardInfo(res.body);
+      });
+  },
+
+  addCard: function (card) {
+    request
+      .post(API_ROOT + 'user/settings/card')
+      .send({card: card})
+      .end(function (error, res) {
+        if (error) {
+          console.log('card failed to post: ', error);
+          return error;
+        }
+        serverActions.addUserCard(res.status);
       });
   }
 

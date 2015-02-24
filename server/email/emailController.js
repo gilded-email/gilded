@@ -43,7 +43,7 @@ module.exports = {
       } else {
         console.log('fields: ', fields);
         // email = fields; // TODO
-        email.to = JSON.parse(fields.envelope).to;
+        email.to = JSON.parse(fields.envelope).to.toLowerCase();
         email.from = fields.from.split('<')[1].split('>')[0];
         email.subject = fields.subject;
         email.html = fields.html;
@@ -121,7 +121,7 @@ module.exports = {
   },
 
   fetchEscrows: function (req, res) {
-    Escrow.find({recipient: req.user.username}, function (error, emails) {
+    Escrow.find({recipient: req.user.username.toLowerCase()}, function (error, emails) {
       if (error) {
         console.log(error);
         res.status(400).send(error);

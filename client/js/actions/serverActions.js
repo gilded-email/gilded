@@ -52,5 +52,12 @@ module.exports = {
       actionType: AppConstants.UPDATE_USER_RATE,
       rate: userData.rate
     });
+  },
+
+  addUserCard: function (status) {
+    AppDispatcher.handleViewAction({
+      actionType: AppConstants.ADD_CARD_SUCCESS,
+      status: status
+    });
   }
 };

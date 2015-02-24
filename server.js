@@ -35,6 +35,7 @@ app.use('/api/escrow/', user.checkSession, email.fetchEscrows);
 app.use('/api/user/settings/rate', user.checkSession, user.changeRate);
 app.use('/api/user/settings/password', user.checkSession, user.changePassword);
 app.use('/api/user/settings/email', user.checkSession, user.updateForwardEmail);
+app.use('/api/user/settings/card', user.checkSession, user.addCard);
 
 app.set('views', './views');
 app.set('view engine', 'jade');

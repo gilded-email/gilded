@@ -51,6 +51,22 @@ var Settings = React.createClass({
     return dollarString.fromCents(0);
   },
 
+  addCard: function () {
+    var card = {
+      cardNumber: this.refs.cardNumber.getValue(),
+      expMonth: this.refs.expMonth.getValue(),
+      expYear: this.refs.expYear.getValue(),
+      cvc: this.refs.cvc.getValue(),
+      cardHolderName: this.refs.cardHolderName.getValue()
+    };
+    this.refs.cardNumber.setValue('');
+    this.refs.expMonth.setValue('');
+    this.refs.expYear.setValue('');
+    this.refs.cvc.setValue('');
+    this.refs.cardHolderName.setValue('');
+    Actions.addCard(card);
+  },
+
   render: function() {
     return (
         <div className="dashboard">
@@ -73,6 +89,12 @@ var Settings = React.createClass({
             <Paper className="dashboard-subcontent" zDepth={4}>
               <div className="dashboard-subheading">Credit Card Info</div>
                 <div className="dashboard-subheading-content">
+                  <TextField ref="cardNumber" className="cardnumber-input" hintText="xxxx xxxx xxxx 4242" floatingLabelText="Card Number" />
+                  <TextField ref="expMonth" className="expmonth-input" hintText="3" floatingLabelText="Expiration Month" />
+                  <TextField ref="expYear" className="expyear-input" hintText="17" floatingLabelText="Expiration Year" />
+                  <TextField ref="cvc" className="cvc-input" hintText="323" floatingLabelText="CVC" />
+                  <TextField ref="cardHolderName" className="cardholdername-input" hintText="John Doe" floatingLabelText="Card Holder Name" />
+                  <RaisedButton className="card-add" label="Add Card" secondary={true} onClick={this.addCard} />
                 </div>
             </Paper>
         </div>
