@@ -1,6 +1,6 @@
-var AppConstants = require("../constants/constants.js");
-var AppDispatcher = require("../dispatcher/dispatcher.js");
-var APIUtils = require("../utils/APIUtils");
+var AppConstants = require('../constants/constants.js');
+var AppDispatcher = require('../dispatcher/dispatcher.js');
+var APIUtils = require('../utils/APIUtils');
 
 var AppActions = {
   loginUser: function (user) {

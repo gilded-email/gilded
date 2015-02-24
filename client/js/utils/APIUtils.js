@@ -1,9 +1,9 @@
 var serverActions = require('../actions/serverActions.js');
 var request = require('superagent');
 
-var API_ROOT = "/api/";
+var API_ROOT = '/api/';
 
-var api_utils = {
+var apiUtils = {
 
   loginUser: function (username, password) {
     request
@@ -34,7 +34,7 @@ var api_utils = {
   logout: function () {
     request
       .post(API_ROOT + 'logout')
-      .end(function (error, res) {
+      .end(function (error) {
         if (error) {
           console.log('logout error ', error);
           return error;
@@ -142,4 +142,4 @@ var api_utils = {
 
 };
 
-module.exports = api_utils;
+module.exports = apiUtils;

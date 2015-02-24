@@ -1,11 +1,10 @@
 var AppDispatcher = require('../dispatcher/dispatcher');
 var AppConstants = require('../constants/constants');
-var request = require('superagent');
 var EventEmitter = require('events').EventEmitter;
 var cookie = require('cookie');
 var _ = require('lodash');
 
-var CHANGE_EVENT = "change";
+var CHANGE_EVENT = 'change';
 
 var _userVIPs = [];
 var _userEmails = {};
@@ -50,7 +49,7 @@ var _updateDashboardInfo = function(userData) {
     password: userData.user.password,
     rate: userData.user.rate
   };
-  _newCard.last4 = userData.user.last4
+  _newCard.last4 = userData.user.last4;
 };
 
 var _updateVIPList = function(VIPList) {
@@ -81,15 +80,15 @@ var _addCard = function (status, last4) {
 };
 
 var AppStore = _.extend({}, EventEmitter.prototype, {
-  emitChange:function(){
+  emitChange: function(){
     this.emit(CHANGE_EVENT);
   },
 
-  addChangeListener:function(callback){
+  addChangeListener: function(callback){
     this.on(CHANGE_EVENT, callback);
   },
 
-  removeChangeListener:function(callback){
+  removeChangeListener: function(callback){
     this.removeListener(CHANGE_EVENT, callback);
   },
 
@@ -126,7 +125,7 @@ var AppStore = _.extend({}, EventEmitter.prototype, {
     };
   },
 
-  dispatcherIndex:AppDispatcher.register(function(payload){
+  dispatcherIndex: AppDispatcher.register(function(payload){
     var action = payload.action; // this is our action from handleViewAction
     switch(action.actionType){
       case AppConstants.LOGIN_USER:

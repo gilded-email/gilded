@@ -10,25 +10,24 @@ var Router = require('react-router');
 var Link = Router.Link;
 var Actions = require('../actions/actions');
 var Store = require('../stores/store.js');
-var StoreWatchMixin = require('../mixins/StoreWatchMixin.js');
 
 var Signup = React.createClass({
 
   mixins: [Router.Navigation, Router.State],
 
-  getInitialState:function(){
+  getInitialState: function(){
     if (Store.isUserLoggedIn()) {
       this.transitionTo('dashboard');
     }
     return null;
   },
-  componentWillMount:function(){
+  componentWillMount: function(){
     Store.addChangeListener(this._onChange);
   },
-  componentWillUnmount:function(){
+  componentWillUnmount: function(){
     Store.removeChangeListener(this._onChange);
   },
-  _onChange:function(){
+  _onChange: function(){
     this.setState(this.getInitialState(this));
   },
 
@@ -60,8 +59,8 @@ var Signup = React.createClass({
           </div>
         </Paper>
       </div>
-    )
+    );
   }
-})
+});
 
 module.exports = Signup;

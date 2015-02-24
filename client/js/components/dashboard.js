@@ -1,7 +1,5 @@
 var React = require('react');
 
-var mui = require('material-ui');
-var LeftNav = mui.LeftNav;
 
 var Router = require('react-router');
 var Link = Router.Link;
@@ -55,7 +53,6 @@ var Dashboard = React.createClass({
   ],
 
   render: function() {
-    console.log(this.state)
     return (
       <div>
 
@@ -68,7 +65,7 @@ var Dashboard = React.createClass({
               <li>
                 <Link to={item.route}>{item.text}</Link>
               </li>
-              )
+              );
           })}
           </ul>
         </div>

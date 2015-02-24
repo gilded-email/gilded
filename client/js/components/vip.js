@@ -4,7 +4,7 @@ var TextField = mui.TextField;
 var RaisedButton = mui.RaisedButton;
 var Paper = mui.Paper;
 var Snackbar = mui.Snackbar;
-var StoreWatchMixin = require('../mixins/StoreWatchMixin');
+var storeWatchMixin = require('../mixins/StoreWatchMixin');
 var Store = require('../stores/store');
 var validator = require('email-validator');
 
@@ -21,7 +21,6 @@ var getInitialState = function () {
 
 var VIProw = React.createClass({
   removeVIPsHandler: function () {
-    contactToRemove = this.props.email.toString();
     Actions.removeVIPs([this.props.email]);
   },
 
@@ -49,7 +48,7 @@ var VIPtable = React.createClass({
         {this.props.data.map(function (email) {
           return (
             <VIProw email={email} />
-            )
+            );
         })}
         </tbody>
       </table>
@@ -59,9 +58,9 @@ var VIPtable = React.createClass({
 
 var VIP = React.createClass({
 
-  mixins: [StoreWatchMixin(getInitialState)],
+  mixins: [storeWatchMixin(getInitialState)],
 
-  componentWillUpdate: function(nextProps, nextState) { //TODO: bug/does not show snackbar with
+  componentWillUpdate: function(nextProps) { //TODO: bug/does not show snackbar with
     if (nextProps.vips.length > this.props.vips.length && this.props.vips[0] !== undefined) {
       this.refs.addEmail.show();
       setTimeout(function() {
@@ -98,7 +97,7 @@ var VIP = React.createClass({
   },
 
   render: function() {
-    var numberOfVIPsMessage = this.props.vips.length > 0 ? "You have " + this.props.vips.length + " contacts in your VIP list." : "Your VIP list is empty."
+    var numberOfVIPsMessage = this.props.vips.length > 0 ? 'You have ' + this.props.vips.length + ' contacts in your VIP list.' : 'Your VIP list is empty.';
 
     return (
       <div className="dashboard">

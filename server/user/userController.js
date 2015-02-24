@@ -92,7 +92,6 @@ module.exports = {
   },
 
   logout: function (req, res) {
-    res.clearCookie('username');
     res.clearCookie('userExpires');
     res.clearCookie('userToken');
     res.redirect('/');

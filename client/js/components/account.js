@@ -3,13 +3,11 @@
  */
 var React = require('react');
 var Actions = require('../actions/actions');
-var StoreWatchMixin = require('../mixins/StoreWatchMixin');
-var Store = require('../stores/store');
+var storeWatchMixin = require('../mixins/StoreWatchMixin');
 var mui = require('material-ui');
 var TextField = mui.TextField;
 var RaisedButton = mui.RaisedButton;
 var Paper = mui.Paper;
-var dollarString = require('dollar-string');
 var Snackbar = mui.Snackbar;
 
 var getInitialState = function() {
@@ -18,15 +16,15 @@ var getInitialState = function() {
 
 var Settings = React.createClass({
 
-  mixins: [StoreWatchMixin(getInitialState)],
+  mixins: [storeWatchMixin(getInitialState)],
 
   getDefaultProps: function() {
       return {
         settings: {
-          forwardEmail: "",
+          forwardEmail: '',
           balance: 0,
           rate: 0,
-          password: ""
+          password: ''
         }
       };
     },
@@ -43,7 +41,7 @@ var Settings = React.createClass({
     Actions.updatePassword(newPassword);
   },
 
-  componentWillUpdate: function(nextProps, nextState) {
+  componentWillUpdate: function(nextProps) {
     if (nextProps !== this.props && this.props.settings.forwardEmail !== undefined) {
       this.refs.snackbar.show();
       setTimeout(function() {
@@ -75,7 +73,7 @@ var Settings = React.createClass({
             </Paper>
             <Snackbar ref="snackbar" message="User Settings Saved" />
         </div>
-    )
+    );
   }
 });
 

@@ -7,19 +7,19 @@ var Store = require('../stores/store.js');
 var Logout = React.createClass({
   mixins: [Router.Navigation, Router.State],
 
-  getInitialState:function(){
+  getInitialState: function(){
     if (!Store.isUserLoggedIn()) {
       this.transitionTo('login');
     }
     return null;
   },
-  componentWillMount:function(){
+  componentWillMount: function(){
     Store.addChangeListener(this._onChange);
   },
-  componentWillUnmount:function(){
+  componentWillUnmount: function(){
     Store.removeChangeListener(this._onChange);
   },
-  _onChange:function(){
+  _onChange: function(){
     this.setState(this.getInitialState(this));
   },
 

@@ -3,7 +3,7 @@
  */
 var React = require('react');
 var Actions = require('../actions/actions');
-var StoreWatchMixin = require('../mixins/StoreWatchMixin');
+var storeWatchMixin = require('../mixins/StoreWatchMixin');
 var Store = require('../stores/store');
 var mui = require('material-ui');
 var TextField = mui.TextField;
@@ -18,20 +18,20 @@ var getInitialState = function() {
 
 var Settings = React.createClass({
 
-  mixins: [StoreWatchMixin(getInitialState)],
+  mixins: [storeWatchMixin(getInitialState)],
 
   getDefaultProps: function() {
     return {
       settings: {
-        forwardEmail: "",
+        forwardEmail: '',
         balance: 0,
         rate: 0,
-        password: ""
+        password: ''
       }
     };
   },
 
-  componentWillUpdate: function(nextProps, nextState) {
+  componentWillUpdate: function(nextProps) {
     var nextCard = nextProps.card;
     if (nextCard.success) {
       Store.resetCard();
@@ -51,7 +51,7 @@ var Settings = React.createClass({
 
   getLast4: function() {
     if (this.props.card.last4) {
-      return 'XXXX-XXXX-XXXX-' +this.props.card.last4;
+      return 'XXXX-XXXX-XXXX-' + this.props.card.last4;
     } else {
       return null;
     }
@@ -129,7 +129,7 @@ var Settings = React.createClass({
           <Snackbar ref="cardFailure" message="Card failed to save." />
 
         </div>
-    )
+    );
   }
 });
 
