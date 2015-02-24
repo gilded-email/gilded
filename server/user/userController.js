@@ -28,7 +28,7 @@ module.exports = {
         console.log(error);
       } else {
         var userData = {
-          username: req.body.username.toLowerCase(),
+          username: req.body.username,
           forwardEmail: req.body.forwardEmail,
           stripeId: customer.id
         };
@@ -55,7 +55,7 @@ module.exports = {
   },
 
   login: function (req, res, next) {
-    User.findOne({username: req.body.username.toLowerCase()}, function (error, user) {
+    User.findOne({username: req.body.username}, function (error, user) {
       if (error) {
         console.log(error);
       } else if (!user) {
@@ -77,7 +77,7 @@ module.exports = {
   },
 
   getUser: function (req, res, next) {
-    User.findOne({username: req.cookies.username.toLowerCase()}, function (error, user) {
+    User.findOne({username: req.cookies.username}, function (error, user) {
       if (error) {
         console.log(error);
         res.status(400).send(error);
@@ -101,9 +101,9 @@ module.exports = {
 
   storeSession: function (req, res, next) {
     var expiration = Date.now() + (1000 * 60 * 60 * 24 * 30);
-    tokenGen(req.body.username.toLowerCase(), expiration)
+    tokenGen(req.body.username, expiration)
       .then(function (token) {
-        res.cookie('username', req.body.username.toLowerCase());
+        res.cookie('username', req.body.username);
         res.cookie('userExpires', expiration);
         res.cookie('userToken', token);
         next();
@@ -114,7 +114,7 @@ module.exports = {
   },
 
   checkSession: function (req, res, next) {
-    var checkToken = process.env.SECRET + req.cookies.username.toLowerCase() + req.cookies.userExpires;
+    var checkToken = process.env.SECRET + req.cookies.username + req.cookies.userExpires;
     bcrypt.compare(checkToken, req.cookies.userToken, function (error, result) {
       if (error) {
         console.log('Compare error: ', error);
@@ -137,7 +137,7 @@ module.exports = {
         console.log(error);
         res.status(400).send(error);
       } else {
-        User.findOneAndUpdate({username: req.cookies.username.toLowerCase()}, {password: hash}, function (error, user) {
+        User.findOneAndUpdate({username: req.cookies.username}, {password: hash}, function (error, user) {
           if (error) {
             console.log(error);
             res.status(400).send(error);
@@ -150,7 +150,7 @@ module.exports = {
   },
 
   updateForwardEmail: function (req, res) {
-    User.findOneAndUpdate({username: req.cookies.username.toLowerCase()}, {forwardEmail: req.body.forwardEmail}, function (error, user) {
+    User.findOneAndUpdate({username: req.cookies.username}, {forwardEmail: req.body.forwardEmail}, function (error, user) {
       if (error) {
         console.log(error);
         res.status(400).send(error);
@@ -161,7 +161,7 @@ module.exports = {
   },
 
   changeRate: function (req, res) {
-    User.findOneAndUpdate({username: req.cookies.username.toLowerCase()}, {rate: req.body.rate}, function (error, user) {
+    User.findOneAndUpdate({username: req.cookies.username}, {rate: req.body.rate}, function (error, user) {
       if (error) {
         console.log(error);
         res.status(400).send(error);
@@ -172,7 +172,7 @@ module.exports = {
   },
 
   addVip: function (req, res) {
-    User.findOneAndUpdate({username: req.cookies.username.toLowerCase()}, {$push: {vipList: {$each: req.body.add}}}, function (error, user) {
+    User.findOneAndUpdate({username: req.cookies.username}, {$push: {vipList: {$each: req.body.add}}}, function (error, user) {
       if (error) {
         console.log(error);
         res.sendStatus(409);
@@ -183,7 +183,7 @@ module.exports = {
   },
 
   removeVip: function (req, res) {
-    User.findOneAndUpdate({username: req.cookies.username.toLowerCase()}, {$pullAll: {vipList: req.body.remove}}, function (error, user) {
+    User.findOneAndUpdate({username: req.cookies.username}, {$pullAll: {vipList: req.body.remove}}, function (error, user) {
       if (error) {
         console.log(error);
         res.sendStatus(409);
@@ -227,7 +227,7 @@ module.exports = {
 
   addCard: function (req, res) {
     var last4 = req.body.card.cardNumber.length === 15 ? req.body.card.cardNumber.slice(11) : req.body.card.cardNumber.slice(12);
-    User.findOneAndUpdate({username: req.cookies.username.toLowerCase()}, {last4: last4}, function (error, user) {
+    User.findOneAndUpdate({username: req.cookies.username}, {last4: last4}, function (error, user) {
       if (error) {
         console.log(error);
       } else {
@@ -259,7 +259,7 @@ module.exports = {
   },
 
   cashOut: function (req, res) {
-    User.findOne({username: req.cookies.username.toLowerCase()}, function (error, user) {
+    User.findOne({username: req.cookies.username}, function (error, user) {
       if (user.balance === 0) {
         res.status(200).send(user);
       }
