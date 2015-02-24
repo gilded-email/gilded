@@ -10,6 +10,7 @@ var autoprefixer = require('gulp-autoprefixer');
 var livereload = require('gulp-livereload');
 var nodemon = require('gulp-nodemon');
 var eslint = require('gulp-eslint');
+var ga = require('gulp-ga');
 
 gulp.task('clean', function () {
   del.sync([
@@ -58,6 +59,7 @@ gulp.task('less', function () {
 
 gulp.task('html', function () {
   return gulp.src('./client/**/*.html')
+    .pipe(ga({url: 'www.gilded.club', uid: 'UA-59881274-1'}))
     .pipe(gulp.dest('./dist/'))
     .pipe(livereload());
 });
