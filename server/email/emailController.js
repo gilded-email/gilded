@@ -42,7 +42,7 @@ module.exports = {
       if (error) {
         res.sendStatus(400);
       } else {
-        email.to = JSON.parse(fields.envelope).to.toLowerCase();
+        email.to = JSON.parse(fields.envelope).to;
         email.from = fields.from.split('<')[1].split('>')[0];
         email.subject = fields.subject;
         email.html = fields.html;
@@ -66,7 +66,7 @@ module.exports = {
             if (forwardAddress === null) {
               module.exports.store(email, recipient[0]);
             } else {
-              email.to = [forwardAddress];
+              email.to = [forwardAddress.toLowerCase()];
               module.exports.sendEmail(email);
             }
           });
