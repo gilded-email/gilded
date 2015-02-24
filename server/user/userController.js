@@ -235,7 +235,7 @@ module.exports = {
               cvc: req.body.card.cvc,
               name: req.body.card.cardHolderName
             }
-          }, function (error, card) {
+          }, function (error) {
             if (error) {
               console.log(error);
               res.status(400).send(error);
@@ -269,7 +269,7 @@ module.exports = {
         currency: 'usd',
         recipient: user.stripeId,
         description: 'Gilded.club balance'
-      }, function (error, transfer) {
+      }, function (error) {
         if (error) {
           console.log(error);
           res.status(400).send(error);
