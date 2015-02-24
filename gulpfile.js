@@ -35,8 +35,8 @@ gulp.task('lint-client', function () {
   return gulp.src([
     './client/**/*.js'
     ])
-    .pipe(eslint())
-    .pipe(eslint.format());
+  .pipe(eslint())
+  .pipe(eslint.format());
 });
 
 gulp.task('lint-server', function () {
@@ -48,7 +48,6 @@ gulp.task('lint-server', function () {
     .pipe(eslint.format());
 });
 
-
 gulp.task('less', function () {
   return gulp.src('./client/less/main.less')
     .pipe(less())
@@ -59,7 +58,11 @@ gulp.task('less', function () {
 
 gulp.task('html', function () {
   return gulp.src('./client/**/*.html')
-    .pipe(ga({url: 'www.gilded.club', uid: 'UA-59881274-1'}))
+    .pipe(ga({
+      uid: 'UA-59881274-1',
+      url: 'auto',
+      anonymizeIp: true
+    }))
     .pipe(gulp.dest('./dist/'))
     .pipe(livereload());
 });
