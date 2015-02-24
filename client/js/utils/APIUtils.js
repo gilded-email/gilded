@@ -101,6 +101,20 @@ var apiUtils = {
       });
   },
 
+  getUserDashboardInfo: function () {
+    request
+      .get(API_ROOT + 'user/dashboard')
+      .end(function (error, res) {
+        if (error) {
+          console.log('dashboard info error', error);
+          return error;
+        }
+        serverActions.getUserDashboardInfo(res.body);
+      });
+  },
+
+// Payments
+
   updateRate: function (rate) {
     request
       .put(API_ROOT + 'user/settings/rate')
@@ -111,18 +125,6 @@ var apiUtils = {
           return error;
         }
         serverActions.updateUserRate(res.body);
-      });
-  },
-
-  getUserDashboardInfo: function () {
-    request
-      .get(API_ROOT + 'user/dashboard')
-      .end(function (error, res) {
-        if (error) {
-          console.log('dashboard info error', error);
-          return error;
-        }
-        serverActions.getUserDashboardInfo(res.body);
       });
   },
 
@@ -137,6 +139,15 @@ var apiUtils = {
         }
         var last4 = res.body.last4;
         serverActions.addUserCard(res.status, last4);
+      });
+  },
+
+  withdraw: function () {
+    console.log('withdrawing!');
+    request
+      .post(API_ROOT + 'user/withdraw')
+      .end(function (error, res) {
+        console.log(res.body);
       });
   }
 

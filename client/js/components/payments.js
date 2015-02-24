@@ -1,6 +1,3 @@
-/**
- * @jsx React.DOM
- */
 var React = require('react');
 var Actions = require('../actions/actions');
 var storeWatchMixin = require('../mixins/StoreWatchMixin');
@@ -94,42 +91,57 @@ var Settings = React.createClass({
     Actions.addCard(card);
   },
 
+  withdraw: function () {
+    Actions.withdraw();
+  },
+
   render: function() {
     return (
-        <div className="dashboard">
-          <div className="dashboard-title">
-            <h1>Payment Settings</h1>
-          </div>
-            <Paper className="dashboard-subcontent" zDepth={2}>
-              <div className="dashboard-subheading">Update Rate</div>
-                <div className="dashboard-subheading-content">
-                  <TextField ref="newRate" className="new-rate" hintText="$" floatingLabelText={this.getRate()} />
-                  <RaisedButton className="new-rate-save" label="Change Rate" secondary={true} onClick={this.changeRate} />
-                </div>
-            </Paper>
-            <Paper className="dashboard-subcontent" zDepth={2}>
-              <div className="dashboard-subheading">Current Balance</div>
-                <div className="dashboard-subheading-content">
-                  {this.getBalance()}
-                </div>
-            </Paper>
-            <Paper className="dashboard-subcontent" zDepth={2}>
-              <div className="dashboard-subheading">Credit Card Info</div>
-                <div className="dashboard-subheading-content">
-                <div className="payment-card-info">{this.getLast4()}</div>
-                  <TextField ref="cardHolderName" className="cardholdername-input" hintText="John Doe" floatingLabelText="Card Holder Name" />
-                  <TextField ref="cardNumber" className="cardnumber-input" hintText="xxxx xxxx xxxx 4242" floatingLabelText="Card Number" />
-                  <TextField ref="expMonth" className="expmonth-input" hintText="3" floatingLabelText="Expiration Month" />
-                  <TextField ref="expYear" className="expyear-input" hintText="17" floatingLabelText="Expiration Year" />
-                  <TextField ref="cvc" className="cvc-input" hintText="323" floatingLabelText="CVC" />
-                  <RaisedButton className="card-add" label="Add Card" secondary={true} onClick={this.addCard} />
-                </div>
-            </Paper>
-          <Snackbar ref="cardSuccess" message="Card successfully added!" />
-          <Snackbar ref="cardFailure" message="Card failed to save." />
 
+      <div className="dashboard">
+
+        <div className="dashboard-title">
+          <h1>Payment Settings</h1>
         </div>
+
+        <Paper className="dashboard-subcontent" zDepth={2}>
+          <div className="dashboard-subheading">Update Rate</div>
+            <div className="dashboard-subheading-content">
+              <TextField ref="newRate" className="new-rate" hintText="$" floatingLabelText={this.getRate()} />
+              <RaisedButton className="new-rate-save" label="Change Rate" secondary={true} onClick={this.changeRate} />
+            </div>
+        </Paper>
+
+        <Paper className="dashboard-subcontent" zDepth={2}>
+          <div className="dashboard-subheading withdraw">Current Balance</div>
+            <div className="dashboard-subheading-content withdraw-balance">
+              {this.getBalance()}
+              <div className="withdraw-button">
+                <RaisedButton label="Withdraw" secondary={true} onClick={this.withdraw} />
+              </div>
+            </div>
+        </Paper>
+
+        <Paper className="dashboard-subcontent" zDepth={2}>
+          <div className="dashboard-subheading">Credit Card Info</div>
+            <div className="dashboard-subheading-content">
+            <div className="payment-card-info">{this.getLast4()}</div>
+              <TextField ref="cardHolderName" className="cardholdername-input" hintText="John Doe" floatingLabelText="Card Holder Name" />
+              <TextField ref="cardNumber" className="cardnumber-input" hintText="xxxx xxxx xxxx 4242" floatingLabelText="Card Number" />
+              <TextField ref="expMonth" className="expmonth-input" hintText="3" floatingLabelText="Expiration Month" />
+              <TextField ref="expYear" className="expyear-input" hintText="17" floatingLabelText="Expiration Year" />
+              <TextField ref="cvc" className="cvc-input" hintText="323" floatingLabelText="CVC" />
+              <RaisedButton className="card-add" label="Add Card" secondary={true} onClick={this.addCard} />
+            </div>
+        </Paper>
+
+        <Snackbar ref="cardSuccess" message="Card successfully added!" />
+        <Snackbar ref="cardFailure" message="Card failed to save." />
+
+      </div>
+
     );
+
   }
 });
 

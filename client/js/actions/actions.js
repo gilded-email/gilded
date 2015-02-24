@@ -58,7 +58,7 @@ var AppActions = {
   },
 
 
-// Settings Page
+// Account Settings
 
   updatePassword: function (password) {
     AppDispatcher.handleViewAction({
@@ -67,15 +67,6 @@ var AppActions = {
     });
 
     APIUtils.updatePassword(password);
-  },
-
-  updateRate: function (rate) {
-    AppDispatcher.handleViewAction({
-      actionType: AppConstants.UPDATE_RATE,
-      rate: rate
-    });
-
-    APIUtils.updateRate(rate);
   },
 
   updateForwardEmail: function (newForwardEmail) {
@@ -87,6 +78,17 @@ var AppActions = {
     APIUtils.updateEmail(newForwardEmail);
   },
 
+// Payments Settings
+
+  updateRate: function (rate) {
+    AppDispatcher.handleViewAction({
+      actionType: AppConstants.UPDATE_RATE,
+      rate: rate
+    });
+
+    APIUtils.updateRate(rate);
+  },
+
   addCard: function (card) {
     AppDispatcher.handleViewAction({
       actionType: AppConstants.ADD_CARD,
@@ -94,6 +96,14 @@ var AppActions = {
     });
 
     APIUtils.addCard(card);
+  },
+
+  withdraw: function () {
+    AppDispatcher.handleViewAction({
+      actionType: AppConstants.WITHDRAW
+    });
+
+    APIUtils.withdraw();
   }
 
 };
