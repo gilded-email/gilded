@@ -19,7 +19,7 @@ var requestPayment = function (savedEmail) {
   var emailRateAndStripe = (savedEmail.cost * 1.029) + 30;
   var cost = (emailRateAndStripe / 100).toFixed(2);
   var paymentInstructions = 'Your recipient requires $' + cost + ' to receive emails. Pay here: ';
-  var paymentUrl = 'https://' + domain + '/pay/' + savedEmail._id;
+  var paymentUrl = 'https://www.' + domain + '/pay/' + savedEmail._id;
   module.exports.sendEmail({
     to: JSON.parse(savedEmail.email).from,
     from: 'jenkins@' + domain,
