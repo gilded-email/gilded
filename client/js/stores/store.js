@@ -10,6 +10,10 @@ var CHANGE_EVENT = "change";
 var _userVIPs = [];
 var _userEmails = {};
 var _userSettings = {};
+var _newCard = {
+  success: false,
+  failure: false
+};
 
 /*eslint-disable */
 var fakeEmails = [
@@ -63,6 +67,14 @@ var _updateUserPassword = function(password) {
 
 var _updateUserRate = function(rate) {
   _userSettings.rate = rate;
+};
+
+var _addCard = function (status) {
+  if (status === 201) {
+    _newCard.success = true;
+  } else if (status === 400 ) {
+    _newCard.failure = true;
+  }
 };
 
 var AppStore = _.extend({}, EventEmitter.prototype, {
@@ -138,6 +150,13 @@ var AppStore = _.extend({}, EventEmitter.prototype, {
 
       case AppConstants.GET_USER_DASHBOARD_INFO:
         _updateDashboardInfo(payload.action.userData);
+        break;
+
+      case AppConstants.ADD_CARD:
+        break;
+
+      case AppConstants.ADD_CARD_SUCCESS:
+        _addCard(payload.action.status);
         break;
     }
 

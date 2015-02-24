@@ -85,6 +85,15 @@ var AppActions = {
     });
 
     APIUtils.updateEmail(newForwardEmail);
+  },
+
+  addCard: function (card) {
+    AppDispatcher.handleViewAction({
+      actionType: AppConstants.ADD_CARD,
+      card: card
+    });
+
+    APIUtils.addCard(card);
   }
 
 };
