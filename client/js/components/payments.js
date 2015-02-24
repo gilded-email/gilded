@@ -32,7 +32,6 @@ var Settings = React.createClass({
   },
 
   componentWillUpdate: function(nextProps, nextState) {
-    console.log(this.props);
     var nextCard = nextProps.card;
     if (nextCard.success) {
       Store.resetCard();
@@ -46,6 +45,15 @@ var Settings = React.createClass({
       setTimeout(function() {
         this.refs.cardFailure.dismiss();
       }.bind(this), 1000);
+    }
+
+  },
+
+  getLast4: function() {
+    if (this.props.card.last4) {
+      return 'XXXX-XXXX-XXXX-' +this.props.card.last4;
+    } else {
+      return null;
     }
   },
 
@@ -108,6 +116,7 @@ var Settings = React.createClass({
             <Paper className="dashboard-subcontent" zDepth={4}>
               <div className="dashboard-subheading">Credit Card Info</div>
                 <div className="dashboard-subheading-content">
+                <div className="payment-card-info">{this.getLast4()}</div>
                   <TextField ref="cardHolderName" className="cardholdername-input" hintText="John Doe" floatingLabelText="Card Holder Name" />
                   <TextField ref="cardNumber" className="cardnumber-input" hintText="xxxx xxxx xxxx 4242" floatingLabelText="Card Number" />
                   <TextField ref="expMonth" className="expmonth-input" hintText="3" floatingLabelText="Expiration Month" />
