@@ -2,13 +2,11 @@ var React = require('react');
 
 var mui = require('material-ui');
 var LeftNav = mui.LeftNav;
-var MenuItem = mui.MenuItem;
 
 var Router = require('react-router');
+var Link = Router.Link;
 var RouteHandler = Router.RouteHandler;
-var RouterHandler = Router.RouteHandler;
 
-var StoreWatchMixin = require('../mixins/StoreWatchMixin');
 var Actions = require('../actions/actions');
 var Store = require('../stores/store');
 
@@ -27,24 +25,24 @@ var Dashboard = React.createClass({
 
   mixins: [Router.Navigation, Router.State, Authentication],
 
-  getInitialState:function(){
+  getInitialState: function () {
     if (Store.isUserLoggedIn()) {
       Actions.getDashboardInfo();
     }
     return Store.getUserData();
   },
-  componentWillMount:function(){
+  componentWillMount: function () {
     Store.addChangeListener(this._onChange);
   },
-  componentWillUnmount:function(){
+  componentWillUnmount: function () {
     Store.removeChangeListener(this._onChange);
   },
-  _onChange:function(){
+  _onChange: function () {
     this.setState(Store.getUserData());
   },
 
 
-  handleClickEvent: function(e, key, payload) {
+  handleClickEvent: function (e, key, payload) {
     this.transitionTo(payload.route);
   },
 
@@ -53,22 +51,40 @@ var Dashboard = React.createClass({
     { route: 'VIP', text: 'VIP List' },
     { route: 'account', text: 'Account Settings' },
     { route: 'payments', text: 'Payment Settings' },
-    { route: 'logout', text: 'Log Out'}, 
+    { route: 'logout', text: 'Log Out'}
   ],
 
   render: function() {
+    console.log(this.state)
     return (
       <div>
-      <div className="dash-menu">
-          <LeftNav menuItems={this.menuItems} onChange={this.handleClickEvent} zDepth={3}/>
+
+        <div className="dash-menu">
+          <h1>Gilded</h1>
+
+          <ul>
+          {this.menuItems.map(function (item) {
+            return (
+              <li>
+                <Link to={item.route}>{item.text}</Link>
+              </li>
+              )
+          })}
+          </ul>
+        </div>
+
+        <div className="dash-content">
+          <RouteHandler escrow={this.state.userEmails} settings={this.state.userSettings} vips={this.state.userVIPs} card={this.state.userCard} />
+        </div>
+
+        <div className="logged-in-user">
+          you@gilded.club
+        </div>
+
       </div>
-      <div className="dash-content">
-        <RouterHandler escrow={this.state.userEmails} settings={this.state.userSettings} vips={this.state.userVIPs} card={this.state.userCard} />
-      </div>
-      </div>
-      )
+      );
   }
 
 });
 
-module.exports = Dashboard
+module.exports = Dashboard;
