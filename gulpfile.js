@@ -34,16 +34,16 @@ gulp.task('compile', ['lint-client'], function () {
 gulp.task('lint-client', function () {
   return gulp.src([
     './client/**/*.js'
-    ])
-  .pipe(eslint())
-  .pipe(eslint.format());
+  ])
+    .pipe(eslint())
+    .pipe(eslint.format());
 });
 
 gulp.task('lint-server', function () {
   return gulp.src([
     './*.js',
     './server/**/*.js'
-    ])
+  ])
     .pipe(eslint())
     .pipe(eslint.format());
 });
