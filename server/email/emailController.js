@@ -61,12 +61,12 @@ module.exports = {
     recipients.forEach(function (recipient) {
       recipient = recipient.split('@');
       if (recipient[1] === domain) {
-        userController.isVip(recipient[0], email.from)
+        userController.isVip(recipient[0].toLowerCase(), email.from)
           .then(function (forwardAddress) {
             if (forwardAddress === null) {
-              module.exports.store(email, recipient[0]);
+              module.exports.store(email, recipient[0].toLowerCase());
             } else {
-              email.to = [forwardAddress.toLowerCase()];
+              email.to = [forwardAddress];
               module.exports.sendEmail(email);
             }
           });
@@ -121,7 +121,7 @@ module.exports = {
   },
 
   fetchEscrows: function (req, res) {
-    Escrow.find({recipient: req.user.username.toLowerCase()}, function (error, emails) {
+    Escrow.find({recipient: req.user.username}, function (error, emails) {
       if (error) {
         console.log(error);
         res.status(400).send(error);
