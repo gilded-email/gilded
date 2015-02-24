@@ -162,6 +162,10 @@ describe('Email Module', function () {
     });
   });
 
+  xit('addresses should be case insensitive', function () {
+    assert.equal(false, true);
+  });
+
   xit("messages from jenkins@' + domain + ' always go through to avoid endless email loops", function () {
     assert.equal(false, true);
 
