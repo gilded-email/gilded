@@ -1,12 +1,12 @@
 var domain = process.env.DOMAIN;
-var Promise = require('bluebird');
+var BPromise = require('bluebird');
 var User = require('./userModel.js');
 var dispatcher = 'jenkins@' + domain;
 var bcrypt = require('bcrypt-nodejs');
 var stripe = require('stripe')(process.env.STRIPE);
 
 var tokenGen = function (username, expiration) {
-  return new Promise(function (resolve, reject) {
+  return new BPromise(function (resolve, reject) {
     bcrypt.hash(process.env.SECRET + username + expiration, null, null, function (error, hash) {
       if (error) {
         reject(error);
@@ -181,7 +181,7 @@ module.exports = {
   },
 
   isVip: function (username, sender) {
-    return new Promise(function (resolve, reject) {
+    return new BPromise(function (resolve, reject) {
       User.findOne({username: username}, function (error, user) {
         if (error) {
           reject(error);
@@ -199,7 +199,7 @@ module.exports = {
   },
 
   getRate: function (username) {
-    return new Promise(function (resolve, reject) {
+    return new BPromise(function (resolve, reject) {
       User.findOne({username: username}, function (error, user) {
         if (error) {
           reject(error);
