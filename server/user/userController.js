@@ -26,7 +26,7 @@ module.exports = {
     bcrypt.hash(req.body.password, null, null, function (error, hash) {
       if (error) {
         console.log(error);
-        res.sendStatus(409);
+        res.status(409).send(error);
       } else {
         userData.password = hash;
         User.create(userData, function (error, user) {
@@ -218,7 +218,11 @@ module.exports = {
       name: req.body.card.cardHolderName,
       type: 'individual',
       description: 'New gilded.club user'
-    }, function(err, recipient) {
+    }, function (error, recipient) {
+      if (error) {
+        console.log('Failed to create recipient: ', error);
+        res.status(400).send(error);
+      }
       User.findOneAndUpdate({username: req.cookies.username}, {last4: last4, stripeId: recipient.id}, function (error, user) {
         if (error) {
           console.log(error);
@@ -253,6 +257,10 @@ module.exports = {
 
   withdraw: function (req, res) {
     User.findOne({username: req.cookies.username}, function (error, user) {
+      if (error) {
+        console.log('User does not exist: ', error);
+        res.status(400).send(error);
+      }
       if (user.balance === 0) {
         res.status(200).send(user);
       }
@@ -271,7 +279,7 @@ module.exports = {
               console.log(error);
               res.status(400).send(error);
             } else {
-              res.send(201).send(updatedUser.toJSON());
+              res.status(201).send(updatedUser.toJSON());
             }
           });
         }
