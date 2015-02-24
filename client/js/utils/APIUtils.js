@@ -14,7 +14,7 @@ var apiUtils = {
           console.log('login error ', error);
           return error;
         }
-        serverActions.userLoggedIn(res.body);
+        serverActions.userLoggedIn(res);
       });
   },
 
@@ -27,19 +27,19 @@ var apiUtils = {
           console.log('signup error ', error);
           return error;
         }
-        serverActions.userLoggedIn(res.body);
+        serverActions.userLoggedIn(res);
       });
   },
 
   logout: function () {
     request
       .post(API_ROOT + 'logout')
-      .end(function (error) {
+      .end(function (error, res) {
         if (error) {
           console.log('logout error ', error);
           return error;
         }
-        serverActions.userLoggedOut();
+        serverActions.userLoggedOut(res);
       });
   },
 

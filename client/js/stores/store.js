@@ -14,6 +14,10 @@ var _newCard = {
   failure: false,
   last4: null
 };
+var _userErrors = {
+  login: false,
+  signup: false
+};
 
 /*eslint-disable */
 var fakeEmails = [
@@ -22,15 +26,22 @@ var fakeEmails = [
 /*eslint-enable */
 
 
-var _logUserIn = function(userData) {
-  _userEmails = fakeEmails; // userData.escrow;
-  _userVIPs = userData.user.vipList;
-  _userSettings = {
-    balance: userData.user.balance,
-    forwardEmail: userData.user.forwardEmail,
-    password: userData.user.password,
-    rate: userData.user.rate
-  };
+var _logUserIn = function(res) {
+  if (!res.body && res.text === 'wrong password') {
+    _userErrors.login = true;
+  } else if (res.status === 409) {
+    _userErrors.signup = true;
+  } else if (res.body) {
+    var userData = res.body;
+    _userEmails = fakeEmails; // userData.escrow;
+    _userVIPs = userData.user.vipList;
+    _userSettings = {
+      balance: userData.user.balance,
+      forwardEmail: userData.user.forwardEmail,
+      password: userData.user.password,
+      rate: userData.user.rate
+    };
+  }
 };
 
 var _logUserOut = function() {
@@ -109,6 +120,10 @@ var AppStore = _.extend({}, EventEmitter.prototype, {
     return _userEmails;
   },
 
+  getUserErrors: function() {
+    return _userErrors;
+  },
+
   getUserData: function() {
     var info = {};
     info.userEmails = _userEmails;
@@ -116,6 +131,13 @@ var AppStore = _.extend({}, EventEmitter.prototype, {
     info.userSettings = _userSettings;
     info.userCard = _newCard;
     return info;
+  },
+
+  resetUserErrors: function() {
+    _userErrors = {
+      login: false,
+      signup: false
+    };
   },
 
   resetCard: function() {
@@ -135,7 +157,7 @@ var AppStore = _.extend({}, EventEmitter.prototype, {
         break;
 
       case AppConstants.USER_LOGGED_IN:
-        _logUserIn(payload.action.userData);
+        _logUserIn(payload.action.res);
         break;
 
       case AppConstants.UPDATE_USER_VIPS:

@@ -27,6 +27,8 @@ $(document).ready(function () {
   var Emails = require('./components/emails');
   var Email = require('./components/email');
   var VIP = require('./components/vip');
+  var cookie = require('cookie');
+
 
   var App = React.createClass({
 
@@ -38,9 +40,18 @@ $(document).ready(function () {
 
   });
 
+  var routeToSignupOrLogin = function () {
+    var username = cookie.parse(document.cookie).username;
+    if (username) {
+      return Login;
+    } else {
+      return Signup;
+    }
+  };
+
   var routes = (
     <Route name="root" path="/" handler={App}>
-      <DefaultRoute handler={Signup} />
+      <DefaultRoute handler={routeToSignupOrLogin()} />
       <Route name="signup" handler={Signup} />
       <Route name="login" handler={Login} />
       <Route name="logout" handler={Logout} />

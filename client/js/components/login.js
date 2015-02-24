@@ -4,12 +4,15 @@ var mui = require('material-ui');
 var TextField = mui.TextField;
 var RaisedButton = mui.RaisedButton;
 var Paper = mui.Paper;
+var Snackbar = mui.Snackbar;
 
 var Router = require('react-router');
 var Link = Router.Link;
 
 var Actions = require('../actions/actions');
 var Store = require('../stores/store');
+var cookie = require('cookie');
+
 
 var Login = React.createClass({
 
@@ -19,7 +22,7 @@ var Login = React.createClass({
     if (Store.isUserLoggedIn()) {
       this.transitionTo('dashboard');
     }
-    return null;
+    return Store.getUserErrors();
   },
 
   componentWillMount: function(){
@@ -34,6 +37,16 @@ var Login = React.createClass({
     this.setState(this.getInitialState(this));
   },
 
+  componentWillUpdate: function(nextProps, nextState) {
+    if (nextState.login) {
+      Store.resetUserErrors();
+      this.refs.loginFailure.show();
+      setTimeout(function() {
+        this.refs.loginFailure.dismiss();
+      }.bind(this), 3000);
+    }
+  },
+
 
   handleClick: function (e) {
     e.preventDefault();
@@ -43,6 +56,15 @@ var Login = React.createClass({
     Actions.loginUser(user);
   },
 
+  getUsername: function() {
+    var username = cookie.parse(document.cookie).username;
+    if (username) {
+      return username;
+    } else {
+      return null;
+    }
+  },
+
   render: function() {
     return (
       <div className="login-container">
@@ -50,13 +72,14 @@ var Login = React.createClass({
           <div className="login-content">
             <div className="mui-font-style-display-3">Log In</div>
             <form>
-              <TextField ref="username" className="login-input" floatingLabelText="Username" />
+              <TextField ref="username" className="login-input" defaultValue={this.getUsername()} floatingLabelText="Username" />
               <TextField ref="password" type={"password"} className="login-input" floatingLabelText="Password" />
               <RaisedButton onClick={this.handleClick} className="login-button" label="Log In" secondary={true} />
               <Link className="signup-link" to="signup">Not a member? Sign up here.</Link>
             </form>
           </div>
         </Paper>
+        <Snackbar ref="loginFailure" message="Please enter a valid username and password" />
       </div>
     );
   }

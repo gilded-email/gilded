@@ -10,6 +10,8 @@ var Router = require('react-router');
 var Link = Router.Link;
 var Actions = require('../actions/actions');
 var Store = require('../stores/store.js');
+var Snackbar = mui.Snackbar;
+
 
 var Signup = React.createClass({
 
@@ -19,7 +21,7 @@ var Signup = React.createClass({
     if (Store.isUserLoggedIn()) {
       this.transitionTo('dashboard');
     }
-    return null;
+    return Store.getUserErrors();
   },
   componentWillMount: function(){
     Store.addChangeListener(this._onChange);
@@ -29,6 +31,15 @@ var Signup = React.createClass({
   },
   _onChange: function(){
     this.setState(this.getInitialState(this));
+  },
+  componentWillUpdate: function (nextProps, nextState) {
+    if (nextState.signup) {
+      Store.resetUserErrors();
+      this.refs.signupFailure.show();
+      setTimeout(function() {
+        this.refs.signupFailure.dismiss();
+      }.bind(this), 3000);
+    }
   },
 
   handleClick: function (e) {
@@ -58,6 +69,7 @@ var Signup = React.createClass({
             </form>
           </div>
         </Paper>
+        <Snackbar ref="signupFailure" message="An account with that username or forwarding email already exists" />
       </div>
     );
   }
