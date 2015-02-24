@@ -6,6 +6,7 @@ var browserify = require('browserify');
 var reactify = require('reactify');
 var source = require('vinyl-source-stream');
 var less = require('gulp-less');
+var autoprefixer = require('gulp-autoprefixer');
 var livereload = require('gulp-livereload');
 var nodemon = require('gulp-nodemon');
 var eslint = require('gulp-eslint');
@@ -50,6 +51,7 @@ gulp.task('lint-server', function () {
 gulp.task('less', function () {
   return gulp.src('./client/less/main.less')
     .pipe(less())
+    .pipe(autoprefixer())
     .pipe(gulp.dest('./dist/css'))
     .pipe(livereload());
 });
@@ -62,6 +64,7 @@ gulp.task('html', function () {
 
 gulp.task('css', function () {
   return gulp.src('./client/css/*.css')
+    .pipe(autoprefixer())
     .pipe(gulp.dest('./dist/css'))
     .pipe(livereload());
 });
