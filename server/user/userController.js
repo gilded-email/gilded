@@ -4,7 +4,6 @@ var User = require('./userModel.js');
 var dispatcher = 'jenkins@' + domain;
 var bcrypt = require('bcrypt-nodejs');
 var stripe = require('stripe')(process.env.STRIPE);
-var emailController = require('../email/emailController.js');
 
 var tokenGen = function (username, expiration) {
   return new Promise(function (resolve, reject) {
@@ -244,7 +243,7 @@ module.exports = {
             console.log(error);
             res.status(400).send(error);
           } else {
-            emailController.sendEmail({
+            require('../email/emailController.js').sendEmail({
               to: user.forwardEmail,
               from: 'hello@gilded.club',
               subject: 'New Card Added',
