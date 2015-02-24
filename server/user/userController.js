@@ -28,7 +28,7 @@ module.exports = {
         console.log(error);
       } else {
         var userData = {
-          username: req.body.username,
+          username: req.body.username.toLowerCase(),
           forwardEmail: req.body.forwardEmail,
           stripeId: customer.id
         };
@@ -55,7 +55,7 @@ module.exports = {
   },
 
   login: function (req, res, next) {
-    User.findOne({username: req.body.username}, function (error, user) {
+    User.findOne({username: req.body.username.toLowerCase()}, function (error, user) {
       if (error) {
         console.log(error);
       } else if (!user) {
@@ -101,9 +101,9 @@ module.exports = {
 
   storeSession: function (req, res, next) {
     var expiration = Date.now() + (1000 * 60 * 60 * 24 * 30);
-    tokenGen(req.body.username, expiration)
+    tokenGen(req.body.username.toLowerCase(), expiration)
       .then(function (token) {
-        res.cookie('username', req.body.username);
+        res.cookie('username', req.body.username.toLowerCase());
         res.cookie('userExpires', expiration);
         res.cookie('userToken', token);
         next();
