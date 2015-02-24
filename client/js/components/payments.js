@@ -89,11 +89,11 @@ var Settings = React.createClass({
             <Paper className="dashboard-subcontent" zDepth={4}>
               <div className="dashboard-subheading">Credit Card Info</div>
                 <div className="dashboard-subheading-content">
+                  <TextField ref="cardHolderName" className="cardholdername-input" hintText="John Doe" floatingLabelText="Card Holder Name" />
                   <TextField ref="cardNumber" className="cardnumber-input" hintText="xxxx xxxx xxxx 4242" floatingLabelText="Card Number" />
                   <TextField ref="expMonth" className="expmonth-input" hintText="3" floatingLabelText="Expiration Month" />
                   <TextField ref="expYear" className="expyear-input" hintText="17" floatingLabelText="Expiration Year" />
                   <TextField ref="cvc" className="cvc-input" hintText="323" floatingLabelText="CVC" />
-                  <TextField ref="cardHolderName" className="cardholdername-input" hintText="John Doe" floatingLabelText="Card Holder Name" />
                   <RaisedButton className="card-add" label="Add Card" secondary={true} onClick={this.addCard} />
                 </div>
             </Paper>

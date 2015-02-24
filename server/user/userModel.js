@@ -8,7 +8,8 @@ var UserSchema = new mongoose.Schema({
   vipList: {type: Array, default: []},
   balance: {type: Number, default: 0},
   rate: {type: Number, default: 100},
-  stripeId: {type: String, unique: true}
+  stripeId: {type: String, unique: true},
+  last4: {type: String}
 });
 
 module.exports = mongoose.model('User', UserSchema);
