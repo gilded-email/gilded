@@ -61,6 +61,19 @@ var VIP = React.createClass({
 
   mixins: [StoreWatchMixin(getInitialState)],
 
+  componentWillUpdate: function(nextProps, nextState) { //TODO: bug/does not show snackbar with 
+    if (nextProps.vips.length > this.props.vips.length && this.props.vips[0] !== undefined) {
+      this.refs.addEmail.show();
+      setTimeout(function() {
+        this.refs.addEmail.dismiss();
+      }.bind(this), 1000);
+    } else if (nextProps.vips.length < this.props.vips.length) {
+      this.refs.removeEmail.show();
+      setTimeout(function() {
+        this.refs.removeEmail.dismiss();
+      }.bind(this), 1000);
+    }
+  },
 
   
 
@@ -108,7 +121,8 @@ var VIP = React.createClass({
         </div>
         <Snackbar ref="duplicateEmail" message="VIP contact already exists" />
         <Snackbar ref="invalidEmail" message="Please enter a valid email" />
-        <Snackbar ref="validEmail" message="Contact was added to VIP list" />
+        <Snackbar ref="addEmail" message="Contact was added to VIP list" />
+        <Snackbar ref="removeEmail" message="Contact was removed from VIP list" />
       </div>
     );
   }
