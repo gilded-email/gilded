@@ -209,6 +209,13 @@ body > footer > p {
   margin-bottom: 0px;
 }
 
+.back-to-top {
+  color: #666;
+}
+
+.back-to-top:hover {
+  color: #BBB;
+}
 
 /* RESPONSIVE CSS
 -------------------------------------------------- */
