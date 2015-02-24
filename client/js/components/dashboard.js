@@ -51,9 +51,8 @@ var Dashboard = React.createClass({
   menuItems: [
     { route: 'emails', text: 'Emails'},
     { route: 'VIP', text: 'VIP List' },
-    { type: MenuItem.Types.SUBHEADER, text: 'Settings' },
-    { route: 'account', text: 'Account' },
-    { route: 'payments', text: 'Payments' },
+    { route: 'account', text: 'Account Settings' },
+    { route: 'payments', text: 'Payment Settings' },
     { route: 'logout', text: 'Log Out'}, 
   ],
 
@@ -61,7 +60,7 @@ var Dashboard = React.createClass({
     return (
       <div>
       <div className="dash-menu">
-          <LeftNav menuItems={this.menuItems} onChange={this.handleClickEvent} zDepth={4}/>
+          <LeftNav menuItems={this.menuItems} onChange={this.handleClickEvent} zDepth={3}/>
       </div>
       <div className="dash-content">
         <RouterHandler escrow={this.state.userEmails} settings={this.state.userSettings} vips={this.state.userVIPs} card={this.state.userCard} />

@@ -3,7 +3,6 @@ var _ = require('lodash');
 
 var AppDispatcher = _.extend({}, Dispatcher.prototype, {
   handleViewAction: function (action) {
-    console.log('Action: ', action);
     this.dispatch({
       source: 'VIEW_ACTION',
       action: action

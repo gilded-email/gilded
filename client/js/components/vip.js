@@ -3,7 +3,7 @@ var mui = require('material-ui');
 var TextField = mui.TextField;
 var RaisedButton = mui.RaisedButton;
 var Paper = mui.Paper;
-var Snackbar = mui.Snackbar 
+var Snackbar = mui.Snackbar;
 var StoreWatchMixin = require('../mixins/StoreWatchMixin');
 var Store = require('../stores/store');
 var validator = require('email-validator');
@@ -61,7 +61,7 @@ var VIP = React.createClass({
 
   mixins: [StoreWatchMixin(getInitialState)],
 
-  componentWillUpdate: function(nextProps, nextState) { //TODO: bug/does not show snackbar with 
+  componentWillUpdate: function(nextProps, nextState) { //TODO: bug/does not show snackbar with
     if (nextProps.vips.length > this.props.vips.length && this.props.vips[0] !== undefined) {
       this.refs.addEmail.show();
       setTimeout(function() {
@@ -75,7 +75,7 @@ var VIP = React.createClass({
     }
   },
 
-  
+
 
   addVipHandler: function (e) {
     e.preventDefault();
@@ -93,7 +93,7 @@ var VIP = React.createClass({
     } else {
       this.state.add.push(this.refs.email.getValue());
       this.refs.email.setValue('');
-      Actions.updateVips(this.state); 
+      Actions.updateVips(this.state);
     }
   },
 
@@ -105,14 +105,14 @@ var VIP = React.createClass({
         <div className="VIP">
           <h1>VIP List</h1>
 
-          <Paper className="dashboard-subcontent" zDepth={4}>
+          <Paper className="dashboard-subcontent" zDepth={2}>
             <div className="dashboard-subheading">Add VIP</div>
               <div className="dashboard-subheading-content">
               <TextField ref="email" className="login-input" floatingLabelText="Add an email address"/>
               <RaisedButton className="vip-add-button" label="Add VIP" secondary={true} onClick={this.addVipHandler}/>
               </div>
           </Paper>
-          <Paper className="vip-table-container" zDepth={4} >
+          <Paper className="vip-table-container" zDepth={2}>
 
           <h4>{numberOfVIPsMessage}</h4>
             <VIPtable data={this.props.vips} />

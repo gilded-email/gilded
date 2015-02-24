@@ -9,7 +9,7 @@ var mui = require('material-ui');
 var TextField = mui.TextField;
 var RaisedButton = mui.RaisedButton;
 var Paper = mui.Paper;
-var Snackbar = mui.Snackbar 
+var Snackbar = mui.Snackbar;
 var dollarString = require('dollar-string');
 
 var getInitialState = function() {
@@ -75,7 +75,7 @@ var Settings = React.createClass({
 
   getBalance: function() {
     var balance = this.props.settings.balance;
-    return dollarString.fromCents(0);
+    return dollarString.fromCents(balance);
   },
 
   addCard: function () {
@@ -100,20 +100,20 @@ var Settings = React.createClass({
           <div className="dashboard-title">
             <h1>Payment Settings</h1>
           </div>
-            <Paper className="dashboard-subcontent" zDepth={4}>
+            <Paper className="dashboard-subcontent" zDepth={2}>
               <div className="dashboard-subheading">Update Rate</div>
                 <div className="dashboard-subheading-content">
                   <TextField ref="newRate" className="new-rate" hintText="$" floatingLabelText={this.getRate()} />
                   <RaisedButton className="new-rate-save" label="Change Rate" secondary={true} onClick={this.changeRate} />
                 </div>
             </Paper>
-            <Paper className="dashboard-subcontent" zDepth={4}>
+            <Paper className="dashboard-subcontent" zDepth={2}>
               <div className="dashboard-subheading">Current Balance</div>
                 <div className="dashboard-subheading-content">
                   {this.getBalance()}
                 </div>
             </Paper>
-            <Paper className="dashboard-subcontent" zDepth={4}>
+            <Paper className="dashboard-subcontent" zDepth={2}>
               <div className="dashboard-subheading">Credit Card Info</div>
                 <div className="dashboard-subheading-content">
                 <div className="payment-card-info">{this.getLast4()}</div>
