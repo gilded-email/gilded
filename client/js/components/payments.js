@@ -75,7 +75,7 @@ var Settings = React.createClass({
 
   getBalance: function() {
     var balance = this.props.settings.balance;
-    return dollarString.fromCents(0);
+    return dollarString.fromCents(balance);
   },
 
   addCard: function () {
