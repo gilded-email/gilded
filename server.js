@@ -48,6 +48,7 @@ app.put('/api/user/vipList', user.checkSession, user.removeVip);
 app.post('/api/join', user.join, user.storeSession, email.fetchEscrows);
 app.post('/api/login', user.login, user.storeSession, email.fetchEscrows);
 app.get('/api/user/dashboard', user.checkSession, user.getUser, email.fetchEscrows);
+app.post('/api/user/withdraw', user.checkSession, user.withdraw);
 
 app.get('/pay/:id', payment.getDetails, payment.paymentRequest);
 app.post('/pay/:id', payment.getDetails, payment.verification, email.findEmailInEscrow, email.findAndPayUserFromEscrow, email.releaseFromEscrow);

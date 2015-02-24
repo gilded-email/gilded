@@ -257,7 +257,7 @@ module.exports = {
     });
   },
 
-  cashOut: function (req, res) {
+  withdraw: function (req, res) {
     User.findOne({username: req.cookies.username}, function (error, user) {
       if (user.balance === 0) {
         res.status(200).send(user);
