@@ -106,7 +106,7 @@ module.exports = {
       if (error) {
         res.sendStatus(403);
       } else {
-        req.user = user;
+        req.user = user.toJSON();
         next();
       }
     });

@@ -43,7 +43,7 @@ module.exports = {
                 console.log(error);
                 res.status(409).send(error);
               } else {
-                req.user = user;
+                req.user = user.toJSON();
                 next();
               }
             });
@@ -67,7 +67,7 @@ module.exports = {
           } else if (response === false) {
             res.status(422).send('wrong password');
           } else {
-            req.user = user;
+            req.user = user.toJSON();
             next();
           }
         });
@@ -81,14 +81,14 @@ module.exports = {
         console.log(error);
         res.status(400).send(error);
       } else {
-        req.user = user;
+        req.user = user.toJSON();
         next();
       }
     });
   },
 
   sendConfirmation: function (req, res) {
-    res.status(201).send(req.user);
+    res.status(201).send(req.user.toJSON());
   },
 
   logout: function (req, res) {
@@ -140,7 +140,7 @@ module.exports = {
             console.log(error);
             res.status(400).send(error);
           } else {
-            res.status(201).send(user);
+            res.status(201).send(user.toJSON());
           }
         });
       }
@@ -153,7 +153,7 @@ module.exports = {
         console.log(error);
         res.status(400).send(error);
       } else {
-        res.status(201).send(user);
+        res.status(201).send(user.toJSON());
       }
     });
   },
@@ -164,7 +164,7 @@ module.exports = {
         console.log(error);
         res.status(400).send(error);
       } else {
-        res.status(201).send(user);
+        res.status(201).send(user.toJSON());
       }
     });
   },
@@ -175,7 +175,7 @@ module.exports = {
         console.log(error);
         res.sendStatus(409);
       } else {
-        res.status(201).send(user);
+        res.status(201).send(user.toJSON());
       }
     });
   },
@@ -186,7 +186,7 @@ module.exports = {
         console.log(error);
         res.sendStatus(409);
       } else {
-        res.status(201).send(user);
+        res.status(201).send(user.toJSON());
       }
     });
   },
@@ -249,7 +249,7 @@ module.exports = {
               html: '<h1>New Card Added</h1>A card was recently added to your gilded.club account for receiving payments. If you believe this to be error, please email <a href="mailto:admin@gilded.club">admin@gilded.club</a> immediately.',
               text: 'A card was recently added to your gilded.club account for receiving payments. If you believe this to be an error, please email admin@gilded.club immediately.'
             });
-            res.status(201).send(user);
+            res.status(201).send(user.toJSON());
           }
         });
       }
@@ -276,7 +276,7 @@ module.exports = {
               console.log(error);
               res.status(400).send(error);
             } else {
-              res.send(201).send(updatedUser);
+              res.send(201).send(updatedUser.toJSON());
             }
           });
         }
