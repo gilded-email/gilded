@@ -20,16 +20,13 @@ var Email = React.createClass({
   mixins: [Router.State, StoreWatchMixin(getInitialState)],
 
   getEmailData: function () {
-    console.log(this.props);
     var emailId = this.getParams().emailId;
     var escrow = this.props.escrow[emailId]; //.userData.escrow[this.getParams().emailId].email);
-    console.log(this.props);
     var email = JSON.parse(escrow.email);
     email.emailId = emailId;
     email.paid = escrow.paid ? "Paid" : "Unpaid";
     email.cost = dollarString.fromCents(escrow.cost);
     email.sentDate = moment(escrow.sentDate).format('MMM DD');
-    console.log(email);
     return email;
   },
 
