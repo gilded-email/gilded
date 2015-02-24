@@ -10,6 +10,7 @@ var autoprefixer = require('gulp-autoprefixer');
 var livereload = require('gulp-livereload');
 var nodemon = require('gulp-nodemon');
 var eslint = require('gulp-eslint');
+var ga = require('gulp-ga');
 
 gulp.task('clean', function () {
   del.sync([
@@ -33,7 +34,7 @@ gulp.task('compile', ['lint-client'], function () {
 gulp.task('lint-client', function () {
   return gulp.src([
     './client/**/*.js'
-    ])
+  ])
     .pipe(eslint())
     .pipe(eslint.format());
 });
@@ -42,11 +43,10 @@ gulp.task('lint-server', function () {
   return gulp.src([
     './*.js',
     './server/**/*.js'
-    ])
+  ])
     .pipe(eslint())
     .pipe(eslint.format());
 });
-
 
 gulp.task('less', function () {
   return gulp.src('./client/less/main.less')
@@ -58,6 +58,11 @@ gulp.task('less', function () {
 
 gulp.task('html', function () {
   return gulp.src('./client/**/*.html')
+    .pipe(ga({
+      uid: 'UA-59881274-1',
+      url: 'auto',
+      anonymizeIp: true
+    }))
     .pipe(gulp.dest('./dist/'))
     .pipe(livereload());
 });
