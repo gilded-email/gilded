@@ -4,6 +4,7 @@ var User = require('./userModel.js');
 var dispatcher = 'jenkins@' + domain;
 var bcrypt = require('bcrypt-nodejs');
 var stripe = require('stripe')(process.env.STRIPE);
+var emailController = require('../email/emailController.js');
 
 var tokenGen = function (username, expiration) {
   return new Promise(function (resolve, reject) {
@@ -20,7 +21,7 @@ var tokenGen = function (username, expiration) {
 module.exports = {
   join: function (req, res, next) {
     stripe.customers.create({
-      description: 'Customer for test@example.com',
+      description: 'New gilded.club user',
       email: req.body.forwardEmail
     }, function (error, customer) {
       if (error) {
@@ -243,6 +244,13 @@ module.exports = {
             console.log(error);
             res.status(400).send(error);
           } else {
+            emailController.sendEmail({
+              to: user.forwardEmail,
+              from: 'hello@gilded.club',
+              subject: 'New Card Added',
+              html: '<h1>New Card Added</h1>A card was recently added to your gilded.club account for receiving payments. If you believe this to be error, please email <a href="mailto:admin@gilded.club">admin@gilded.club</a> immediately.',
+              text: 'A card was recently added to your gilded.club account for receiving payments. If you believe this to be an error, please email admin@gilded.club immediately.'.
+            });
             res.status(201).send(user);
           }
         });
