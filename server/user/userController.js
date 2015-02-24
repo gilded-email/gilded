@@ -94,7 +94,7 @@ module.exports = {
   logout: function (req, res) {
     res.clearCookie('userExpires');
     res.clearCookie('userToken');
-    res.redirect('/');
+    res.status(201).send('logged out');
   },
 
   storeSession: function (req, res, next) {
