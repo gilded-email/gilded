@@ -10,7 +10,7 @@ var TextField = mui.TextField;
 var RaisedButton = mui.RaisedButton;
 var Paper = mui.Paper;
 var dollarString = require('dollar-string');
-var Snackbar = mui.Snackbar 
+var Snackbar = mui.Snackbar
 
 var getInitialState = function() {
   return null;
@@ -59,14 +59,14 @@ var Settings = React.createClass({
           <div className="dashboard-title">
             <h1>Account Settings</h1>
           </div>
-            <Paper className="dashboard-subcontent" zDepth={4}>
+            <Paper className="dashboard-subcontent" zDepth={2}>
               <div className="dashboard-subheading">Forward Email</div>
                 <div className="dashboard-subheading-content">
                   <TextField ref="newEmail" className="new-email" floatingLabelText={this.props.settings.forwardEmail} />
                   <RaisedButton className="new-email-save" label="Update Email" secondary={true} onClick={this.changeForwardEmail} />
                 </div>
             </Paper>
-            <Paper className="dashboard-subcontent" zDepth={4}>
+            <Paper className="dashboard-subcontent" zDepth={2}>
               <div className="dashboard-subheading">Change Password</div>
                 <div className="dashboard-subheading-content">
                   <TextField ref="newPassword" className="new-password" type={"password"} floatingLabelText="Enter new password" />
