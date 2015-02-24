@@ -3,7 +3,7 @@ var mui = require('material-ui');
 var TextField = mui.TextField;
 var RaisedButton = mui.RaisedButton;
 var Paper = mui.Paper;
-var Snackbar = mui.Snackbar
+var Snackbar = mui.Snackbar;
 var StoreWatchMixin = require('../mixins/StoreWatchMixin');
 var Store = require('../stores/store');
 var validator = require('email-validator');
@@ -112,7 +112,7 @@ var VIP = React.createClass({
               <RaisedButton className="vip-add-button" label="Add VIP" secondary={true} onClick={this.addVipHandler}/>
               </div>
           </Paper>
-          <Paper className="vip-table-container" zDepth={2} >
+          <Paper className="vip-table-container" zDepth={2}>
 
           <h4>{numberOfVIPsMessage}</h4>
             <VIPtable data={this.props.vips} />

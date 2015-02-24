@@ -9,7 +9,7 @@ var mui = require('material-ui');
 var TextField = mui.TextField;
 var RaisedButton = mui.RaisedButton;
 var Paper = mui.Paper;
-var Snackbar = mui.Snackbar
+var Snackbar = mui.Snackbar;
 var dollarString = require('dollar-string');
 
 var getInitialState = function() {

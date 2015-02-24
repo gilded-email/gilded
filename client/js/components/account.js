@@ -10,7 +10,7 @@ var TextField = mui.TextField;
 var RaisedButton = mui.RaisedButton;
 var Paper = mui.Paper;
 var dollarString = require('dollar-string');
-var Snackbar = mui.Snackbar
+var Snackbar = mui.Snackbar;
 
 var getInitialState = function() {
   return null;
