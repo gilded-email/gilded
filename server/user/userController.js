@@ -4,7 +4,6 @@ var User = require('./userModel.js');
 var dispatcher = 'jenkins@' + domain;
 var bcrypt = require('bcrypt-nodejs');
 var stripe = require('stripe')(process.env.STRIPE);
-var payoutRatio = 0.7;
 
 var tokenGen = function (username, expiration) {
   return new Promise(function (resolve, reject) {
@@ -257,7 +256,7 @@ module.exports = {
         res.status(200).send(user);
       }
       stripe.transfers.create({
-        amount: user.balance * payoutRatio,
+        amount: user.balance,
         currency: 'usd',
         recipient: user.stripeId,
         description: 'Gilded.club balance'

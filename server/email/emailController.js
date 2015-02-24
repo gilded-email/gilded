@@ -5,6 +5,7 @@ var userController = require('../user/userController.js');
 var Escrow = require('./emailModel.js');
 var User = require('../user/userModel.js');
 var domain = process.env.DOMAIN;
+var payoutRatio = 0.7;
 
 var printAsyncResult = function (error, result) {
   if (error) {
@@ -41,8 +42,6 @@ module.exports = {
       if (error) {
         res.sendStatus(400);
       } else {
-        console.log('fields: ', fields);
-        // email = fields; // TODO
         email.to = JSON.parse(fields.envelope).to.toLowerCase();
         email.from = fields.from.split('<')[1].split('>')[0];
         email.subject = fields.subject;
@@ -102,7 +101,8 @@ module.exports = {
   },
 
   findAndPayUserFromEscrow: function (req, res, next) {
-    User.findOneAndUpdate({username: req.escrow.recipient}, {$inc: {balance: req.escrow.cost}}, function (error, user) {
+    var cost = Math.floor(req.escrow.cost * payoutRatio);
+    User.findOneAndUpdate({username: req.escrow.recipient}, {$inc: {balance: cost}}, function (error, user) {
       if (error) {
         res.sendStatus(403);
       } else {
