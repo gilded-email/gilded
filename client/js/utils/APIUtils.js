@@ -135,6 +135,7 @@ var api_utils = {
           console.log('card failed to post: ', error);
           return error;
         }
+        console.log('this is res.body for addCard', res);
         serverActions.addUserCard(res.status);
       });
   }

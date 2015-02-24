@@ -9,6 +9,7 @@ var mui = require('material-ui');
 var TextField = mui.TextField;
 var RaisedButton = mui.RaisedButton;
 var Paper = mui.Paper;
+var Snackbar = mui.Snackbar 
 var dollarString = require('dollar-string');
 
 var getInitialState = function() {
@@ -20,15 +21,33 @@ var Settings = React.createClass({
   mixins: [StoreWatchMixin(getInitialState)],
 
   getDefaultProps: function() {
-      return {
-        settings: {
-          forwardEmail: "",
-          balance: 0,
-          rate: 0,
-          password: ""
-        }
-      };
-    },
+    return {
+      settings: {
+        forwardEmail: "",
+        balance: 0,
+        rate: 0,
+        password: ""
+      }
+    };
+  },
+
+  componentWillUpdate: function(nextProps, nextState) {
+    console.log(this.props);
+    var nextCard = nextProps.card;
+    if (nextCard.success) {
+      Store.resetCard();
+      this.refs.cardSuccess.show();
+      setTimeout(function() {
+        this.refs.cardSuccess.dismiss();
+      }.bind(this), 1000);
+    } else if (nextCard.failure) {
+      Store.resetCard();
+      this.refs.cardFailure.show();
+      setTimeout(function() {
+        this.refs.cardFailure.dismiss();
+      }.bind(this), 1000);
+    }
+  },
 
   getRate: function() {
     var rate = this.props.settings.rate;
@@ -97,6 +116,9 @@ var Settings = React.createClass({
                   <RaisedButton className="card-add" label="Add Card" secondary={true} onClick={this.addCard} />
                 </div>
             </Paper>
+          <Snackbar ref="cardSuccess" message="Card successfully added!" />
+          <Snackbar ref="cardFailure" message="Card failed to save." />
+
         </div>
     )
   }

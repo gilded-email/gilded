@@ -64,7 +64,7 @@ var Dashboard = React.createClass({
           <LeftNav menuItems={this.menuItems} onChange={this.handleClickEvent} zDepth={4}/>
       </div>
       <div className="dash-content">
-        <RouterHandler escrow={this.state.userEmails} settings={this.state.userSettings} vips={this.state.userVIPs} />
+        <RouterHandler escrow={this.state.userEmails} settings={this.state.userSettings} vips={this.state.userVIPs} card={this.state.userCard} />
       </div>
       </div>
       )

@@ -112,7 +112,15 @@ var AppStore = _.extend({}, EventEmitter.prototype, {
     info.userEmails = _userEmails;
     info.userVIPs = _userVIPs;
     info.userSettings = _userSettings;
+    info.userCard = _newCard;
     return info;
+  },
+
+  resetCard: function() {
+    _newCard = {
+      success: false,
+      failure: false
+    };
   },
 
   dispatcherIndex:AppDispatcher.register(function(payload){
