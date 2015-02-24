@@ -135,7 +135,8 @@ var api_utils = {
           console.log('card failed to post: ', error);
           return error;
         }
-        serverActions.addUserCard(res.status);
+        var last4 = res.body.last4;
+        serverActions.addUserCard(res.status, last4);
       });
   }
 

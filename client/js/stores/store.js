@@ -12,7 +12,8 @@ var _userEmails = {};
 var _userSettings = {};
 var _newCard = {
   success: false,
-  failure: false
+  failure: false,
+  last4: null
 };
 
 /*eslint-disable */
@@ -51,6 +52,7 @@ var _updateDashboardInfo = function(userData) {
     password: userData.user.password,
     rate: userData.user.rate
   };
+  _newCard.last4 = userData.user.last4
 };
 
 var _updateVIPList = function(VIPList) {
@@ -69,11 +71,14 @@ var _updateUserRate = function(rate) {
   _userSettings.rate = rate;
 };
 
-var _addCard = function (status) {
+var _addCard = function (status, last4) {
   if (status === 201) {
     _newCard.success = true;
   } else if (status === 400 ) {
     _newCard.failure = true;
+  }
+  if (last4) {
+    _newCard.last4 = last4;
   }
 };
 
@@ -112,7 +117,15 @@ var AppStore = _.extend({}, EventEmitter.prototype, {
     info.userEmails = _userEmails;
     info.userVIPs = _userVIPs;
     info.userSettings = _userSettings;
+    info.userCard = _newCard;
     return info;
+  },
+
+  resetCard: function() {
+    _newCard = {
+      success: false,
+      failure: false
+    };
   },
 
   dispatcherIndex:AppDispatcher.register(function(payload){
@@ -156,7 +169,7 @@ var AppStore = _.extend({}, EventEmitter.prototype, {
         break;
 
       case AppConstants.ADD_CARD_SUCCESS:
-        _addCard(payload.action.status);
+        _addCard(payload.action.status, payload.action.last4);
         break;
     }
 

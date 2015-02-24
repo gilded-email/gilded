@@ -54,10 +54,11 @@ module.exports = {
     });
   },
 
-  addUserCard: function (status) {
+  addUserCard: function (status, last4) {
     AppDispatcher.handleViewAction({
       actionType: AppConstants.ADD_CARD_SUCCESS,
-      status: status
+      status: status,
+      last4: last4
     });
   }
 };
