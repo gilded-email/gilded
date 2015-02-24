@@ -1,4 +1,4 @@
-var Promise = require('es6-promise').Promise;
+var BPromise = require('es6-promise').Promise;
 var _ = require('lodash');
 
 var _callbacks = [];
@@ -10,7 +10,7 @@ var _promises = [];
  * @param {object} payload The data from the Action.
  */
 var _addPromise = function(callback, payload) {
-  _promises.push(new Promise(function(resolve, reject) {
+  _promises.push(new BPromise(function(resolve, reject) {
     if (callback(payload)) {
       resolve(payload);
     } else {
@@ -47,7 +47,7 @@ Dispatcher.prototype = _.extend({}, Dispatcher.prototype, {
     _callbacks.forEach(function(callback) {
       _addPromise(callback, payload);
     });
-    Promise.all(_promises).then(_clearPromises);
+    BPromise.all(_promises).then(_clearPromises);
   }
 
 });

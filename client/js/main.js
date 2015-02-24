@@ -14,7 +14,6 @@ $(document).ready(function () {
   var React = require('react');
 
   var Router = require('react-router');
-  var Link = Router.Link;
   var Route = Router.Route;
   var RouteHandler = Router.RouteHandler;
   var DefaultRoute = Router.DefaultRoute;
@@ -24,19 +23,17 @@ $(document).ready(function () {
   var Logout = require('./components/logout');
   var Dashboard = require('./components/dashboard');
   var Account = require('./components/account');
-  var Payments = require('./components/payments')
+  var Payments = require('./components/payments');
   var Emails = require('./components/emails');
   var Email = require('./components/email');
   var VIP = require('./components/vip');
-  var Store = require('./stores/store.js');
-  var Actions = require('./actions/actions');
 
   var App = React.createClass({
 
     render: function () {
       return (
         <RouteHandler />
-      )
+      );
     }
 
   });

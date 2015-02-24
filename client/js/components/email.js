@@ -7,9 +7,7 @@ var dollarString = require('dollar-string');
 var mui = require('material-ui');
 var Paper = mui.Paper;
 
-var Actions = require('../actions/actions');
-var Store = require('../stores/store');
-var StoreWatchMixin = require('../mixins/StoreWatchMixin');
+var storeWatchMixin = require('../mixins/StoreWatchMixin');
 
 
 var getInitialState = function () {
@@ -17,14 +15,14 @@ var getInitialState = function () {
 };
 
 var Email = React.createClass({
-  mixins: [Router.State, StoreWatchMixin(getInitialState)],
+  mixins: [Router.State, storeWatchMixin(getInitialState)],
 
   getEmailData: function () {
     var emailId = this.getParams().emailId;
     var escrow = this.props.escrow[emailId]; //.userData.escrow[this.getParams().emailId].email);
     var email = JSON.parse(escrow.email);
     email.emailId = emailId;
-    email.paid = escrow.paid ? "Paid" : "Unpaid";
+    email.paid = escrow.paid ? 'Paid' : 'Unpaid';
     email.cost = dollarString.fromCents(escrow.cost);
     email.sentDate = moment(escrow.sentDate).format('MMM DD');
     return email;

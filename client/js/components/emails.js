@@ -1,17 +1,12 @@
 var React = require('react');
 
 var Router = require('react-router');
-var Link = Router.link;
 
-var mui = require('material-ui');
-var Menu = mui.Menu;
 
 var moment = require('moment');
 var dollarString = require('dollar-string');
 
-var Actions = require('../actions/actions');
-var Store = require('../stores/store');
-var StoreWatchMixin = require('../mixins/StoreWatchMixin');
+var storeWatchMixin = require('../mixins/StoreWatchMixin');
 
 var getInitialState = function() {
   return null;
@@ -19,8 +14,11 @@ var getInitialState = function() {
 
 var Escrows = React.createClass({
   emailData: function () {
-      if(!this.props.data.map) return [];
-      else return this.props.data;
+      if (!this.props.data.map) {
+        return [];
+      } else {
+        return this.props.data;
+      }
   },
 
   render: function () {
@@ -39,17 +37,17 @@ var Escrows = React.createClass({
           { this.emailData().map(function (escrow, i) {
           var email = JSON.parse(escrow.email);
           email.emailId = i;
-          email.paid = escrow.paid ? "Paid" : "Unpaid";
+          email.paid = escrow.paid ? 'Paid' : 'Unpaid';
           email.cost = dollarString.fromCents(escrow.cost);
           email.sentDate = moment(escrow.sentDate).format('MMM DD');
           return (
             <Email {...email} key={i} />
-          )
+          );
         }
       )}
         </tbody>
       </table>
-      )
+      );
   }
 });
 
@@ -69,12 +67,12 @@ var Email = React.createClass({
         <td>{this.props.cost}</td>
         <td>{this.props.paid}</td>
       </tr>
-      )
+      );
   }
 });
 
 var Emails = React.createClass({
-  mixins: [StoreWatchMixin(getInitialState)],
+  mixins: [storeWatchMixin(getInitialState)],
 
   render: function () {
     return (
