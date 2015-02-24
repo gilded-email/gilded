@@ -226,8 +226,8 @@ module.exports = {
   },
 
   addCard: function (req, res) {
-    console.log("CARD: ", req.body);
-    User.findOne({username: req.cookies.username.toLowerCase()}, function (error, user) {
+    var last4 = req.body.card.cardNumber.length === 15 ? req.body.card.cardNumber.slice(11) : req.body.card.cardNumber.slice(12);
+    User.findOneAndUpdate({username: req.cookies.username.toLowerCase()}, {last4: last4}, function (error, user) {
       if (error) {
         console.log(error);
       } else {
@@ -244,7 +244,7 @@ module.exports = {
             console.log(error);
             res.status(400).send(error);
           } else {
-            res.sendStatus(201);
+            res.status(201).send(user);
           }
         });
       }
