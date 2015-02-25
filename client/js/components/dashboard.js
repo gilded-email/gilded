@@ -1,13 +1,11 @@
 var React = require('react');
-
-
+var cookie = require('cookie');
 var Router = require('react-router');
 var Link = Router.Link;
 var RouteHandler = Router.RouteHandler;
 
 var Actions = require('../actions/actions');
 var Store = require('../stores/store');
-
 
 var Authentication = {
   statics: {
@@ -37,9 +35,7 @@ var Dashboard = React.createClass({
   },
   _onChange: function () {
     this.setState(Store.getUserData());
-    console.log(this.state);
   },
-
 
   handleClickEvent: function (e, key, payload) {
     this.transitionTo(payload.route);
@@ -54,6 +50,7 @@ var Dashboard = React.createClass({
   ],
 
   render: function() {
+    var username = cookie.parse(document.cookie).username;
     return (
       <div>
 
@@ -76,7 +73,7 @@ var Dashboard = React.createClass({
         </div>
 
         <div className="logged-in-user">
-          <span>you@gilded.club</span><span className="down-arrow">&#9662;</span>
+          <span>{username}@gilded.club</span><span className="down-arrow">&#9662;</span>
         </div>
 
       </div>
