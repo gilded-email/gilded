@@ -118,66 +118,36 @@ module.exports = {
     });
   },
 
-  changePassword: function (req, res) {
+  changePassword: function (req, res, next) {
     bcrypt.hash(req.body.password, null, null, function (error, hash) {
       if (error) {
         console.log(error);
         res.status(400).send(error);
       } else {
-        User.findOneAndUpdate({username: req.cookies.username}, {password: hash}, function (error, user) {
-          if (error) {
-            console.log(error);
-            res.status(400).send(error);
-          } else {
-            res.status(201).send(user.toJSON());
-          }
-        });
+        req.update = {password: hash};
+        next();
       }
     });
   },
 
-  updateForwardEmail: function (req, res) {
-    User.findOneAndUpdate({username: req.cookies.username}, {forwardEmail: req.body.forwardEmail}, function (error, user) {
-      if (error) {
-        console.log(error);
-        res.status(400).send(error);
-      } else {
-        res.status(201).send(user.toJSON());
-      }
-    });
+  updateForwardEmail: function (req, res, next) {
+    req.update = {forwardEmail: req.body.forwardEmail};
+    next();
   },
 
-  changeRate: function (req, res) {
-    User.findOneAndUpdate({username: req.cookies.username}, {rate: req.body.rate}, function (error, user) {
-      if (error) {
-        console.log(error);
-        res.status(400).send(error);
-      } else {
-        res.status(201).send(user.toJSON());
-      }
-    });
+  changeRate: function (req, res, next) {
+    req.update = {rate: req.body.rate};
+    next();
   },
 
-  addVip: function (req, res) {
-    User.findOneAndUpdate({username: req.cookies.username}, {$push: {vipList: {$each: req.body.add}}}, function (error, user) {
-      if (error) {
-        console.log(error);
-        res.sendStatus(409);
-      } else {
-        res.status(201).send(user.toJSON());
-      }
-    });
+  addVip: function (req, res, next) {
+    req.update = {$push: {vipList: {$each: req.body.add}}};
+    next();
   },
 
-  removeVip: function (req, res) {
-    User.findOneAndUpdate({username: req.cookies.username}, {$pullAll: {vipList: req.body.remove}}, function (error, user) {
-      if (error) {
-        console.log(error);
-        res.sendStatus(409);
-      } else {
-        res.status(201).send(user.toJSON());
-      }
-    });
+  removeVip: function (req, res, next) {
+    req.update = {$pullAll: {vipList: req.body.remove}};
+    next();
   },
 
   isVip: function (username, sender) {
@@ -212,7 +182,7 @@ module.exports = {
     });
   },
 
-  addCard: function (req, res) {
+  addCard: function (req, res, next) {
     var last4 = req.body.card.cardNumber.slice(-4);
     var card = {
       number: req.body.card.cardNumber,
@@ -241,15 +211,9 @@ module.exports = {
               console.log('Error updating card: ', error);
               res.status(400).send(error);
             } else {
-              User.update({username: req.cookies.username}, {last4: last4}, function (error, updateUser) {
-                if (error) {
-                  console.log('Error updating user record: ', error);
-                  res.status(400).send(error);
-                } else {
-                  require('../email/emailController.js').sendEmail(newCardEmail);
-                  res.status(201).send(updateUser);
-                }
-              });
+              require('../email/emailController.js').sendEmail(newCardEmail);
+              req.update = {last4: last4};
+              next();
             }
           });
         } else {
@@ -268,15 +232,9 @@ module.exports = {
                   console.log('Error adding card: ', error);
                   res.status(400).send(error);
                 } else {
-                  User.update({username: req.cookies.username}, {last4: last4, stripeId: recipient.id}, function (error, updateUser) {
-                    if (error) {
-                      console.log('Error updating user record: ', error);
-                      res.status(400).send(error);
-                    } else {
-                      require('../email/emailController.js').sendEmail(newCardEmail);
-                      res.status(201).send(updateUser);
-                    }
-                  });
+                  require('../email/emailController.js').sendEmail(newCardEmail);
+                  req.update = {last4: last4, stripeId: recipient.id};
+                  next();
                 }
               });
             }
@@ -286,7 +244,7 @@ module.exports = {
     });
   },
 
-  withdraw: function (req, res) {
+  withdraw: function (req, res, next) {
     User.findOne({username: req.cookies.username}, function (error, user) {
       if (error) {
         console.log('User does not exist: ', error);
@@ -305,16 +263,22 @@ module.exports = {
           console.log(error);
           res.status(400).send(error);
         } else {
-          User.findOneAndUpdate({_id: user.id}, {balance: 0}, function (error, updatedUser) {
-            if (error) {
-              console.log(error);
-              res.status(400).send(error);
-            } else {
-              res.status(201).send(updatedUser.toJSON());
-            }
-          });
+          req.update = {balance: 0};
+          next();
         }
       });
+    });
+  },
+
+  update: function (req, res) {
+    var update = req.update;
+    User.findOneAndUpdate({username: req.cookies.username}, update, function (error, updatedUser) {
+      if (error) {
+        console.log(error);
+        res.status(400).send(error);
+      } else {
+        res.status(201).send(updatedUser.toJSON());
+      }
     });
   }
 };

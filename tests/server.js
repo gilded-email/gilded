@@ -117,7 +117,7 @@ describe('User Module', function () {
   });
 
   it('should allow users to update their password', function (done) {
-    request.post({url: serverUrl + '/api/user/settings/password', jar: j, json: true, body: {password: 'secret2'}}, function (error, httpResponse, body) {
+    request.put({url: serverUrl + '/api/user/settings/password', jar: j, json: true, body: {password: 'secret2'}}, function (error, httpResponse, body) {
       if (error) {
         console.log(error);
       } else {
