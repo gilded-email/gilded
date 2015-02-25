@@ -37,6 +37,7 @@ var Dashboard = React.createClass({
   },
   _onChange: function () {
     this.setState(Store.getUserData());
+    console.log(this.state);
   },
 
 
