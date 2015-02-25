@@ -76,7 +76,7 @@ var Dashboard = React.createClass({
         </div>
 
         <div className="logged-in-user">
-          you@gilded.club
+          <span>you@gilded.club</span><span className="down-arrow">&#9662;</span>
         </div>
 
       </div>
