@@ -213,22 +213,30 @@ module.exports = {
   },
 
   addCard: function (req, res) {
-    var last4 = req.body.card.cardNumber.length === 15 ? req.body.card.cardNumber.slice(11) : req.body.card.cardNumber.slice(12);
+    var last4 = req.body.card.cardNumber.slice(-4);
+    var card = {
+      number: req.body.card.cardNumber,
+      exp_month: req.body.card.expMonth,
+      exp_year: req.body.card.expYear,
+      cvc: req.body.card.cvc,
+      name: req.body.card.cardHolderName
+    };
+
     User.findOne({username: req.cookies.username}, function (error, user) {
       if (error) {
         console.log('User not found: ', error);
         res.status(400).send(error);
       } else {
+        var newCardEmail = {
+          to: user.forwardEmail,
+          from: 'hello@gilded.club',
+          subject: 'New Card Added',
+          html: '<h1>New Card Added</h1>A card was recently added to your gilded.club account for receiving payments. If you believe this to be error, please email <a href="mailto:admin@gilded.club">admin@gilded.club</a> immediately.',
+          text: 'A card was recently added to your gilded.club account for receiving payments. If you believe this to be an error, please email admin@gilded.club immediately.'
+        };
+
         if (user.stripeId) {
-          stripe.recipients.update(user.stripeId, {
-            card: {
-              number: req.body.card.cardNumber,
-              exp_month: req.body.card.expMonth,
-              exp_year: req.body.card.expYear,
-              cvc: req.body.card.cvc,
-              name: req.body.card.cardHolderName
-            }
-          }, function (error) {
+          stripe.recipients.update(user.stripeId, {card: card}, function (error) {
             if (error) {
               console.log('Error updating card: ', error);
               res.status(400).send(error);
@@ -238,13 +246,7 @@ module.exports = {
                   console.log('Error updating user record: ', error);
                   res.status(400).send(error);
                 } else {
-                  require('../email/emailController.js').sendEmail({
-                    to: user.forwardEmail,
-                    from: 'hello@gilded.club',
-                    subject: 'New Card Added',
-                    html: '<h1>New Card Added</h1>A card was recently added to your gilded.club account for receiving payments. If you believe this to be error, please email <a href="mailto:admin@gilded.club">admin@gilded.club</a> immediately.',
-                    text: 'A card was recently added to your gilded.club account for receiving payments. If you believe this to be an error, please email admin@gilded.club immediately.'
-                  });
+                  require('../email/emailController.js').sendEmail(newCardEmail);
                   res.status(201).send(updateUser);
                 }
               });
@@ -261,15 +263,7 @@ module.exports = {
               console.log('Error creating recipient: ', error);
               res.status(400).send(error);
             } else {
-              stripe.recipients.createCard(recipient.id, {
-                card: {
-                  number: req.body.card.cardNumber,
-                  exp_month: req.body.card.expMonth,
-                  exp_year: req.body.card.expYear,
-                  cvc: req.body.card.cvc,
-                  name: req.body.card.cardHolderName
-                }
-              }, function (error, card) {
+              stripe.recipients.createCard(recipient.id, {card: card}, function (error) {
                 if (error) {
                   console.log('Error adding card: ', error);
                   res.status(400).send(error);
@@ -279,13 +273,7 @@ module.exports = {
                       console.log('Error updating user record: ', error);
                       res.status(400).send(error);
                     } else {
-                      require('../email/emailController.js').sendEmail({
-                        to: user.forwardEmail,
-                        from: 'hello@gilded.club',
-                        subject: 'New Card Added',
-                        html: '<h1>New Card Added</h1>A card was recently added to your gilded.club account for receiving payments. If you believe this to be error, please email <a href="mailto:admin@gilded.club">admin@gilded.club</a> immediately.',
-                        text: 'A card was recently added to your gilded.club account for receiving payments. If you believe this to be an error, please email admin@gilded.club immediately.'
-                      });
+                      require('../email/emailController.js').sendEmail(newCardEmail);
                       res.status(201).send(updateUser);
                     }
                   });
