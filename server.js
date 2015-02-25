@@ -30,25 +30,25 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use('/', express.static(path.join(__dirname, 'dist')));
 
-app.use('/api/inbound', email.receive, email.verify);
-app.use('/api/escrow/', user.checkSession, email.fetchEscrows);
-app.use('/api/user/settings/card', user.checkSession, user.addCard);
-app.use('/api/user/settings/rate', user.checkSession, user.changeRate);
-app.use('/api/user/settings/password', user.checkSession, user.changePassword);
-app.use('/api/user/settings/email', user.checkSession, user.updateForwardEmail);
-
 app.set('views', './views');
 app.set('view engine', 'jade');
 
 app.post('/signup', marketing.signup);
 
+app.post('/api/inbound', email.receive, email.verify);
+app.get('/api/escrow/', user.checkSession, email.fetchEscrows);
+app.post('/api/user/settings/card', user.checkSession, user.addCard, user.update);
+app.put('/api/user/settings/rate', user.checkSession, user.changeRate, user.update);
+app.put('/api/user/settings/password', user.checkSession, user.changePassword, user.update);
+app.put('/api/user/settings/email', user.checkSession, user.updateForwardEmail, user.update);
+
 app.post('/api/logout', user.logout);
-app.post('/api/user/vipList', user.checkSession, user.addVip);
-app.put('/api/user/vipList', user.checkSession, user.removeVip);
+app.post('/api/user/vipList', user.checkSession, user.addVip, user.update);
+app.put('/api/user/vipList', user.checkSession, user.removeVip, user.update);
 app.post('/api/join', user.join, user.storeSession, email.fetchEscrows);
 app.post('/api/login', user.login, user.storeSession, email.fetchEscrows);
 app.get('/api/user/dashboard', user.checkSession, user.getUser, email.fetchEscrows);
-app.post('/api/user/withdraw', user.checkSession, user.withdraw);
+app.post('/api/user/withdraw', user.checkSession, user.withdraw, user.update);
 
 app.get('/pay/:id', payment.getDetails, payment.paymentRequest);
 app.post('/pay/:id', payment.getDetails, payment.verification, email.findEmailInEscrow, email.findAndPayUserFromEscrow, email.releaseFromEscrow);
