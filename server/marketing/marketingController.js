@@ -1,4 +1,3 @@
-var Promise = require('bluebird');
 var MarketingModel = require('./marketingModel.js');
 var emailController = require('../email/emailController.js');
 

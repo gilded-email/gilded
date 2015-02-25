@@ -1,4 +1,3 @@
-var Promise = require('bluebird');
 var formidable = require('formidable');
 var sendgrid = require('sendgrid')(process.env.SENDGRID_USER, process.env.SENDGRID_PASSWORD);
 var userController = require('../user/userController.js');

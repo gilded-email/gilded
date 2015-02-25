@@ -130,7 +130,7 @@ describe('User Module', function () {
   it('should be able to log out users', function (done) {
     request.post({url: serverUrl + '/api/logout', jar: j, json: true, body: {}}, function (error, httpResponse, body) {
       var cookies = j.getCookies(serverUrl);
-      assert.equal(cookies.length, 0);
+      assert.equal(cookies.length, 1);
       done();
     });
 
