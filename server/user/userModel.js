@@ -1,6 +1,6 @@
 require('../../db/db.js');
-var privates = require('mongoose-private');
 var mongoose = require('mongoose');
+var privates = require('mongoose-private');
 
 var UserSchema = new mongoose.Schema({
   username: {type: String, unique: true, required: true},
@@ -9,7 +9,7 @@ var UserSchema = new mongoose.Schema({
   vipList: {type: Array, default: []},
   balance: {type: Number, default: 0},
   rate: {type: Number, default: 100},
-  stripeId: {type: String, unique: true, private: true},
+  stripeId: {type: String, private: true},
   last4: {type: String}
 });
 
