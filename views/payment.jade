@@ -27,14 +27,20 @@ html
                     a(href="/signup.html") Join
                   li
                     a(href="/app/#/login") Login
-    div(class="container")
-      div(class="jumbotron")
-        div(class="container")
-          h1(class="text-center") Welcome
-          p Your recipient's inbox is protected. In order to reach them, they are requesting a fee.
-          p Don't worry, we are holding your message in escrow for a week. It will be immediately forwarded to them once payment is complete.
-        div(class="payment")
-            form(method="post")
-              script(src="https://checkout.stripe.com/checkout.js", class="stripe-button", data-key="pk_test_8kvjMq55qMQ1JwQ73W73C8no", data-amount!= amount, data-name="Gilded Club", data-description!= '$' + (amount/100).toFixed(2), data-image="/assets/icon-128x128.png", data-bitcoin="true")
+    if paid
+      div(class="container")
+        div(class="jumbotron")
+          div(class="container")
+            h2 You've already paid for this email, and it was successfully sent to your recipient.
+    else
+      div(class="container")
+        div(class="jumbotron")
+          div(class="container")
+            h1(class="text-center") Welcome
+            p Your recipient's inbox is protected. In order to reach them, they are requesting a fee.
+            p Don't worry, we are holding your message in escrow for a week. It will be immediately forwarded to them once payment is complete.
+          div(class="payment")
+              form(method="post")
+                script(src="https://checkout.stripe.com/checkout.js", class="stripe-button", data-key="pk_test_8kvjMq55qMQ1JwQ73W73C8no", data-amount!= amount, data-name="Gilded Club", data-description!= '$' + (amount/100).toFixed(2), data-image="/assets/icon-128x128.png", data-bitcoin="true")
     script(src="../bower_components/jquery/dist/jquery.min.js")
     script(src="../bower_components/bootstrap/dist/js/bootstrap.min.js")

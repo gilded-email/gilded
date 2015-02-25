@@ -26,6 +26,7 @@ module.exports = {
         console.log('No email');
       } else {
         req.cost = email.cost;
+        req.paid = email.paid;
         next();
       }
     });
@@ -33,7 +34,7 @@ module.exports = {
 
   paymentRequest: function (req, res) {
     var cost = Math.ceil((req.cost * 1.029) + 30);
-    res.render('payment', {name: 'Gilded Club Payment', amount: cost});
+    res.render('payment', {name: 'Gilded Club Payment', amount: cost, paid: req.paid});
   },
 
   verification: function (req, res, next) {
