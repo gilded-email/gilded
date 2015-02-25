@@ -32,12 +32,14 @@ var Email = React.createClass({
 
     var email = this.getEmailData();
     return (
+      <div className="dashboard">
+        <h1>Emails</h1>
         <Paper className="email-page">
           <div className="email-content">
             <div className="back-to-emails">
               <Link to="emails">&lt; Back to Emails</Link>
             </div>
-            <h1>{email.subject}</h1>
+            <h2>{email.subject}</h2>
             <hr />
             <span className="email-from">From: {email.from}</span>
             <br /><span className="email-to">To: {email.to}</span>
@@ -45,11 +47,11 @@ var Email = React.createClass({
             <br /><span className="email-paid">{email.paid} {email.cost}</span>
             <div className="email-message">
               <span className="email-html" dangerouslySetInnerHTML={{__html: email.html}} />
-              <span className="email-text">{email.text}</span>
             </div>
 
           </div>
         </Paper>
+      </div>
     );
   }
 });
