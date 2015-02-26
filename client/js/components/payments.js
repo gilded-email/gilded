@@ -67,7 +67,7 @@ var Settings = React.createClass({
     e.preventDefault();
     var newRate = this.refs.newRate.getValue();
     var newRateInCents = dollarString.toCents(newRate);
-    this.refs.newRate.setValue('');
+    this.refs.newRate.setValue('$');
     Actions.updateRate(newRateInCents);
   },
 
