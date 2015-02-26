@@ -71,16 +71,6 @@ var Settings = React.createClass({
     Actions.updateRate(newRateInCents);
   },
 
-  onSubmitRateHandler: function(e) {
-    if (e.keyCode === 13) {
-      this.changeRate(e);
-    }
-  },
-
-  getBalance: function() {
-    return dollarString.fromCents(this.props.settings.balance);
-  },
-
   addCard: function () {
     var card = {
       cardNumber: this.refs.cardNumber.getValue(),
@@ -97,18 +87,27 @@ var Settings = React.createClass({
     Actions.addCard(card);
   },
 
+  onSubmitRateHandler: function(e) {
+    if (e.keyCode === 13) {
+      this.changeRate(e);
+    }
+  },
+
+
+// Withdraw
+
+  getBalance: function () {
+    if (this.props.settings.balance <= 0) {
+      this.emptyBalance = true;
+    }
+    return dollarString.fromCents(this.props.settings.balance);
+  },
+
   withdraw: function () {
     Actions.withdraw();
   },
 
   render: function() {
-    if (this.getBalance() > 0) {
-      var withdrawButton = function () {
-        return (
-          <RaisedButton label="Withdraw" secondary={true} onClick={this.withdraw} />
-        )
-      }
-    };
     return (
 
       <div className="dashboard">
@@ -130,7 +129,7 @@ var Settings = React.createClass({
             <div className="dashboard-subheading-content withdraw-balance">
               {this.getBalance()}
               <div className="withdraw-button">
-                {withdrawButton}
+                <RaisedButton label="Withdraw" onClick={this.withdraw} disabled={this.emptyBalance} secondary={!this.emptyBalance} />
               </div>
             </div>
         </Paper>
