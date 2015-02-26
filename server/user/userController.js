@@ -319,7 +319,6 @@ module.exports = {
           text: 'A Forgot Username request was made for this email address. Your Gilded username is: *' + user.username + '*\n\nIf this request wasn\'t made by you, it\'s safe to ignore. If you ever have any problems, please email admin@gilded.club.'
         });
       }
-
     });
   }
 };

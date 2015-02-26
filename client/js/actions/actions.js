@@ -104,6 +104,16 @@ var AppActions = {
     });
 
     APIUtils.withdraw();
+  },
+
+// Forgot Account Details
+
+  forgotUsername: function (email) {
+    AppDispatcher.handleViewAction({
+      actionType: AppConstants.FORGOT_USERNAME
+    })
+
+    APIUtils.forgotUsername(email);
   }
 
 };

@@ -22,5 +22,7 @@ module.exports = keyMirror({
   GET_USER_DASHBOARD_INFO: null,
   ADD_CARD: null,
   ADD_CARD_SUCCESS: null,
-  UPDATE_BALANCE: null
+  UPDATE_BALANCE: null,
+  FORGOT_USERNAME: null,
+  FORGOTTEN_EMAIL_VERIFICATION: null
 });

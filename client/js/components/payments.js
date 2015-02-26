@@ -46,7 +46,7 @@ var Settings = React.createClass({
 
   getLast4: function() {
     if (this.props.card.last4) {
-      return 'XXXX-XXXX-XXXX-' + this.props.card.last4;
+      return 'Last Four Digits: ' + this.props.card.last4;
     } else {
       return null;
     }
@@ -133,7 +133,7 @@ var Settings = React.createClass({
         </Paper>
 
         <Paper className="dashboard-subcontent" zDepth={2}>
-          <div className="dashboard-subheading">Credit Card Info</div>
+          <div className="dashboard-subheading">Debit Card Info</div>
             <div className="dashboard-subheading-content">
             <div className="payment-card-info">{this.getLast4()}</div>
               <TextField ref="cardHolderName" className="cardholdername-input" hintText="John Doe" floatingLabelText="Card Holder Name" />
