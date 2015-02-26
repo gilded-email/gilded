@@ -68,5 +68,14 @@ module.exports = {
       actionType: AppConstants.UPDATE_BALANCE,
       balance: balance
     });
+  },
+
+// Forgot Account Details
+  forgottenEmailVerification: function (status, text) {
+    AppDispatcher.handleViewAction({
+      actionType: AppConstants.FORGOTTEN_EMAIL_VERIFICATION,
+      status: status,
+      text: text
+    });
   }
 };

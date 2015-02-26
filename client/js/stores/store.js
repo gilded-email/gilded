@@ -19,7 +19,12 @@ var _newCard = {
 };
 var _userErrors = {
   login: false,
-  signup: false
+  signup: false,
+};
+
+var _userForgotUsername = {
+  verificationSent: false,
+  verificationError: false
 };
 
 /*eslint-disable */
@@ -97,6 +102,14 @@ var _updateBalance = function (balance) {
   _userSettings.balance = balance;
 };
 
+var _forgottenEmailVerification = function (status, text) {
+  if (status === 400) {
+    _userForgotUsername.verificationError = true;
+  } else if (status === 201) {
+    _userForgotUsername.verificationSent = true;
+  }
+};
+
 
 var AppStore = _.extend({}, EventEmitter.prototype, {
   emitChange: function(){
@@ -139,6 +152,17 @@ var AppStore = _.extend({}, EventEmitter.prototype, {
     info.userSettings = _userSettings;
     info.userCard = _newCard;
     return info;
+  },
+
+  getForgotUsernameDetails: function() {
+    return _userForgotUsername;
+  },
+
+  resetForgotUsernameDetails: function() {
+    _userForgotUsername = {
+      verificationSent: false,
+      verificationError: false
+    };
   },
 
   resetUserErrors: function() {
@@ -204,6 +228,13 @@ var AppStore = _.extend({}, EventEmitter.prototype, {
 
       case AppConstants.UPDATE_BALANCE:
         _updateBalance(payload.action.balance);
+        break;
+        
+      case AppConstants.FORGOT_USERNAME:
+        break;
+
+      case AppConstants.FORGOTTEN_EMAIL_VERIFICATION:
+        _forgottenEmailVerification(payload.action.status, payload.action.text);
         break;
     }
 

@@ -149,6 +149,20 @@ var apiUtils = {
       .end(function (error, res) {
         serverActions.updateBalance(res.body.balance);
       });
+  },
+
+  forgotUsername: function(email) {
+    request
+      .post(API_ROOT + 'user/forgotusername')
+      .send({email: email})
+      .end(function (error, res) {
+        if (error) {
+          console.log(error);
+        }
+        var status = res.status;
+        var text = res.text
+        serverActions.forgottenEmailVerification(status, text);
+      })
   }
 
 };
