@@ -20,10 +20,8 @@ var Settings = React.createClass({
   getDefaultProps: function() {
     return {
       settings: {
-        forwardEmail: '',
         balance: 0,
         rate: 0,
-        password: ''
       }
     };
   },

@@ -1,14 +1,15 @@
-/**
- * @jsx React.DOM
- */
 var React = require('react');
-var Actions = require('../actions/actions');
-var storeWatchMixin = require('../mixins/StoreWatchMixin');
+var validator = require("email-validator");
+
 var mui = require('material-ui');
 var TextField = mui.TextField;
 var RaisedButton = mui.RaisedButton;
 var Paper = mui.Paper;
 var Snackbar = mui.Snackbar;
+
+var Actions = require('../actions/actions');
+var storeWatchMixin = require('../mixins/StoreWatchMixin');
+
 
 var getInitialState = function() {
   return null;
@@ -22,8 +23,6 @@ var Settings = React.createClass({
       return {
         settings: {
           forwardEmail: '',
-          balance: 0,
-          rate: 0,
           password: ''
         }
       };
@@ -32,8 +31,11 @@ var Settings = React.createClass({
   changeForwardEmail: function(e) {
     e.preventDefault();
     var newForwardEmail = this.refs.newEmail.getValue();
-    this.refs.newEmail.setValue('');
-    Actions.updateForwardEmail(newForwardEmail);
+    if (validator.validate(newForwardEmail)) {
+      Actions.updateForwardEmail(newForwardEmail);
+    } else {
+      this.refs.newEmail.setErrorText('Please enter a valid email');
+    }
   },
 
   changePassword: function(e) {
@@ -50,6 +52,7 @@ var Settings = React.createClass({
         this.refs.snackbar.dismiss();
       }.bind(this), 1000);
     }
+    this.refs.newEmail.setValue(this.props.settings.forwardEmail);
   },
 
   onSubmitPasswordHandler: function(e) {
@@ -64,17 +67,24 @@ var Settings = React.createClass({
     }
   },
 
-
   render: function() {
     return (
         <div className="dashboard">
           <div className="dashboard-title">
-            <h1>Account Settings</h1>
+            <h1>
+              Account Settings
+            </h1>
           </div>
             <Paper className="dashboard-subcontent" zDepth={2}>
               <div className="dashboard-subheading">Forward Email</div>
                 <div className="dashboard-subheading-content">
-                  <TextField ref="newEmail" className="new-email"  onKeyUp={this.onSubmitEmailHandler} floatingLabelText={this.props.settings.forwardEmail} />
+                  <TextField
+                    ref="newEmail"
+                    className="new-email"
+                    onKeyUp={this.onSubmitEmailHandler}
+                    floatingLabelText="Forwarding Email Address"
+                    defaultValue={this.props.settings.forwardEmail}
+                   />
                   <RaisedButton className="new-email-save" label="Update Email" secondary={true} onClick={this.changeForwardEmail} />
                 </div>
             </Paper>

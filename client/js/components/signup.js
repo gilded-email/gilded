@@ -1,6 +1,3 @@
-/**
- * @jsx React.DOM
- */
 var React = require('react');
 var mui = require('material-ui');
 var TextField = mui.TextField;
