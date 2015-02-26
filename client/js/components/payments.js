@@ -63,11 +63,18 @@ var Settings = React.createClass({
     }
   },
 
-  changeRate: function() {
+  changeRate: function(e) {
+    e.preventDefault();
     var newRate = this.refs.newRate.getValue();
     var newRateInCents = dollarString.toCents(newRate);
-    this.refs.newRate.setValue('');
+    this.refs.newRate.setValue('$');
     Actions.updateRate(newRateInCents);
+  },
+
+  onSubmitRateHandler: function(e) {
+    if (e.keyCode === 13) {
+      this.changeRate(e);
+    }
   },
 
   getBalance: function() {
@@ -107,7 +114,7 @@ var Settings = React.createClass({
         <Paper className="dashboard-subcontent" zDepth={2}>
           <div className="dashboard-subheading">Update Rate</div>
             <div className="dashboard-subheading-content">
-              <TextField ref="newRate" className="new-rate" hintText="$" floatingLabelText={this.getRate()} />
+              <TextField ref="newRate" className="new-rate" defaultValue="$" onKeyUp={this.onSubmitRateHandler} floatingLabelText={this.getRate()} />
               <RaisedButton className="new-rate-save" label="Change Rate" secondary={true} onClick={this.changeRate} />
             </div>
         </Paper>

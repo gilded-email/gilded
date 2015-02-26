@@ -8,7 +8,10 @@ var CHANGE_EVENT = 'change';
 
 var _userVIPs = [];
 var _userEmails = {};
-var _userSettings = {};
+var _userSettings = {
+  balance: 0,
+  rate: 100
+};
 var _newCard = {
   success: false,
   failure: false,

@@ -29,13 +29,15 @@ var Settings = React.createClass({
       };
     },
 
-  changeForwardEmail: function() {
+  changeForwardEmail: function(e) {
+    e.preventDefault();
     var newForwardEmail = this.refs.newEmail.getValue();
     this.refs.newEmail.setValue('');
     Actions.updateForwardEmail(newForwardEmail);
   },
 
-  changePassword: function() {
+  changePassword: function(e) {
+    e.preventDefault();
     var newPassword = this.refs.newPassword.getValue();
     this.refs.newPassword.setValue('');
     Actions.updatePassword(newPassword);
@@ -50,6 +52,18 @@ var Settings = React.createClass({
     }
   },
 
+  onSubmitPasswordHandler: function(e) {
+    if (e.keyCode === 13) {
+      this.changePassword(e);
+    }
+  },
+
+  onSubmitEmailHandler: function(e) {
+    if (e.keyCode === 13) {
+      this.changeForwardEmail(e);
+    }
+  },
+
 
   render: function() {
     return (
@@ -60,14 +74,14 @@ var Settings = React.createClass({
             <Paper className="dashboard-subcontent" zDepth={2}>
               <div className="dashboard-subheading">Forward Email</div>
                 <div className="dashboard-subheading-content">
-                  <TextField ref="newEmail" className="new-email" floatingLabelText={this.props.settings.forwardEmail} />
+                  <TextField ref="newEmail" className="new-email"  onKeyUp={this.onSubmitEmailHandler} floatingLabelText={this.props.settings.forwardEmail} />
                   <RaisedButton className="new-email-save" label="Update Email" secondary={true} onClick={this.changeForwardEmail} />
                 </div>
             </Paper>
             <Paper className="dashboard-subcontent" zDepth={2}>
               <div className="dashboard-subheading">Change Password</div>
                 <div className="dashboard-subheading-content">
-                  <TextField ref="newPassword" className="new-password" type={"password"} floatingLabelText="Enter new password" />
+                  <TextField ref="newPassword" className="new-password" type={"password"} onKeyUp={this.onSubmitPasswordHandler} floatingLabelText="Enter new password" />
                   <RaisedButton className="new-password-save" label="Change Password" secondary={true} onClick={this.changePassword} />
                 </div>
             </Paper>
