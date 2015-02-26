@@ -111,7 +111,7 @@ var AppActions = {
   forgotUsername: function (email) {
     AppDispatcher.handleViewAction({
       actionType: AppConstants.FORGOT_USERNAME
-    })
+    });
 
     APIUtils.forgotUsername(email);
   }

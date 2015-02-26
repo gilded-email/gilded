@@ -19,7 +19,7 @@ var _newCard = {
 };
 var _userErrors = {
   login: false,
-  signup: false,
+  signup: false
 };
 
 var _userForgotUsername = {
@@ -102,7 +102,7 @@ var _updateBalance = function (balance) {
   _userSettings.balance = balance;
 };
 
-var _forgottenEmailVerification = function (status, text) {
+var _forgottenEmailVerification = function (status) {
   if (status === 400) {
     _userForgotUsername.verificationError = true;
   } else if (status === 201) {
@@ -228,9 +228,6 @@ var AppStore = _.extend({}, EventEmitter.prototype, {
 
       case AppConstants.UPDATE_BALANCE:
         _updateBalance(payload.action.balance);
-        break;
-        
-      case AppConstants.FORGOT_USERNAME:
         break;
 
       case AppConstants.FORGOTTEN_EMAIL_VERIFICATION:

@@ -160,9 +160,9 @@ var apiUtils = {
           console.log(error);
         }
         var status = res.status;
-        var text = res.text
+        var text = res.text;
         serverActions.forgottenEmailVerification(status, text);
-      })
+      });
   }
 
 };
