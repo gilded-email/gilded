@@ -61,5 +61,12 @@ module.exports = {
       status: status,
       last4: last4
     });
+  },
+
+  updateBalance: function (balance) {
+    AppDispatcher.handleViewAction({
+      actionType: AppConstants.UPDATE_BALANCE,
+      balance: balance
+    });
   }
 };

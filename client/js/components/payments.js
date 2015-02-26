@@ -78,8 +78,7 @@ var Settings = React.createClass({
   },
 
   getBalance: function() {
-    var balance = this.props.settings.balance;
-    return dollarString.fromCents(balance);
+    return dollarString.fromCents(this.props.settings.balance);
   },
 
   addCard: function () {
@@ -103,6 +102,13 @@ var Settings = React.createClass({
   },
 
   render: function() {
+    if (this.getBalance() > 0) {
+      var withdrawButton = function () {
+        return (
+          <RaisedButton label="Withdraw" secondary={true} onClick={this.withdraw} />
+        )
+      }
+    };
     return (
 
       <div className="dashboard">
@@ -124,7 +130,7 @@ var Settings = React.createClass({
             <div className="dashboard-subheading-content withdraw-balance">
               {this.getBalance()}
               <div className="withdraw-button">
-                <RaisedButton label="Withdraw" secondary={true} onClick={this.withdraw} />
+                {withdrawButton}
               </div>
             </div>
         </Paper>
@@ -143,6 +149,7 @@ var Settings = React.createClass({
         </Paper>
 
         <Snackbar ref="cardSuccess" message="Card successfully added!" />
+        <Snackbar ref="cardFailure" message="Card failed to save." />
         <Snackbar ref="cardFailure" message="Card failed to save." />
 
       </div>

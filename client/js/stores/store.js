@@ -93,6 +93,11 @@ var _addCard = function (status, last4) {
   }
 };
 
+var _updateBalance = function (balance) {
+  _userSettings.balance = balance;
+};
+
+
 var AppStore = _.extend({}, EventEmitter.prototype, {
   emitChange: function(){
     this.emit(CHANGE_EVENT);
@@ -192,6 +197,13 @@ var AppStore = _.extend({}, EventEmitter.prototype, {
 
       case AppConstants.ADD_CARD_SUCCESS:
         _addCard(payload.action.status, payload.action.last4);
+        break;
+
+      case AppConstants.WITHDRAW:
+        break;
+
+      case AppConstants.UPDATE_BALANCE:
+        _updateBalance(payload.action.balance);
         break;
     }
 
