@@ -133,8 +133,16 @@ describe('User Module', function () {
       assert.equal(cookies.length, 1);
       done();
     });
-
   });
+
+  xit('should be able to look up forgotten usernames', function () {
+    assert.equal(false, true);
+  });
+
+  xit('should be able to reset forgotten passwords', function () {
+    assert.equal(false, true);
+  });
+
 });
 
 describe('Email Module', function () {

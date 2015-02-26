@@ -282,5 +282,24 @@ module.exports = {
         res.status(201).send(updatedUser.toJSON());
       }
     });
-  }
+  },
+
+  forgotUsername: function (req, res) {
+    User.findOne({forwardEmail: req.body.email}, function (error, user) {
+      if (error || !user) {
+        console.log('forgotUsername error: ', error);
+        res.status(400).send(error);
+      } else {
+        res.status(201).send('Reminder sent to ' + req.body.email);
+        require('../email/emailController.js').sendEmail({
+          to: user.forwardEmail,
+          from: 'hello@gilded.club',
+          subject: 'Forgot Username',
+          html: '<h1>Forgot Username</h1>A Forgot Username request was made for this email address. Your Gilded username is: <strong>' + user.username + '</strong><br><br>If this request wasn\'t made by you, it\'s safe to ignore. If you ever have any problems, please email <a href="mailto:admin@gilded.club">admin@gilded.club</a>.',
+          text: 'A Forgot Username request was made for this email address. Your Gilded username is: *' + user.username + '*\n\nIf this request wasn\'t made by you, it\'s safe to ignore. If you ever have any problems, please email admin@gilded.club.'
+        });
+      }
+
+    }
+  })
 };
