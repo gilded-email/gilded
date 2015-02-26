@@ -1,5 +1,5 @@
 var React = require('react');
-var validator = require("email-validator");
+var validator = require('email-validator');
 
 var mui = require('material-ui');
 var TextField = mui.TextField;

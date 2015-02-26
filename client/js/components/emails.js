@@ -7,7 +7,6 @@ var RaisedButton = require('material-ui').RaisedButton;
 var moment = require('moment');
 var dollarString = require('dollar-string');
 var Snackbar = require('material-ui').Snackbar;
-var validator = require('email-validator');
 
 var Actions = require('../actions/actions');
 var storeWatchMixin = require('../mixins/StoreWatchMixin');
@@ -20,7 +19,7 @@ var Escrows = React.createClass({
   emailData: function () {
       var dataForEmails = {
         vips: this.props.vips
-      }
+      };
       if (!this.props.data.map) {
         dataForEmails.emails = [];
       } else {
@@ -51,7 +50,7 @@ var Escrows = React.createClass({
           </tr>
         </thead>
         <tbody>
-          { this.emailData().emails.map(function (email, i) {;
+          { this.emailData().emails.map(function (email, i) {
           return (
             <Email {...email} key={i} />
           );
@@ -72,7 +71,6 @@ var Email = React.createClass({
 
   addToVIPs: function (e) {
     e.preventDefault();
-    var validated = validator.validate(this.props.from);
     if (this.props.vips.indexOf(this.props.from) > -1){
       this.refs.duplicateEmail.show();
       setTimeout(function() {
@@ -114,12 +112,9 @@ var Emails = React.createClass({
   render: function () {
     return (
       <div className="emails">
- 
         <div className="dashboard">
           <h1>Emails</h1>
-
           <Escrows vips={this.props.vips} data={this.props.escrow} />
-
         </div>
       </div>
     );

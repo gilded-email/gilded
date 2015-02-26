@@ -1,6 +1,5 @@
 var React = require('react');
 var Router = require('react-router');
-var Link = Router.Link;
 
 var mui = require('material-ui');
 var TextField = mui.TextField;

@@ -21,7 +21,7 @@ var Settings = React.createClass({
     return {
       settings: {
         balance: 0,
-        rate: 0,
+        rate: 0
       }
     };
   },
