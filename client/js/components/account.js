@@ -52,7 +52,6 @@ var Settings = React.createClass({
         this.refs.snackbar.dismiss();
       }.bind(this), 1000);
     }
-    this.refs.newEmail.setValue(this.props.settings.forwardEmail);
   },
 
   onSubmitPasswordHandler: function(e) {
