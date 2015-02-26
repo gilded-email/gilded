@@ -76,6 +76,7 @@ var Login = React.createClass({
               <TextField ref="password" type={"password"} className="login-input" floatingLabelText="Password" />
               <RaisedButton onClick={this.handleClick} className="login-button" label="Log In" secondary={true} />
               <Link className="forgotusername-link" to="forgotusername">Forgot Username?</Link><br></br>
+              <Link className="forgotpassword-link" to="forgotpassword">Forgot Password?</Link><br></br>
               <Link className="signup-link" to="signup">Not a member? Sign up here.</Link>
             </form>
           </div>

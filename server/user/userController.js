@@ -327,6 +327,7 @@ module.exports = {
     User.findOne({username: username}, function (error, user) {
       if (error || !user) {
         console.log(error);
+        res.status(400).send(error);
       } else {
         var expiration = Date.now() + (1000 * 60 * 60 * 24); // 24 hours
         tokenGen(username, expiration)

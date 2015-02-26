@@ -27,6 +27,11 @@ var _userForgotUsername = {
   verificationError: false
 };
 
+var _userForgotPassword = {
+  verificationSent: false,
+  verificationError: false
+};
+
 /*eslint-disable */
 var fakeEmails = [
   {"_id":"1","email":"{\"to\":[\"you@gilded.club\"],\"from\":\"welcome@gilded.club\",\"subject\":\"Welcome to Gilded\",\"html\":\"<h1>Welcome to Gilded!</h1>\",\"text\":\"Thanks for signing up with Gilded. Enjoy!\"}","recipient":"welcome","__v":0,"cost":1,"paid":true,"sentDate":"2015-02-22T00:11:07.123Z"},
@@ -102,14 +107,13 @@ var _updateBalance = function (balance) {
   _userSettings.balance = balance;
 };
 
-var _forgottenEmailVerification = function (status) {
-  if (status === 400) {
-    _userForgotUsername.verificationError = true;
-  } else if (status === 201) {
-    _userForgotUsername.verificationSent = true;
-  }
+var _forgottenUsernameEmailVerification = function (forgotUsername) {
+  _userForgotUsername = forgotUsername;
 };
 
+var _forgottenPasswordEmailVerification = function (forgotPassword) {
+  _userForgotPassword = forgotPassword;
+};
 
 var AppStore = _.extend({}, EventEmitter.prototype, {
   emitChange: function(){
@@ -160,6 +164,17 @@ var AppStore = _.extend({}, EventEmitter.prototype, {
 
   resetForgotUsernameDetails: function() {
     _userForgotUsername = {
+      verificationSent: false,
+      verificationError: false
+    };
+  },
+
+  getForgotPasswordDetails: function() {
+    return _userForgotPassword;
+  },
+
+  resetForgotPasswordDetails: function() {
+    _userForgotPassword = {
       verificationSent: false,
       verificationError: false
     };
@@ -230,8 +245,12 @@ var AppStore = _.extend({}, EventEmitter.prototype, {
         _updateBalance(payload.action.balance);
         break;
 
-      case AppConstants.FORGOTTEN_EMAIL_VERIFICATION:
-        _forgottenEmailVerification(payload.action.status, payload.action.text);
+      case AppConstants.FORGOTTEN_USERNAME_EMAIL_VERIFICATION:
+        _forgottenUsernameEmailVerification(payload.action.forgotUsername);
+        break;
+
+      case AppConstants.FORGOTTEN_PASSWORD_EMAIL_VERIFICATION:
+        _forgottenPasswordEmailVerification(payload.action.forgotPassword);
         break;
     }
 

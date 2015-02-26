@@ -151,7 +151,7 @@ var apiUtils = {
       });
   },
 
-  forgotUsername: function(email) {
+  forgotUsername: function (email) {
     request
       .post(API_ROOT + 'user/forgotusername')
       .send({email: email})
@@ -161,7 +161,20 @@ var apiUtils = {
         }
         var status = res.status;
         var text = res.text;
-        serverActions.forgottenEmailVerification(status, text);
+        serverActions.forgottenUsernameEmailVerification(status, text);
+      });
+  },
+
+  forgotPassword: function (username) {
+    request
+      .post(API_ROOT + 'user/forgotpassword')
+      .send({username: username})
+      .end(function (error, res) {
+        if (error) {
+          console.log(error);
+          return;
+        }
+        serverActions.forgottenPasswordEmailVerification(res.status);
       });
   }
 
