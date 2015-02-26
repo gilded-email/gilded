@@ -96,6 +96,12 @@ var VIP = React.createClass({
     }
   },
 
+  onSubmitVIPHandler: function (e) {
+    if (e.keyCode === 13) {
+      this.addVipHandler(e);
+    }
+  },
+
   render: function() {
     var numberOfVIPsMessage = this.props.vips.length > 0 ? 'You have ' + this.props.vips.length + ' contacts in your VIP list.' : 'Your VIP list is empty.';
 
@@ -107,7 +113,7 @@ var VIP = React.createClass({
           <Paper className="dashboard-subcontent" zDepth={2}>
             <div className="dashboard-subheading">Add VIP</div>
               <div className="dashboard-subheading-content">
-              <TextField ref="email" className="login-input" floatingLabelText="Add an email address"/>
+              <TextField ref="email" className="login-input" onKeyUp={this.onSubmitVIPHandler} floatingLabelText="Add an email address"/>
               <RaisedButton className="vip-add-button" label="Add VIP" secondary={true} onClick={this.addVipHandler}/>
               </div>
           </Paper>
