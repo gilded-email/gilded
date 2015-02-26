@@ -114,6 +114,15 @@ var AppActions = {
     });
 
     APIUtils.forgotUsername(email);
+  },
+
+  forgotPassword: function (username) {
+    AppDispatcher.handleViewAction({
+      actionType: AppConstants.FORGOT_PASSWORD
+    });
+
+    APIUtils.forgotPassword(username);
+
   }
 
 };

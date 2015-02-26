@@ -71,11 +71,39 @@ module.exports = {
   },
 
 // Forgot Account Details
-  forgottenEmailVerification: function (status, text) {
+  forgottenUsernameEmailVerification: function (status) {
+    var userForgotUsername = {
+      verificationSent: false,
+      verificationError: false
+    };
+
+    if (status === 400) {
+      userForgotUsername.verificationError = true;
+    } else if (status === 201) {
+      userForgotUsername.verificationSent = true;
+    }
+
     AppDispatcher.handleViewAction({
-      actionType: AppConstants.FORGOTTEN_EMAIL_VERIFICATION,
-      status: status,
-      text: text
+      actionType: AppConstants.FORGOTTEN_USERNAME_EMAIL_VERIFICATION,
+      forgotUsername: userForgotUsername
     });
+  },
+
+  forgottenPasswordEmailVerification: function (status) {
+    var userForgotPassword = {
+      verificationSent: false,
+      verificationError: false
+    };
+
+    if (status === 400) {
+      userForgotPassword.verificationError = true;
+    } else if (status === 201) {
+      userForgotPassword.verificationSent = true;
+    }
+
+    AppDispatcher.handleViewAction({
+      actionType: AppConstants.FORGOTTEN_PASSWORD_EMAIL_VERIFICATION,
+      forgotPassword: userForgotPassword
+    })
   }
 };

@@ -21,7 +21,8 @@ $(document).ready(function () {
   var Signup = require('./components/signup');
   var Login = require('./components/login');
   var Logout = require('./components/logout');
-  var ForgotUsername = require('./components/username');
+  var ForgotUsername = require('./components/forgotusername');
+  var ForgotPassword = require('./components/forgotpassword');
   var Dashboard = require('./components/dashboard');
   var Account = require('./components/account');
   var Payments = require('./components/payments');
@@ -54,6 +55,7 @@ $(document).ready(function () {
     <Route name="root" path="/" handler={App}>
       <DefaultRoute handler={routeToSignupOrLogin()} />
       <Route name="forgotusername" handler={ForgotUsername} />
+      <Route name="forgotpassword" handler={ForgotPassword} />
       <Route name="signup" handler={Signup} />
       <Route name="login" handler={Login} />
       <Route name="logout" handler={Logout} />

@@ -10,11 +10,11 @@ var Snackbar = mui.Snackbar;
 var Actions = require('../actions/actions');
 var Store = require('../stores/store');
 
-var forgotPassword = React.createClass({
+var ForgotPassword = React.createClass({
   mixins: [Router.Navigation, Router.State],
 
   getInitialState: function (){
-    return Store.getForgotUsernameDetails();
+    return Store.getForgotPasswordDetails();
   },
 
   componentWillMount: function(){
@@ -35,13 +35,13 @@ var forgotPassword = React.createClass({
       setTimeout(function() {
         this.refs.verificationFailure.dismiss();
       }.bind(this), 3000);
-      Store.resetForgotUsernameDetails();
+      Store.resetForgotPasswordDetails();
     } else if (nextState.verificationSent) {
       this.refs.verificationSuccess.show();
       setTimeout(function() {
         this.refs.verificationSuccess.dismiss();
       }.bind(this), 3000);
-      Store.resetForgotUsernameDetails();
+      Store.resetForgotPasswordDetails();
     }
     this.refs.email.setValue('');
   },
@@ -49,8 +49,8 @@ var forgotPassword = React.createClass({
 
   handleClick: function(e) {
     e.preventDefault();
-    var email = this.refs.email.getValue();
-    Actions.forgotUsername(email);
+    var username = this.refs.email.getValue();
+    Actions.forgotPassword(username);
   },
 
   render: function() {
@@ -58,18 +58,18 @@ var forgotPassword = React.createClass({
       <div className="login-container">
         <Paper className="login">
           <div className="login-content">
-            <div className="mui-font-style-display-3">Forgot Username?</div>
+            <div className="mui-font-style-display-3">Forgot Password?</div>
             <form>
-              <TextField ref="email" className="login-input" floatingLabelText="Enter your email address" />
-              <RaisedButton className="login-button" onClick={this.handleClick} label="Send Verification Email" secondary={true} />
+              <TextField ref="email" className="login-input" floatingLabelText="Enter your username" />
+              <RaisedButton className="login-button" onClick={this.handleClick} label="Send Password Reset Email" secondary={true} />
             </form>
           </div>
         </Paper>
-        <Snackbar ref="verificationFailure" message="There is no account under that email address" />
-        <Snackbar ref="verificationSuccess" message="A verification email has been sent to your email address" />
+        <Snackbar ref="verificationFailure" message="There is no account under that username" />
+        <Snackbar ref="verificationSuccess" message="A reset password email has been sent to your email address" />
       </div>
     );
   }
 });
 
-module.exports = forgotPassword;
+module.exports = ForgotPassword;
