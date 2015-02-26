@@ -1,3 +1,6 @@
+var fs = require('fs');
+var path = require('path');
+var jade = require('jade');
 var domain = process.env.DOMAIN;
 var BPromise = require('bluebird');
 var User = require('./userModel.js');
@@ -34,6 +37,23 @@ module.exports = {
             console.log(error);
             res.status(409).send(error);
           } else {
+            //Welcome email
+            fs.readFile(path.join(__dirname, '/../../views/welcomeEmail.jade'), 'utf8', function (error, data) {
+              if (error) {
+                console.log('Welcome Email error: ', error);
+              } else {
+                var compiledHtml = jade.compile(data);
+                var email = user.username + '@' + domain;
+                var html = compiledHtml({email: email});
+                var newUserEmail = {
+                  to: user.forwardEmail,
+                  from: 'welcome@gilded.club',
+                  subject: 'Welcome to Gilded',
+                  html: html
+                };
+                require('../email/emailController.js').sendEmail(newUserEmail);
+              }
+            });
             req.user = user.toJSON();
             next();
           }
@@ -300,6 +320,6 @@ module.exports = {
         });
       }
 
-    }
-  })
+    });
+  }
 };
