@@ -143,11 +143,11 @@ var apiUtils = {
   },
 
   withdraw: function () {
-    console.log('withdrawing!');
+    console.log('withdrawing');
     request
       .post(API_ROOT + 'user/withdraw')
       .end(function (error, res) {
-        console.log(res.body);
+        serverActions.updateBalance(res.body.balance);
       });
   }
 

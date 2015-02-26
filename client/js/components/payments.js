@@ -71,17 +71,6 @@ var Settings = React.createClass({
     Actions.updateRate(newRateInCents);
   },
 
-  onSubmitRateHandler: function(e) {
-    if (e.keyCode === 13) {
-      this.changeRate(e);
-    }
-  },
-
-  getBalance: function() {
-    var balance = this.props.settings.balance;
-    return dollarString.fromCents(balance);
-  },
-
   addCard: function () {
     var card = {
       cardNumber: this.refs.cardNumber.getValue(),
@@ -96,6 +85,22 @@ var Settings = React.createClass({
     this.refs.cvc.setValue('');
     this.refs.cardHolderName.setValue('');
     Actions.addCard(card);
+  },
+
+  onSubmitRateHandler: function(e) {
+    if (e.keyCode === 13) {
+      this.changeRate(e);
+    }
+  },
+
+
+// Withdraw
+
+  getBalance: function () {
+    if (this.props.settings.balance <= 0) {
+      this.emptyBalance = true;
+    }
+    return dollarString.fromCents(this.props.settings.balance);
   },
 
   withdraw: function () {
@@ -124,7 +129,7 @@ var Settings = React.createClass({
             <div className="dashboard-subheading-content withdraw-balance">
               {this.getBalance()}
               <div className="withdraw-button">
-                <RaisedButton label="Withdraw" secondary={true} onClick={this.withdraw} />
+                <RaisedButton label="Withdraw" onClick={this.withdraw} disabled={this.emptyBalance} secondary={!this.emptyBalance} />
               </div>
             </div>
         </Paper>
@@ -143,6 +148,7 @@ var Settings = React.createClass({
         </Paper>
 
         <Snackbar ref="cardSuccess" message="Card successfully added!" />
+        <Snackbar ref="cardFailure" message="Card failed to save." />
         <Snackbar ref="cardFailure" message="Card failed to save." />
 
       </div>

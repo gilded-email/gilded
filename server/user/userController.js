@@ -253,20 +253,22 @@ module.exports = {
       if (user.balance === 0) {
         res.status(200).send(user);
       }
-      stripe.transfers.create({
-        amount: user.balance,
-        currency: 'usd',
-        recipient: user.stripeId,
-        description: 'Gilded.club balance'
-      }, function (error) {
-        if (error) {
-          console.log(error);
-          res.status(400).send(error);
-        } else {
-          req.update = {balance: 0};
-          next();
-        }
-      });
+      else {
+        stripe.transfers.create({
+          amount: user.balance,
+          currency: 'usd',
+          recipient: user.stripeId,
+          description: 'Gilded.club balance'
+        }, function (error) {
+          if (error) {
+            console.log(error);
+            res.status(400).send(error);
+          } else {
+            req.update = {balance: 0};
+            next();
+          }
+        });
+      }
     });
   },
 
