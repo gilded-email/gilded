@@ -7,6 +7,7 @@ var User = require('./userModel.js');
 var dispatcher = 'jenkins@' + domain;
 var bcrypt = require('bcrypt-nodejs');
 var stripe = require('stripe')(process.env.STRIPE);
+var base64Url = require('base64-url');
 
 var tokenGen = function (username, expiration) {
   return new BPromise(function (resolve, reject) {
@@ -272,8 +273,7 @@ module.exports = {
       }
       if (user.balance === 0) {
         res.status(200).send(user);
-      }
-      else {
+      } else {
         stripe.transfers.create({
           amount: user.balance,
           currency: 'usd',
@@ -320,5 +320,64 @@ module.exports = {
         });
       }
     });
+  },
+
+  requestForgotPassword: function (req, res) {
+    var username = req.body.username;
+    User.findOne({username: username}, function (error, user) {
+      if (error || !user) {
+        console.log(error);
+      } else {
+        var expiration = Date.now() + (1000 * 60 * 60 * 24); // 24 hours
+        tokenGen(username, expiration)
+          .then(function (hash) {
+            var urlToken = base64Url.encode(username + '+' + expiration + '+' + hash);
+            var resetUrl = 'https://www' + domain + '/resetpassword/' + urlToken;
+            res.status(201).send('Password reset sent for ' + username);
+            require('../email/emailController.js').sendEmail({
+              to: user.forwardEmail,
+              from: 'hello@gilded.club',
+              subject: 'Forgot Password Request',
+              html: '<h1>Forgot Password</h1>A Forgot Password request was made for your Gilded address. Follow this link to reset your password: <a href="' + resetUrl + '">' + resetUrl + '</a><br><br>If this request wasn\'t made by you, it\'s safe to ignore. If you ever have any problems, please email <a href="mailto:admin@gilded.club">admin@gilded.club</a>.',
+              text: 'A Forgot Password request was made for your Gilded address. Follow this link to reset your password: ' + resetUrl + '\n\nIf this request wasn\'t made by you, it\'s safe to ignore. If you ever have any problems, please email admin@gilded.club.'
+            });
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+      }
+    });
+  },
+
+  handleForgotPassword: function (req, res, urlToken) {
+    var params = base64Url.decode(urlToken).split('+');
+    var username = params[0];
+    var expiration = params[1];
+    var checkToken = process.env.SECRET + username + expiration;
+    var hash = params[2];
+    bcrypt.compare(checkToken, hash, function (error, result) {
+      if (error) {
+        console.log('Compare error: ', error);
+        // Compare error
+      } else if (!result) {
+        console.log('The hash isn\'t valid');
+      } else {
+        if (req.cookies.userExpiration < Date.now()) {
+          console.log('Your Forgot Password request expired. It only lasts 24 hours. Ask for a new one.');
+        } else {
+          console.log('Good urlToken!');
+        }
+      }
+    });
+  },
+
+  normalizeInput: function (req, res, next) {
+    if (req.body.username) {
+      req.body.username = req.body.username.toLowerCase();
+    }
+    if (req.body.email) {
+      req.body.email = req.body.email.toLowerCase();
+    }
+    next();
   }
 };
