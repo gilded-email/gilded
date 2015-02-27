@@ -10,7 +10,7 @@ var Paper = mui.Paper;
 var Snackbar = mui.Snackbar;
 var dollarString = require('dollar-string');
 
-var getInitialState = function() {
+var getInitialState = function () {
   return null;
 };
 
@@ -18,7 +18,7 @@ var Settings = React.createClass({
 
   mixins: [storeWatchMixin(getInitialState)],
 
-  getDefaultProps: function() {
+  getDefaultProps: function () {
     return {
       settings: {
         balance: 0,
@@ -27,25 +27,25 @@ var Settings = React.createClass({
     };
   },
 
-  componentWillUpdate: function(nextProps) {
+  componentWillUpdate: function (nextProps) {
     var nextCard = nextProps.card;
     if (nextCard.success) {
       Store.resetCard();
       this.refs.cardSuccess.show();
-      setTimeout(function() {
+      setTimeout(function () {
         this.refs.cardSuccess.dismiss();
       }.bind(this), 1000);
     } else if (nextCard.failure) {
       Store.resetCard();
       this.refs.cardFailure.show();
-      setTimeout(function() {
+      setTimeout(function () {
         this.refs.cardFailure.dismiss();
       }.bind(this), 1000);
     }
 
   },
 
-  getLast4: function() {
+  getLast4: function () {
     if (this.props.card.last4) {
       return 'Last Four Digits: ' + this.props.card.last4;
     } else {
@@ -53,7 +53,7 @@ var Settings = React.createClass({
     }
   },
 
-  getRate: function() {
+  getRate: function () {
     var rate = this.props.settings.rate;
     if (rate) {
       return dollarString.fromCents(rate);
@@ -62,7 +62,7 @@ var Settings = React.createClass({
     }
   },
 
-  changeRate: function(e) {
+  changeRate: function (e) {
     e.preventDefault();
     var newRate = this.refs.newRate.getValue();
     var newRateInCents = dollarString.toCents(newRate);
@@ -86,7 +86,7 @@ var Settings = React.createClass({
     Actions.addCard(card);
   },
 
-  onSubmitRateHandler: function(e) {
+  onSubmitRateHandler: function (e) {
     if (e.keyCode === 13) {
       this.changeRate(e);
     }
@@ -116,7 +116,7 @@ var Settings = React.createClass({
   },
 
 
-  render: function() {
+  render: function () {
 
     return (
 
@@ -149,7 +149,7 @@ var Settings = React.createClass({
             <div className="dashboard-subheading-content">
             <div className="payment-card-info">{this.getLast4()}</div>
               <TextField ref="cardHolderName" className="cardholdername-input" hintText="John Doe" floatingLabelText="Card Holder Name" />
-              <TextField ref="cardNumber" className="cardnumber-input" hintText="xxxx xxxx xxxx 4242" floatingLabelText="Card Number" />
+              <TextField ref="cardNumber" className="cardnumber-input" hintText="4242424242424242" floatingLabelText="Card Number" />
               <TextField ref="expMonth" className="expmonth-input" hintText="3" floatingLabelText="Expiration Month" />
               <TextField ref="expYear" className="expyear-input" hintText="17" floatingLabelText="Expiration Year" />
               <TextField ref="cvc" className="cvc-input" hintText="323" floatingLabelText="CVC" />
@@ -158,7 +158,7 @@ var Settings = React.createClass({
         </Paper>
 
         <Dialog ref="dialog" title="Withdrawal Confirmation" actions={[{ text: 'Cancel' },<RaisedButton label="Confirm Withdrawal" onClick={this.onWithdrawalConfirmation} />]}>
-          Stripe charges 25¢ per successful transfer. Please confirm that you wish to make a transfer.
+          Our payment processor charges 25¢ per successful transfer. Please confirm that you wish to make a transfer.
         </Dialog>
         <Snackbar ref="cardSuccess" message="Card successfully added!" />
         <Snackbar ref="cardFailure" message="Card failed to save." />
