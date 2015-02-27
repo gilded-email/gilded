@@ -31,6 +31,10 @@
 
   .back-to-emails {
     margin-bottom: 2em;
+    a {
+      text-decoration: none;
+      color: #111;
+    }
   }
   .email-content {
     padding: 2em;
@@ -38,12 +42,18 @@
 
   color: #111;
 
-  .email-from, .email-to {
-
+  .email-metadata {
+    width: 100%;
+    height: 3em;
   }
 
-  .email-sentDate, .email-cost, .email-paid {
+  .email-top-left {
+    float: left;
+  }
+
+  .email-top-right {
     float: right;
+    text-align: right;
   }
 
   .email-message {

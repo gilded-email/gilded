@@ -62,6 +62,7 @@ $(document).ready(function () {
       <Route name="login" handler={Login} />
       <Route name="logout" handler={Logout} />
       <Route name="dashboard" handler={Dashboard}>
+        <DefaultRoute handler={Emails} />
         <Route name="emails" handler={Emails} />
         <Route name="email" path="/dashboard/emails/:emailId" handler={Email} />
         <Route name="VIP" handler={VIP} />

@@ -40,7 +40,7 @@ var _userResetPassword = {
 
 /*eslint-disable */
 var fakeEmails = [
-  {"_id":"1","email":"{\"to\":[\"you@gilded.club\"],\"from\":\"welcome@gilded.club\",\"subject\":\"Welcome to Gilded\",\"html\":\"<h1>Welcome to Gilded!</h1>\",\"text\":\"Thanks for signing up with Gilded. Enjoy!\"}","recipient":"welcome","__v":0,"cost":1,"paid":true,"sentDate":"2015-02-22T00:11:07.123Z"},
+  {"_id":"1","email":"{\"to\":[\"you@gilded.club\"],\"from\":\"welcome@gilded.club\",\"subject\":\"Welcome to Gilded\",\"html\":\"<h2>Welcome to Gilded!</h2><p>Thanks for signing up with Gilded.</p><p>This is where you'll see all incoming email.</p><p>Enjoy!</p>\",\"text\":\"Thanks for signing up with Gilded. Enjoy!\"}","recipient":"welcome","__v":0,"cost":0,"paid":false,"sentDate":"2015-02-02T00:12:34.567Z"},
 ];
 /*eslint-enable */
 
