@@ -15,24 +15,31 @@ var getInitialState = function() {
   return null;
 };
 
-var Escrows = React.createClass({
+var EmailTable = React.createClass({
   emailData: function () {
       var dataForEmails = {
         vips: this.props.vips
       };
+
       if (!this.props.data.map) {
         dataForEmails.emails = [];
       } else {
-        dataForEmails.emails = this.props.data.map(function (escrow, i) {
-          var email = JSON.parse(escrow.email);
-          email.emailId = i;
-          email.paid = escrow.paid ? 'Paid' : 'Unpaid';
-          email.cost = dollarString.fromCents(escrow.cost);
-          email.sentDate = moment(escrow.sentDate).format('MMM DD');
-          email.vips = dataForEmails.vips;
-          return email;
+        dataForEmails.emails = this.props.data
+          .map(function (escrow, i) {
+            var email = JSON.parse(escrow.email);
+            email.emailId = i;
+            email.paid = escrow.paid ? 'Paid' : 'Unpaid';
+            email.cost = dollarString.fromCents(escrow.cost);
+            email.sentDate = moment(escrow.sentDate).format('MMM D');
+            email.sentTime = escrow.sentDate;
+            email.vips = dataForEmails.vips;
+            return email;
+          }).sort(function (a, b) {
+          // Sort emails by newest first
+          return new Date(b.sentTime) - new Date(a.sentTime);
         });
       }
+
       return dataForEmails;
   },
 
@@ -52,7 +59,7 @@ var Escrows = React.createClass({
         <tbody>
           { this.emailData().emails.map(function (email, i) {
           return (
-            <Email {...email} key={i} />
+            <EmailRow {...email} key={i} />
           );
         }
       )}
@@ -62,7 +69,7 @@ var Escrows = React.createClass({
   }
 });
 
-var Email = React.createClass({
+var EmailRow = React.createClass({
   mixins: [Router.Navigation],
 
   viewEmail: function () {
@@ -114,7 +121,7 @@ var Emails = React.createClass({
       <div className="emails">
         <div className="dashboard">
           <h1>Emails</h1>
-          <Escrows vips={this.props.vips} data={this.props.escrow} />
+          <EmailTable vips={this.props.vips} data={this.props.escrow} />
         </div>
       </div>
     );

@@ -24,7 +24,7 @@ var Email = React.createClass({
     email.emailId = emailId;
     email.paid = escrow.paid ? 'Paid' : 'Unpaid';
     email.cost = dollarString.fromCents(escrow.cost);
-    email.sentDate = moment(escrow.sentDate).format('MMM DD');
+    email.sentDate = moment(escrow.sentDate).format('lll');
     return email;
   },
 
@@ -39,12 +39,24 @@ var Email = React.createClass({
             <div className="back-to-emails">
               <Link to="emails">&lt; Back to Emails</Link>
             </div>
-            <h2>{email.subject}</h2>
+
             <hr />
-            <span className="email-from">From: {email.from}</span>
-            <br /><span className="email-to">To: {email.to}</span>
-            <span className="email-sentDate">{email.sentDate}</span>
-            <br /><span className="email-paid">{email.paid} {email.cost}</span>
+
+            <h2>{email.subject}</h2>
+
+            <hr />
+
+            <div className="email-metadata">
+              <div className="email-top-left">
+                <span className="email-from">From: {email.from}</span>
+                <br /><span className="email-to">To: {email.to}</span>
+              </div>
+              <div className="email-top-right">
+                <span className="email-sentDate">{email.sentDate}</span>
+                <br /><span className="email-paid">Price: {email.cost} ({email.paid})</span>
+              </div>
+            </div>
+
             <div className="email-message">
               <span className="email-html" dangerouslySetInnerHTML={{__html: email.html}} />
             </div>
