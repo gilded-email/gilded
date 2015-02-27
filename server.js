@@ -55,4 +55,3 @@ app.get('/resetpassword/:urlToken', user.handleForgotPassword);
 
 app.get('/pay/:id', payment.getDetails, payment.paymentRequest);
 app.post('/pay/:id', payment.getDetails, payment.verification, email.findEmailInEscrow, email.findAndPayUserFromEscrow, email.releaseFromEscrow);
-
