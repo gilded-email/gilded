@@ -27,6 +27,9 @@ var apiUtils = {
           console.log('signup error ', error);
           return error;
         }
+        else if (res.body.error) {
+          console.log('Signup Error: ', res.body.error);
+        }
         serverActions.userLoggedIn(res);
       });
   },

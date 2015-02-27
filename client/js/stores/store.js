@@ -19,7 +19,8 @@ var _newCard = {
 };
 var _userErrors = {
   login: false,
-  signup: false
+  signup: false,
+  signupError: null
 };
 
 var _userForgotUsername = {
@@ -43,7 +44,7 @@ var _logUserIn = function(res) {
   if (!res.body && res.text === 'wrong password') {
     _userErrors.login = true;
   } else if (res.status === 409) {
-    _userErrors.signup = true;
+    _userErrors.signupError = res.body.error;
   } else if (res.body) {
     var userData = res.body;
     _userEmails = fakeEmails; // userData.escrow;

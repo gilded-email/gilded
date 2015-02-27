@@ -104,6 +104,6 @@ module.exports = {
     AppDispatcher.handleViewAction({
       actionType: AppConstants.FORGOTTEN_PASSWORD_EMAIL_VERIFICATION,
       forgotPassword: userForgotPassword
-    })
+    });
   }
 };
