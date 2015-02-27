@@ -98,6 +98,8 @@ var Settings = React.createClass({
   getBalance: function () {
     if (this.props.settings.balance <= 0) {
       this.emptyBalance = true;
+    } else {
+      this.emptyBalance = false;
     }
     return dollarString.fromCents(this.props.settings.balance);
   },
