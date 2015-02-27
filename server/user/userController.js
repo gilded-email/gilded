@@ -5,12 +5,12 @@ var bcrypt = require('bcrypt-nodejs');
 var BPromise = require('bluebird');
 var base64Url = require('base64-url');
 var emailValidator = require('email-validator');
+
 var stripe = require('stripe')(process.env.STRIPE);
 var domain = process.env.DOMAIN;
 var dispatcher = 'jenkins@' + domain;
 
 var User = require('./userModel.js');
-
 
 var tokenGen = function (username, expiration) {
   return new BPromise(function (resolve, reject) {
@@ -40,6 +40,14 @@ module.exports = {
       return;
     }
 
+    // Check if username is valid
+    if (userData.username.indexOf('+') > -1 || !emailValidator.validate(userData.username + '@gilded.club')) {
+      res.status(409).send({
+        error: 'Username not valid'
+      });
+      return;
+    }
+
     // Check is forward email is valid
     if (!emailValidator.validate(req.body.forwardEmail)) {
       res.status(409).send({
@@ -48,68 +56,59 @@ module.exports = {
       return;
     }
 
-    // Check if username is available
-    User.findOne({ username: userData.username}, function (error, existingUser) {
-      if (error) { console.log(error); }
-      if (existingUser !== null) {
-        res.status(409).send({
-          error: 'Username already exists'
-        });
-        return;
-      }
-      else  {
+      // Create user in DB with hashed password
+      bcrypt.hash(req.body.password, null, null, function (error, hash) {
+        if (error) {
+          console.log(error);
+          res.status(409).send(error);
+        } else {
+          userData.password = hash;
+          User.create(userData, function (error, user) {
+            console.log(error);
 
-        // Check if forward email is not in use
-        User.findOne({forwardEmail: userData.forwardEmail}, function (error, existingUser) {
-          if (error) { console.log(error); }
-          if (existingUser !== null) {
-            res.status(409).send({
-              error: 'Forward email already in use'
-            });
-            return;
-          }
-          else {
-
-            // Create user in DB with hashed password
-            bcrypt.hash(req.body.password, null, null, function (error, hash) {
-              if (error) {
-                console.log(error);
-                res.status(409).send(error);
-              } else {
-                userData.password = hash;
-                User.create(userData, function (error, user) {
-                  if (error) {
-                    console.log(error);
-                    res.status(409).send(error);
-                  } else {
-
-                    // Send welcome email
-                    fs.readFile(path.join(__dirname, '/../../views/welcomeEmail.jade'), 'utf8', function (error, data) {
-                      if (error) {
-                        console.log('Welcome Email error: ', error);
-                      } else {
-                        var compiledHtml = jade.compile(data);
-                        var email = user.username + '@' + domain;
-                        var html = compiledHtml({email: email});
-                        var newUserEmail = {
-                          to: user.forwardEmail,
-                          from: 'welcome@gilded.club',
-                          subject: 'Welcome to Gilded',
-                          html: html
-                        };
-                        require('../email/emailController.js').sendEmail(newUserEmail);
-                      }
-                    });
-                    req.user = user.toJSON();
-                    next();
-                  }
+            // Send error message to client
+            if (error.err) {
+              if (error.err.indexOf('$username') > -1) {
+                res.status(409).send({
+                  error: 'Username already exists'
                 });
+                return;
               }
-            });
-          }
-        });
-      }
-    });
+
+              if (error.err.indexOf('$forwardEmail') > -1) {
+                res.status(409).send({
+                  error: 'Forward email already in use'
+                });
+                return;
+              }
+
+              return;
+
+            } else {
+
+              // Send welcome email
+              fs.readFile(path.join(__dirname, '/../../views/welcomeEmail.jade'), 'utf8', function (error, data) {
+                if (error) {
+                  console.log('Welcome Email error: ', error);
+                } else {
+                  var compiledHtml = jade.compile(data);
+                  var email = user.username + '@' + domain;
+                  var html = compiledHtml({email: email});
+                  var newUserEmail = {
+                    to: user.forwardEmail,
+                    from: 'welcome@gilded.club',
+                    subject: 'Welcome to Gilded',
+                    html: html
+                  };
+                  require('../email/emailController.js').sendEmail(newUserEmail);
+                }
+              });
+              req.user = user.toJSON();
+              next();
+            }
+          });
+        }
+      });
   },
 
   login: function (req, res, next) {

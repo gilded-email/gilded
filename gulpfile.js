@@ -88,7 +88,7 @@ gulp.task('watch', ['build'], function () {
   gulp.watch('./client/assets/*.*', ['assets']);
   gulp.watch('./client/less/**/*.less', ['less']);
   gulp.watch('./client/js/**/*.js', ['lint-client', 'compile']);
-  gulp.watch(['./*.js', './server/*.js'], ['lint-server']);
+  gulp.watch(['./*.js', './server/**/*.js'], ['lint-server']);
 });
 
 gulp.task('run', ['build'], function () {
