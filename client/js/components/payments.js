@@ -5,6 +5,7 @@ var Store = require('../stores/store');
 var mui = require('material-ui');
 var TextField = mui.TextField;
 var RaisedButton = mui.RaisedButton;
+var Dialog = mui.Dialog;
 var Paper = mui.Paper;
 var Snackbar = mui.Snackbar;
 var dollarString = require('dollar-string');
@@ -65,7 +66,7 @@ var Settings = React.createClass({
     e.preventDefault();
     var newRate = this.refs.newRate.getValue();
     var newRateInCents = dollarString.toCents(newRate);
-    this.refs.newRate.setValue('$');
+    this.refs.newRate.setValue('');
     Actions.updateRate(newRateInCents);
   },
 
@@ -97,15 +98,26 @@ var Settings = React.createClass({
   getBalance: function () {
     if (this.props.settings.balance <= 0) {
       this.emptyBalance = true;
+    } else {
+      this.emptyBalance = false;
     }
     return dollarString.fromCents(this.props.settings.balance);
   },
 
   withdraw: function () {
-    Actions.withdraw();
+    this.refs.dialog.show();
   },
 
+//Dialog Actions
+
+  onWithdrawalConfirmation: function () {
+    Actions.withdraw();
+    this.refs.dialog.dismiss();
+  },
+
+
   render: function() {
+
     return (
 
       <div className="dashboard">
@@ -117,7 +129,7 @@ var Settings = React.createClass({
         <Paper className="dashboard-subcontent" zDepth={2}>
           <div className="dashboard-subheading">Update Rate</div>
             <div className="dashboard-subheading-content">
-              <TextField ref="newRate" className="new-rate" defaultValue="$" onKeyUp={this.onSubmitRateHandler} floatingLabelText={this.getRate()} />
+              <TextField ref="newRate" className="new-rate" hintText="$" onKeyUp={this.onSubmitRateHandler} floatingLabelText={this.getRate()} />
               <RaisedButton className="new-rate-save" label="Change Rate" secondary={true} onClick={this.changeRate} />
             </div>
         </Paper>
@@ -145,6 +157,9 @@ var Settings = React.createClass({
             </div>
         </Paper>
 
+        <Dialog ref="dialog" title="Withdrawal Confirmation" actions={[{ text: 'Cancel' },<RaisedButton label="Confirm Withdrawal" onClick={this.onWithdrawalConfirmation} />]}>
+          Stripe charges 25¢ per successful transfer. Please confirm that you wish to make a transfer.
+        </Dialog>
         <Snackbar ref="cardSuccess" message="Card successfully added!" />
         <Snackbar ref="cardFailure" message="Card failed to save." />
         <Snackbar ref="cardFailure" message="Card failed to save." />
