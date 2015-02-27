@@ -1,13 +1,16 @@
 var fs = require('fs');
 var path = require('path');
 var jade = require('jade');
-var domain = process.env.DOMAIN;
-var BPromise = require('bluebird');
-var User = require('./userModel.js');
-var dispatcher = 'jenkins@' + domain;
 var bcrypt = require('bcrypt-nodejs');
-var stripe = require('stripe')(process.env.STRIPE);
+var BPromise = require('bluebird');
 var base64Url = require('base64-url');
+var emailValidator = require('email-validator');
+var stripe = require('stripe')(process.env.STRIPE);
+var domain = process.env.DOMAIN;
+var dispatcher = 'jenkins@' + domain;
+
+var User = require('./userModel.js');
+
 
 var tokenGen = function (username, expiration) {
   return new BPromise(function (resolve, reject) {
@@ -23,40 +26,86 @@ var tokenGen = function (username, expiration) {
 
 module.exports = {
   join: function (req, res, next) {
+
     var userData = {
       username: req.body.username.toLowerCase(),
       forwardEmail: req.body.forwardEmail
     };
-    bcrypt.hash(req.body.password, null, null, function (error, hash) {
-      if (error) {
-        console.log(error);
-        res.status(409).send(error);
-      } else {
-        userData.password = hash;
-        User.create(userData, function (error, user) {
-          if (error) {
-            console.log(error);
-            res.status(409).send(error);
-          } else {
-            //Welcome email
-            fs.readFile(path.join(__dirname, '/../../views/welcomeEmail.jade'), 'utf8', function (error, data) {
+
+    // Check if username and password are not blank
+    if (userData.username === '' || req.body.password === '') {
+      res.status(409).send({
+        error: 'Username and password required'
+      });
+      return;
+    }
+
+    // Check is forward email is valid
+    if (!emailValidator.validate(req.body.forwardEmail)) {
+      res.status(409).send({
+        error: 'Not a valid email address'
+      });
+      return;
+    }
+
+    // Check if username is available
+    User.findOne({ username: userData.username}, function (error, existingUser) {
+      if (error) { console.log(error); }
+      if (existingUser !== null) {
+        res.status(409).send({
+          error: 'Username already exists'
+        });
+        return;
+      }
+      else  {
+
+        // Check if forward email is not in use
+        User.findOne({forwardEmail: userData.forwardEmail}, function (error, existingUser) {
+          if (error) { console.log(error); }
+          if (existingUser !== null) {
+            res.status(409).send({
+              error: 'Forward email already in use'
+            });
+            return;
+          }
+          else {
+
+            // Create user in DB with hashed password
+            bcrypt.hash(req.body.password, null, null, function (error, hash) {
               if (error) {
-                console.log('Welcome Email error: ', error);
+                console.log(error);
+                res.status(409).send(error);
               } else {
-                var compiledHtml = jade.compile(data);
-                var email = user.username + '@' + domain;
-                var html = compiledHtml({email: email});
-                var newUserEmail = {
-                  to: user.forwardEmail,
-                  from: 'welcome@gilded.club',
-                  subject: 'Welcome to Gilded',
-                  html: html
-                };
-                require('../email/emailController.js').sendEmail(newUserEmail);
+                userData.password = hash;
+                User.create(userData, function (error, user) {
+                  if (error) {
+                    console.log(error);
+                    res.status(409).send(error);
+                  } else {
+
+                    // Send welcome email
+                    fs.readFile(path.join(__dirname, '/../../views/welcomeEmail.jade'), 'utf8', function (error, data) {
+                      if (error) {
+                        console.log('Welcome Email error: ', error);
+                      } else {
+                        var compiledHtml = jade.compile(data);
+                        var email = user.username + '@' + domain;
+                        var html = compiledHtml({email: email});
+                        var newUserEmail = {
+                          to: user.forwardEmail,
+                          from: 'welcome@gilded.club',
+                          subject: 'Welcome to Gilded',
+                          html: html
+                        };
+                        require('../email/emailController.js').sendEmail(newUserEmail);
+                      }
+                    });
+                    req.user = user.toJSON();
+                    next();
+                  }
+                });
               }
             });
-            req.user = user.toJSON();
-            next();
           }
         });
       }
