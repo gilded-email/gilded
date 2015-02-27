@@ -154,6 +154,8 @@ var apiUtils = {
       });
   },
 
+// Username and Password Help
+
   forgotUsername: function (email) {
     request
       .post(API_ROOT + 'user/forgotusername')
@@ -178,6 +180,19 @@ var apiUtils = {
           return;
         }
         serverActions.forgottenPasswordEmailVerification(res.status);
+      });
+  },
+
+  resetPassword: function (userId, newPassword) {
+    request
+      .put(API_ROOT + 'resetpassword/' + userId)
+      .send({password: newPassword})
+      .end(function (error, res) {
+        if (error) {
+          console.log(error);
+          return;
+        }
+        serverActions.resetPasswordConfirmation(res.status);
       });
   }
 

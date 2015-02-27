@@ -105,5 +105,24 @@ module.exports = {
       actionType: AppConstants.FORGOTTEN_PASSWORD_EMAIL_VERIFICATION,
       forgotPassword: userForgotPassword
     });
+  },
+
+  resetPasswordConfirmation: function (status) {
+
+    var userResetPassword = {
+      resetPasswordSuccess: false,
+      resetPasswordFailure: false
+    };
+
+    if (status === 400) {
+      userResetPassword.resetPasswordFailure = true;
+    } else if (status === 201) {
+      userResetPassword.resetPasswordSuccess = true;
+    }
+
+    AppDispatcher.handleViewAction({
+      actionType: AppConstants.RESET_PASSWORD_CONFIRMATION,
+      resetPassword: userResetPassword
+    });
   }
 };
