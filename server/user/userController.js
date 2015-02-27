@@ -56,59 +56,56 @@ module.exports = {
       return;
     }
 
-      // Create user in DB with hashed password
-      bcrypt.hash(req.body.password, null, null, function (error, hash) {
-        if (error) {
+    // Create user in DB with hashed password
+    bcrypt.hash(req.body.password, null, null, function (error, hash) {
+      if (error) {
+        console.log(error);
+        res.status(409).send(error);
+      } else {
+        userData.password = hash;
+        User.create(userData, function (error, user) {
           console.log(error);
-          res.status(409).send(error);
-        } else {
-          userData.password = hash;
-          User.create(userData, function (error, user) {
-            console.log(error);
 
-            // Send error message to client
-            if (error.err) {
-              if (error.err.indexOf('$username') > -1) {
-                res.status(409).send({
-                  error: 'Username already exists'
-                });
-                return;
-              }
-
-              if (error.err.indexOf('$forwardEmail') > -1) {
-                res.status(409).send({
-                  error: 'Forward email already in use'
-                });
-                return;
-              }
-
-              return;
-
-            } else {
-
-              // Send welcome email
-              fs.readFile(path.join(__dirname, '/../../views/welcomeEmail.jade'), 'utf8', function (error, data) {
-                if (error) {
-                  console.log('Welcome Email error: ', error);
-                } else {
-                  var compiledHtml = jade.compile(data);
-                  var email = user.username + '@' + domain;
-                  var html = compiledHtml({email: email});
-                  var newUserEmail = {
-                    to: user.forwardEmail,
-                    from: 'welcome@gilded.club',
-                    subject: 'Welcome to Gilded',
-                    html: html
-                  };
-                  require('../email/emailController.js').sendEmail(newUserEmail);
-                }
+          // Send error message to client
+          if (error.err) {
+            if (error.err.indexOf('$username') > -1) {
+              res.status(409).send({
+                error: 'Username already exists'
               });
-              req.user = user.toJSON();
-              next();
+              return;
             }
-          });
-        }
-      });
+            if (error.err.indexOf('$forwardEmail') > -1) {
+              res.status(409).send({
+                error: 'Forward email already in use'
+              });
+              return;
+            }
+            return;
+          } else {
+
+            // Send welcome email
+            fs.readFile(path.join(__dirname, '/../../views/welcomeEmail.jade'), 'utf8', function (error, data) {
+              if (error) {
+                console.log('Welcome Email error: ', error);
+              } else {
+                var compiledHtml = jade.compile(data);
+                var email = user.username + '@' + domain;
+                var html = compiledHtml({email: email});
+                var newUserEmail = {
+                  to: user.forwardEmail,
+                  from: 'welcome@gilded.club',
+                  subject: 'Welcome to Gilded',
+                  html: html
+                };
+                require('../email/emailController.js').sendEmail(newUserEmail);
+              }
+            });
+            req.user = user.toJSON();
+            next();
+          }
+        });
+      }
+    });
   },
 
   login: function (req, res, next) {
@@ -322,8 +319,9 @@ module.exports = {
       if (user.balance === 0) {
         res.status(200).send(user);
       } else {
+        var withdrawalAmount = user.balance - 25; //Stripe transfer fee is $0.25
         stripe.transfers.create({
-          amount: user.balance,
+          amount: withdrawalAmount,
           currency: 'usd',
           recipient: user.stripeId,
           description: 'Gilded.club balance'
