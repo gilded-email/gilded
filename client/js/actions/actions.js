@@ -123,6 +123,14 @@ var AppActions = {
 
     APIUtils.forgotPassword(username);
 
+  },
+
+  resetPassword: function(userId, newPassword) {
+    AppDispatcher.handleViewAction({
+      actionType: AppConstants.RESET_PASSWORD
+    });
+
+    APIUtils.resetPassword(userId, newPassword);
   }
 
 };

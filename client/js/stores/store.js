@@ -33,6 +33,11 @@ var _userForgotPassword = {
   verificationError: false
 };
 
+var _userResetPassword = {
+  resetPasswordSuccess: false,
+  resetPasswordFailure: false
+};
+
 /*eslint-disable */
 var fakeEmails = [
   {"_id":"1","email":"{\"to\":[\"you@gilded.club\"],\"from\":\"welcome@gilded.club\",\"subject\":\"Welcome to Gilded\",\"html\":\"<h1>Welcome to Gilded!</h1>\",\"text\":\"Thanks for signing up with Gilded. Enjoy!\"}","recipient":"welcome","__v":0,"cost":1,"paid":true,"sentDate":"2015-02-22T00:11:07.123Z"},
@@ -116,6 +121,10 @@ var _forgottenPasswordEmailVerification = function (forgotPassword) {
   _userForgotPassword = forgotPassword;
 };
 
+var _resetPasswordConfirmation = function (resetPassword) {
+  _userResetPassword = resetPassword;
+};
+
 var AppStore = _.extend({}, EventEmitter.prototype, {
   emitChange: function(){
     this.emit(CHANGE_EVENT);
@@ -178,6 +187,17 @@ var AppStore = _.extend({}, EventEmitter.prototype, {
     _userForgotPassword = {
       verificationSent: false,
       verificationError: false
+    };
+  },
+
+  getResetPasswordDetails: function() {
+    return _userResetPassword;
+  },
+
+  resetResetPasswordDetails: function() {
+    _userResetPassword = {
+      resetPasswordSuccess: false,
+      resetPasswordFailure: false
     };
   },
 
@@ -252,6 +272,10 @@ var AppStore = _.extend({}, EventEmitter.prototype, {
 
       case AppConstants.FORGOTTEN_PASSWORD_EMAIL_VERIFICATION:
         _forgottenPasswordEmailVerification(payload.action.forgotPassword);
+        break;
+
+      case AppConstants.RESET_PASSWORD_CONFIRMATION:
+        _resetPasswordConfirmation(payload.action.resetPassword);
         break;
     }
 
