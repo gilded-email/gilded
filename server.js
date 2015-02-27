@@ -39,7 +39,7 @@ app.post('/api/inbound', email.receive, email.verify);
 app.get('/api/escrow/', user.checkSession, email.fetchEscrows);
 app.post('/api/user/settings/card', user.checkSession, user.addCard, user.update);
 app.put('/api/user/settings/rate', user.checkSession, user.changeRate, user.update);
-app.put('/api/user/settings/password', user.checkSession, user.changePassword, user.update);
+app.put('/api/user/settings/password', user.checkSession, user.checkPassword, user.changePassword, user.update);
 app.put('/api/user/settings/email', user.checkSession, user.updateForwardEmail, user.update);
 
 app.post('/api/logout', user.logout);
