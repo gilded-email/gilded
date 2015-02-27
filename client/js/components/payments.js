@@ -53,15 +53,6 @@ var Settings = React.createClass({
     }
   },
 
-  getRate: function () {
-    var rate = this.props.settings.rate;
-    if (rate) {
-      return dollarString.fromCents(rate);
-    } else {
-      return 0;
-    }
-  },
-
   changeRate: function (e) {
     e.preventDefault();
     var newRate = this.refs.newRate.getValue();
@@ -121,7 +112,6 @@ var Settings = React.createClass({
 
 
   render: function () {
-
     return (
 
       <div className="dashboard">
@@ -133,7 +123,11 @@ var Settings = React.createClass({
         <Paper className="dashboard-subcontent" zDepth={2}>
           <div className="dashboard-subheading">Update Rate</div>
             <div className="dashboard-subheading-content">
-              <TextField ref="newRate" className="new-rate" hintText="$" onKeyUp={this.onSubmitRateHandler} floatingLabelText={this.getRate()} />
+              <div className="rate-calculation">
+                <p className="rate-current-rate">Your current rate is: {dollarString.fromCents(this.props.settings.rate)}.</p>
+                <p className="rate-you-receive">We'll charge senders {dollarString.fromCents(this.props.settings.rate)} per email, and you'll receive {dollarString.fromCents(this.props.settings.rate * 0.7)} per email.</p>
+              </div>
+              <TextField ref="newRate" className="new-rate" hintText="$" onKeyUp={this.onSubmitRateHandler} floatingLabelText={dollarString.fromCents(this.props.settings.rate)} />
               <RaisedButton className="new-rate-save" label="Change Rate" secondary={true} onClick={this.changeRate} />
             </div>
         </Paper>
