@@ -1,3 +1,6 @@
+var fs = require('fs');
+var path = require('path');
+var jade = require('jade');
 var formidable = require('formidable');
 var sendgrid = require('sendgrid')(process.env.SENDGRID_USER, process.env.SENDGRID_PASSWORD);
 var userController = require('../user/userController.js');
@@ -15,16 +18,24 @@ var printAsyncResult = function (error, result) {
 };
 
 var requestPayment = function (savedEmail) {
+  var sender = JSON.parse(savedEmail.email).from;
   var emailRateAndStripe = (savedEmail.cost * 1.029) + 30;
   var cost = (emailRateAndStripe / 100).toFixed(2);
-  var paymentInstructions = 'Your recipient requires $' + cost + ' to receive emails. Pay here: ';
   var paymentUrl = 'https://www.' + domain + '/pay/' + savedEmail._id;
-  module.exports.sendEmail({
-    to: JSON.parse(savedEmail.email).from,
-    from: 'jenkins@' + domain,
-    subject: 'Payment required',
-    html: paymentInstructions + '<a href="' + paymentUrl + '" target="_blank">' + paymentUrl + '</a>.', // TODO: add original email for the payer
-    text: paymentInstructions + paymentUrl + ' .'
+  fs.readFile(path.join(__dirname, '/../../views/jenkins.jade'), 'utf8', function (error, data) {
+    if (error) {
+      console.log('Welcome Email error: ', error);
+    } else {
+      var compiledHtml = jade.compile(data);
+      var html = compiledHtml({recipient: savedEmail.recipient, cost: cost, subject: JSON.parse(savedEmail.email).subject, body: JSON.parse(savedEmail.email).html, url: paymentUrl, from: sender});
+      var paymentRequestEmail = {
+        to: sender,
+        from: 'jenkins@' + domain,
+        subject: 'Payment required to reach ' + savedEmail.recipient + '@' + domain,
+        html: html
+      };
+      module.exports.sendEmail(paymentRequestEmail);
+    }
   });
 };
 
