@@ -158,7 +158,7 @@ var Settings = React.createClass({
         </Paper>
 
         <Dialog ref="dialog" title="Withdrawal Confirmation" actions={[{ text: 'Cancel' },<RaisedButton label="Confirm Withdrawal" onClick={this.onWithdrawalConfirmation} />]}>
-          Our payment processor charges 25¢ per successful transfer. Please confirm that you wish to make a transfer.
+          Our payment processor charges 25¢ per successful transfer, which will be deducted from your balance. Please confirm that you wish to make a transfer now.
         </Dialog>
         <Snackbar ref="cardSuccess" message="Card successfully added!" />
         <Snackbar ref="cardFailure" message="Card failed to save." />
