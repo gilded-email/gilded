@@ -11,36 +11,36 @@ var Snackbar = require('material-ui').Snackbar;
 var Actions = require('../actions/actions');
 var storeWatchMixin = require('../mixins/StoreWatchMixin');
 
-var getInitialState = function() {
+var getInitialState = function () {
   return null;
 };
 
 var EmailTable = React.createClass({
   emailData: function () {
-      var dataForEmails = {
-        vips: this.props.vips
-      };
+    var dataForEmails = {
+      vips: this.props.vips
+    };
 
-      if (!this.props.data.map) {
-        dataForEmails.emails = [];
-      } else {
-        dataForEmails.emails = this.props.data
-          .map(function (escrow, i) {
-            var email = JSON.parse(escrow.email);
-            email.emailId = i;
-            email.paid = escrow.paid ? 'Paid' : 'Unpaid';
-            email.cost = dollarString.fromCents(escrow.cost);
-            email.sentDate = moment(escrow.sentDate).format('MMM D');
-            email.sentTime = escrow.sentDate;
-            email.vips = dataForEmails.vips;
-            return email;
-          }).sort(function (a, b) {
+    if (!this.props.data.map) {
+      dataForEmails.emails = [];
+    } else {
+      dataForEmails.emails = this.props.data
+        .map(function (escrow, i) {
+          var email = JSON.parse(escrow.email);
+          email.emailId = i;
+          email.paid = escrow.paid ? 'Paid' : 'Unpaid';
+          email.cost = dollarString.fromCents(escrow.cost);
+          email.sentDate = moment(escrow.sentDate).format('MMM D');
+          email.sentTime = escrow.sentDate;
+          email.vips = dataForEmails.vips;
+          return email;
+        }).sort(function (a, b) {
           // Sort emails by newest first
           return new Date(b.sentTime) - new Date(a.sentTime);
         });
-      }
+    }
 
-      return dataForEmails;
+    return dataForEmails;
   },
 
   render: function () {
@@ -52,7 +52,7 @@ var EmailTable = React.createClass({
             <th>Subject</th>
             <th>Date</th>
             <th>Price</th>
-            <th>Paid</th>
+            <th>Status</th>
             <th></th>
           </tr>
         </thead>
@@ -80,7 +80,7 @@ var EmailRow = React.createClass({
     e.preventDefault();
     if (this.props.vips.indexOf(this.props.from) > -1){
       this.refs.duplicateEmail.show();
-      setTimeout(function() {
+      setTimeout(function () {
         this.refs.duplicateEmail.dismiss();
       }.bind(this), 1000);
     } else {
@@ -89,7 +89,7 @@ var EmailRow = React.createClass({
         remove: []
       });
       this.refs.addEmail.show();
-      setTimeout(function() {
+      setTimeout(function () {
         this.refs.addEmail.dismiss();
       }.bind(this), 1000);
     }
