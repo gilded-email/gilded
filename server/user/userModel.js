@@ -1,4 +1,4 @@
-require('../../db/db.js');
+require('../db.js');
 var mongoose = require('mongoose');
 var privates = require('mongoose-private');
 
