@@ -62,27 +62,33 @@ module.exports = {
         email.subject = fields.subject;
         email.html = fields.html;
         email.text = fields.text;
-        var attachments = [];
-        for (var i = 1; i <= +fields.attachments; i++) {
-          var attachmentInfo = JSON.parse(fields['attachment-info']);
-          (function (index) {
-            fs.readFile(files['attachment' + index].path, function (error, data) {
-              if (error) {
-                console.log('Attachment readFile error', error);
-                res.status(400).send(error);
-              } else {
-                var attachmentIndex = 'attachment' + index;
-                var filename = attachmentInfo[attachmentIndex].name;
-                attachments.push({filename: filename, content: data});
-                if (attachments.length === +fields.attachments) {
-                  req.email = email;
-                  req.attachments = attachments;
-                  res.sendStatus(201);
-                  next();
+        if (fields.attachments > 0) {
+          var attachments = [];
+          for (var i = 1; i <= +fields.attachments; i++) {
+            var attachmentInfo = JSON.parse(fields['attachment-info']);
+            (function (index) {
+              fs.readFile(files['attachment' + index].path, function (error, data) {
+                if (error) {
+                  console.log('Attachment readFile error', error);
+                  res.status(400).send(error);
+                } else {
+                  var attachmentIndex = 'attachment' + index;
+                  var filename = attachmentInfo[attachmentIndex].name;
+                  attachments.push({filename: filename, content: data});
+                  if (attachments.length === +fields.attachments) {
+                    req.email = email;
+                    req.attachments = attachments;
+                    res.sendStatus(201);
+                    next();
+                  }
                 }
-              }
-            });
-          })(i);
+              });
+            })(i);
+          }
+        } else {
+          req.email = email;
+          res.sendStatus(201);
+          next();
         }
       }
     });
@@ -100,7 +106,9 @@ module.exports = {
               module.exports.store(email, req.attachments, recipient[0].toLowerCase());
             } else {
               email.to = [forwardAddress];
-              email.files = req.attachments;
+              if (req.attachments) {
+                email.files = req.attachments;
+              }
               module.exports.sendEmail(email);
             }
           });
@@ -110,10 +118,15 @@ module.exports = {
 
   store: function (email, attachments, recipient, callback) {
     callback = callback || requestPayment;
-    var fileName = attachments[0].filename;
+    var attachment;
+    if (attachments) {
+      attachment = attachments[0].content;
+    } else {
+      attachment = [];
+    }
     userController.getRate(recipient)
       .then(function (rate) {
-        Escrow.create({email: JSON.stringify(email), recipient: recipient, cost: rate, attachment: attachments[0].content}, function (error, savedEmail) {
+        Escrow.create({email: JSON.stringify(email), recipient: recipient, cost: rate, attachment: attachment}, function (error, savedEmail) {
           if (error) {
             console.log('Escrow storing error: ', error);
           } else {
@@ -152,7 +165,9 @@ module.exports = {
   releaseFromEscrow: function (req, res) {
     var email = JSON.parse(req.escrow.email);
     email.to = [req.user.forwardEmail];
-    email.files = [{filename: 'test.jpg', content: req.escrow.attachment}];
+    if (req.escrow.attachment) {
+      email.files = [{filename: 'test.jpg', content: req.escrow.attachment}];
+    }
     delete email.attachment;
     delete email.filename;
     delete email.attachments;
