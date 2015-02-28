@@ -2,6 +2,7 @@ var fs = require('fs');
 var path = require('path');
 var jade = require('jade');
 var formidable = require('formidable');
+var BPromise = require('bluebird');
 var sendgrid = require('sendgrid')(process.env.SENDGRID_USER, process.env.SENDGRID_PASSWORD);
 var Escrow = require('./emailModel.js');
 var User = require('../user/userModel.js');
@@ -118,21 +119,18 @@ module.exports = {
 
   store: function (email, attachments, recipient, callback) {
     callback = callback || requestPayment;
-    var attachment;
-    if (attachments) {
-      attachment = attachments[0].content;
-    } else {
-      attachment = [];
-    }
-    userController.getRate(recipient)
-      .then(function (rate) {
-        Escrow.create({email: JSON.stringify(email), recipient: recipient, cost: rate, attachment: attachment}, function (error, savedEmail) {
-          if (error) {
-            console.log('Escrow storing error: ', error);
-          } else {
-            callback(savedEmail);
-          }
-        });
+      module.exports.storeAndRetrieveAttachments(attachments)
+      .then(function (list) {
+        userController.getRate(recipient)
+          .then(function (rate) {
+            Escrow.create({email: JSON.stringify(email), recipient: recipient, cost: rate, attachments: list}, function (error, savedEmail) {
+              if (error) {
+                console.log('Escrow storing error: ', error);
+              } else {
+                callback(savedEmail);
+              }
+            });
+          });
       });
   },
 
@@ -165,8 +163,8 @@ module.exports = {
   releaseFromEscrow: function (req, res) {
     var email = JSON.parse(req.escrow.email);
     email.to = [req.user.forwardEmail];
-    if (req.escrow.attachment) {
-      email.files = [{filename: 'test.jpg', content: req.escrow.attachment}];
+    if (req.escrow.attachments.length > 0) {
+      email.files = req.escrow.attachments;
     }
     delete email.attachment;
     delete email.filename;
@@ -191,6 +189,20 @@ module.exports = {
           escrow: emails
         };
         res.status(201).send(data);
+      }
+    });
+  },
+
+  storeAndRetrieveAttachments: function (attachments) {
+    var list = [];
+    return new BPromise(function (resolve, reject) {
+      if (!attachments) {
+        resolve([]);
+      } else {
+        attachments.forEach(function (attachment) {
+          list.push({filename: attachment.filename, content: attachment.content});
+        });
+        resolve(list);
       }
     });
   }
