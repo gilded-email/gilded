@@ -22,18 +22,18 @@ var requestPayment = function (savedEmail) {
   var sender = JSON.parse(savedEmail.email).from;
   var emailRateAndStripe = (savedEmail.cost * 1.029) + 30;
   var cost = (emailRateAndStripe / 100).toFixed(2);
-  var paymentUrl = 'https://www.' + domain + '/pay/' + savedEmail._id;
+  var paymentUrl = domain + '/pay/' + savedEmail._id;
   fs.readFile(path.join(__dirname, '/../../views/jenkins.jade'), 'utf8', function (error, data) {
     if (error) {
       console.log('Welcome Email error: ', error);
     } else {
       var compiledHtml = jade.compile(data);
-      var html = compiledHtml({recipient: savedEmail.recipient, cost: cost, subject: JSON.parse(savedEmail.email).subject, body: JSON.parse(savedEmail.email).html, url: paymentUrl, from: sender});
+      var html = compiledHtml({recipient: savedEmail.recipient, cost: cost, subject: JSON.parse(savedEmail.email).subject, body: JSON.parse(savedEmail.email).html, url: paymentUrl, from: sender, domain: domain});
       var paymentRequestEmail = {
         to: sender,
         from: 'jenkins@' + domain,
         fromname: 'Gilded Club',
-        replyto: 'payments@gilded.club',
+        replyto: 'payments@' + domain,
         subject: 'Payment required to reach ' + savedEmail.recipient + '@' + domain,
         html: html
       };

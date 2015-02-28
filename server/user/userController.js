@@ -110,10 +110,10 @@ module.exports = {
             } else {
               var compiledHtml = jade.compile(data);
               var email = user.username + '@' + domain;
-              var html = compiledHtml({email: email});
+              var html = compiledHtml({email: email, domain: domain});
               var newUserEmail = {
                 to: user.forwardEmail,
-                from: 'welcome@gilded.club',
+                from: 'welcome@' + domain,
                 subject: 'Welcome to Gilded',
                 html: html
               };
@@ -303,7 +303,7 @@ module.exports = {
       } else {
         var newCardEmail = {
           to: user.forwardEmail,
-          from: 'hello@gilded.club',
+          from: 'hello@' + domain,
           subject: 'New Card Added',
           html: '<h1>New Card Added</h1>A card was recently added to your gilded.club account for receiving payments. If you believe this to be error, please email <a href="mailto:admin@gilded.club">admin@gilded.club</a> immediately.',
           text: 'A card was recently added to your gilded.club account for receiving payments. If you believe this to be an error, please email admin@gilded.club immediately.'
@@ -397,7 +397,7 @@ module.exports = {
         res.status(201).send('Reminder sent to ' + req.body.email);
         require('../email/emailController.js').sendEmail({
           to: user.forwardEmail,
-          from: 'hello@gilded.club',
+          from: 'hello@' + domain,
           subject: 'Forgot Username',
           html: '<h1>Forgot Username</h1>A Forgot Username request was made for this email address. Your Gilded username is: <strong>' + user.username + '</strong><br><br>If this request wasn\'t made by you, it\'s safe to ignore. If you ever have any problems, please email <a href="mailto:admin@gilded.club">admin@gilded.club</a>.',
           text: 'A Forgot Username request was made for this email address. Your Gilded username is: *' + user.username + '*\n\nIf this request wasn\'t made by you, it\'s safe to ignore. If you ever have any problems, please email admin@gilded.club.'
@@ -417,11 +417,11 @@ module.exports = {
         makeHash(username, expiration)
           .then(function (hash) {
             var resetToken = base64Url.encode(username + '+' + expiration + '+' + hash);
-            var resetUrl = 'https://www.' + domain + '/resetpassword/' + resetToken;
+            var resetUrl = 'https://' + domain + '/resetpassword/' + resetToken;
             res.status(201).send('Password reset sent for ' + username);
             require('../email/emailController.js').sendEmail({
               to: user.forwardEmail,
-              from: 'hello@gilded.club',
+              from: 'hello@' + domain,
               subject: 'Forgot Password Request',
               html: '<h1>Forgot Password</h1>A Forgot Password request was made for your Gilded address. Follow this link to reset your password: <a href="' + resetUrl + '">' + resetUrl + '</a><br><br>If this request wasn\'t made by you, it\'s safe to ignore. If you ever have any problems, please email <a href="mailto:admin@gilded.club">admin@gilded.club</a>.',
               text: 'A Forgot Password request was made for your Gilded address. Follow this link to reset your password: ' + resetUrl + '\n\nIf this request wasn\'t made by you, it\'s safe to ignore. If you ever have any problems, please email admin@gilded.club.'
