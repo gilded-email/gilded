@@ -45,17 +45,16 @@ var ResetPassword = React.createClass({
 
   handleClick: function(e) {
     e.preventDefault();
-    window.location.href.split('?')[1];
     var password = this.refs.password.getValue();
     var confirmPassword = this.refs.confirmPassword.getValue();
-    var userId = window.location.href.split('?')[1];
+    var resetToken = window.location.href.split('?')[1];
     if (password !== confirmPassword) {
       this.refs.confirmFailure.show();
       setTimeout(function() {
         this.refs.confirmFailure.dismiss();
       }.bind(this), 3000);
     } else {
-      Actions.resetPassword(userId, password);
+      Actions.resetPassword(resetToken, password);
     }
   },
 

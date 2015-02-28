@@ -183,9 +183,9 @@ var apiUtils = {
       });
   },
 
-  resetPassword: function (userId, newPassword) {
+  resetPassword: function (resetToken, newPassword) {
     request
-      .put(API_ROOT + 'resetpassword/' + userId)
+      .put('/resetpassword/' + resetToken)
       .send({password: newPassword})
       .end(function (error, res) {
         if (error) {

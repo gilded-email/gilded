@@ -188,7 +188,6 @@ module.exports = {
   checkSession: function (req, res, next) {
     checkHash(req.cookies.username, req.cookies.expiration, req.cookies.token)
       .then(function () {
-        console.log('in the then');
         next();
       })
       .catch(function (error) {
@@ -414,7 +413,7 @@ module.exports = {
         makeHash(username, expiration)
           .then(function (hash) {
             var resetToken = base64Url.encode(username + '+' + expiration + '+' + hash);
-            var resetUrl = 'https://www' + domain + '/resetpassword/' + resetToken;
+            var resetUrl = 'https://www.' + domain + '/resetpassword/' + resetToken;
             res.status(201).send('Password reset sent for ' + username);
             require('../email/emailController.js').sendEmail({
               to: user.forwardEmail,

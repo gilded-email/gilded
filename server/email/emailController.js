@@ -155,7 +155,6 @@ module.exports = {
   },
 
   fetchEscrows: function (req, res) {
-    console.log('infetchescrows');
     Escrow.find({recipient: req.user.username}, function (error, emails) {
       if (error) {
         console.log(error);

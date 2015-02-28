@@ -108,6 +108,7 @@ module.exports = {
   },
 
   resetPasswordConfirmation: function (status) {
+    console.log('status from server actions', status);
 
     var userResetPassword = {
       resetPasswordSuccess: false,

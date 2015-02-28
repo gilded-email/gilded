@@ -125,12 +125,12 @@ var AppActions = {
 
   },
 
-  resetPassword: function(userId, newPassword) {
+  resetPassword: function(resetToken, newPassword) {
     AppDispatcher.handleViewAction({
       actionType: AppConstants.RESET_PASSWORD
     });
 
-    APIUtils.resetPassword(userId, newPassword);
+    APIUtils.resetPassword(resetToken, newPassword);
   }
 
 };
