@@ -40,7 +40,6 @@ var ResetPassword = React.createClass({
       Store.resetForgotPasswordDetails();
       this.transitionTo('login');
     }
-    this.refs.email.setValue('');
   },
 
 
@@ -48,14 +47,14 @@ var ResetPassword = React.createClass({
     e.preventDefault();
     var password = this.refs.password.getValue();
     var confirmPassword = this.refs.confirmPassword.getValue();
-    var userId = this.getParams().userId;
+    var resetToken = window.location.href.split('?')[1];
     if (password !== confirmPassword) {
       this.refs.confirmFailure.show();
       setTimeout(function() {
         this.refs.confirmFailure.dismiss();
       }.bind(this), 3000);
     } else {
-      Actions.resetPassword(userId, password);
+      Actions.resetPassword(resetToken, password);
     }
   },
 

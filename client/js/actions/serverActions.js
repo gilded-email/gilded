@@ -108,7 +108,6 @@ module.exports = {
   },
 
   resetPasswordConfirmation: function (status) {
-
     var userResetPassword = {
       resetPasswordSuccess: false,
       resetPasswordFailure: false

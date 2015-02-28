@@ -57,11 +57,11 @@ $(document).ready(function () {
       <DefaultRoute handler={routeToSignupOrLogin()} />
       <Route name="forgotusername" handler={ForgotUsername} />
       <Route name="forgotpassword" handler={ForgotPassword} />
-      <Route name="resetpassword" path="/resetpassword/:userId" handler={ResetPassword} />
+      <Route name="resetpassword" handler={ResetPassword} />
       <Route name="signup" handler={Signup} />
       <Route name="login" handler={Login} />
       <Route name="logout" handler={Logout} />
-      <Route name="dashboard" handler={Dashboard}>
+      <Route name="dashboard" path="/dashboard/" handler={Dashboard}>
         <DefaultRoute handler={Emails} />
         <Route name="emails" handler={Emails} />
         <Route name="email" path="/dashboard/emails/:emailId" handler={Email} />
