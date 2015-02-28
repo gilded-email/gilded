@@ -8,7 +8,11 @@ var EmailSchema = new mongoose.Schema({
   email: String,
   recipient: String,
   cost: {type: Number, default: 100},
-  attachment: {type: Buffer}
+  // attachment: {type: Buffer}
+  attachments: [{
+    filename: {type: String},
+    content: {type: Buffer}
+  }]
 });
 
 module.exports = mongoose.model('Escrow', EmailSchema);
