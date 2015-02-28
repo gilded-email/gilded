@@ -1,13 +1,18 @@
 var fs = require('fs');
 var path = require('path');
 var jade = require('jade');
+var mongoose = require('mongoose');
+var Grid = require('gridfs-stream');
 var formidable = require('formidable');
 var sendgrid = require('sendgrid')(process.env.SENDGRID_USER, process.env.SENDGRID_PASSWORD);
-var userController = require('../user/userController.js');
+var db = require('../../db/db.js'); // mongoose.connect object
 var Escrow = require('./emailModel.js');
 var User = require('../user/userModel.js');
+var userController = require('../user/userController.js');
+
 var domain = process.env.DOMAIN;
 var payoutRatio = 0.7;
+Grid.mongo = mongoose.mongo;
 
 var printAsyncResult = function (error, result) {
   if (error) {
@@ -48,19 +53,38 @@ module.exports = {
   receive: function (req, res, next) {
     var form = new formidable.IncomingForm();
     var email = {};
-    form.parse(req, function (error, fields) {
+    form.parse(req, function (error, fields, files) {
       if (error) {
         res.sendStatus(400);
       } else {
+        email = fields;
+        delete email.headers; //remove headers because sendgrid attaches new ones
         email.to = JSON.parse(fields.envelope).to;
         email.from = fields.from.split('<')[1].split('>')[0];
         email.subject = fields.subject;
         email.html = fields.html;
         email.text = fields.text;
-        email.files = fields.files;
-        req.email = email;
-        res.sendStatus(201);
-        next();
+        email.files = [];
+        for (var i = 1; i <= +fields.attachments; i++) {
+          var attachmentInfo = JSON.parse(fields['attachment-info']);
+          (function (index) {
+            fs.readFile(files['attachment' + index].path, function (error, data) {
+              if (error) {
+                console.log('Attachment readFile error', error);
+                res.status(400).send(error);
+              } else {
+                var attachmentIndex = 'attachment' + index;
+                var filename = attachmentInfo[attachmentIndex].name;
+                email.files.push({filename: filename, content: data});
+                if (email.files.length === +fields.attachments) {
+                  req.email = email;
+                  res.sendStatus(201);
+                  next();
+                }
+              }
+            });
+          })(i);
+        }
       }
     });
   },

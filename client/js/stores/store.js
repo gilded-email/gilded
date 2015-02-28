@@ -140,7 +140,7 @@ var AppStore = _.extend({}, EventEmitter.prototype, {
 
   isUserLoggedIn: function() {
     var parsedCookie = cookie.parse(document.cookie);
-    return parsedCookie.userToken && parsedCookie.userExpires > Date.now();
+    return parsedCookie.token && parsedCookie.expiration > Date.now();
   },
 
   getUserSettings: function() {
