@@ -45,9 +45,9 @@ var VIPtable = React.createClass({
     return (
       <table className="vip-table">
         <tbody>
-        {this.props.data.map(function (email) {
+        {this.props.data.map(function (email, i) {
           return (
-            <VIProw email={email} />
+            <VIProw email={email} key={i} />
             );
         })}
         </tbody>

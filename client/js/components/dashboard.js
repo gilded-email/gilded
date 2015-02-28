@@ -58,10 +58,10 @@ var Dashboard = React.createClass({
           <h1>Gilded</h1>
 
           <ul>
-          {this.menuItems.map(function (item, key) {
+          {this.menuItems.map(function (item, i) {
             return (
-              <li>
-                <Link to={item.route} key={key}>{item.text}</Link>
+              <li key={i}>
+                <Link to={item.route}>{item.text}</Link>
               </li>
               );
           })}
