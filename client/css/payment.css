@@ -15,6 +15,14 @@ body {
   margin: 0;
 }
 
+a {
+  color: #FFF1A3;
+}
+
+a:hover, a:active {
+  color: #FFCC00;
+}
+
 /* Special class on .container surrounding .navbar, used for positioning it into place. */
 .navbar-wrapper {
   position: absolute;

@@ -13,32 +13,32 @@ var Store = require('../stores/store');
 var ForgotPassword = React.createClass({
   mixins: [Router.Navigation, Router.State],
 
-  getInitialState: function (){
+  getInitialState: function () {
     return Store.getForgotPasswordDetails();
   },
 
-  componentWillMount: function(){
+  componentWillMount: function () {
     Store.addChangeListener(this._onChange);
   },
 
-  componentWillUnmount: function(){
+  componentWillUnmount: function () {
     Store.removeChangeListener(this._onChange);
   },
 
-  _onChange: function(){
+  _onChange: function () {
     this.setState(this.getInitialState(this));
   },
 
-  componentWillUpdate: function(nextProps, nextState) {
+  componentWillUpdate: function (nextProps, nextState) {
     if (nextState.verificationError) {
       this.refs.verificationFailure.show();
-      setTimeout(function() {
+      setTimeout(function () {
         this.refs.verificationFailure.dismiss();
       }.bind(this), 3000);
       Store.resetForgotPasswordDetails();
     } else if (nextState.verificationSent) {
       this.refs.verificationSuccess.show();
-      setTimeout(function() {
+      setTimeout(function () {
         this.refs.verificationSuccess.dismiss();
       }.bind(this), 3000);
       Store.resetForgotPasswordDetails();
@@ -47,22 +47,22 @@ var ForgotPassword = React.createClass({
   },
 
 
-  handleClick: function(e) {
+  handleClick: function (e) {
     e.preventDefault();
     var username = this.refs.email.getValue();
     Actions.forgotPassword(username);
   },
 
-  render: function() {
+  render: function () {
     return (
       <div className="login-container">
         <Paper className="login">
           <div className="login-content">
             <div className="mui-font-style-display-3">Forgot Password?</div>
-            <form>
-              <TextField ref="email" className="login-input" floatingLabelText="Enter your username" />
-              <RaisedButton className="login-button" onClick={this.handleClick} label="Send Password Reset Email" secondary={true} />
-            </form>
+              <form>
+                <TextField ref="email" className="login-input" floatingLabelText="Enter your username" />
+                <RaisedButton className="login-button" onClick={this.handleClick} label="Send Reset Email" secondary={true} />
+              </form>
           </div>
         </Paper>
         <Snackbar ref="verificationFailure" message="There is no account under that username" />
