@@ -28,6 +28,7 @@ var checkHash = function (username, expiration, hash) {
   return new BPromise(function (resolve, reject) {
     if (expiration < Date.now()) {
       reject('Expired token');
+      return;
     }
     var checkToken = process.env.SECRET + username + expiration;
     bcrypt.compare(checkToken, hash, function (error, result) {
@@ -185,7 +186,7 @@ module.exports = {
   },
 
   checkSession: function (req, res, next) {
-    checkHash(req.cookie.username, req.cookie.expiration, req.cookie.token)
+    checkHash(req.cookies.username, req.cookies.expiration, req.cookies.token)
       .then(function () {
         next();
       })
@@ -197,7 +198,7 @@ module.exports = {
 
   checkPassword: function (req, res, next) {
     if (!req.body.checkPassword) {
-      res.status(400).send('Missing checkPassword');
+      res.status(400).send('Missing checkPassword in body');
     }
     User.findOne({username: req.cookies.username}, function (error, user) {
       if (error) {
