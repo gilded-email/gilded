@@ -242,7 +242,7 @@ module.exports = {
   },
 
   addVip: function (req, res, next) {
-    if (!emailValidator.validate(req.body.add)) {
+    if (!emailValidator.validate(req.body.add[0])) {
       res.status(400).send('Invalid email address');
       return;
     }
