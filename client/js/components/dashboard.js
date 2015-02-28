@@ -56,8 +56,8 @@ var Dashboard = React.createClass({
 
         <div className="dash-menu">
           <h1>Gilded</h1>
-
-          <ul>
+          <span className="hamburger">&#9776;</span>
+          <ul className="dash-menu-items">
           {this.menuItems.map(function (item, i) {
             return (
               <li key={i}>
@@ -68,13 +68,14 @@ var Dashboard = React.createClass({
           </ul>
         </div>
 
+        <div className="logged-in-user">
+          <span>{username}@gilded.club</span><span className="down-arrow">&#9662;</span>
+        </div>
+
         <div className="dash-content">
           <RouteHandler escrow={this.state.userEmails} settings={this.state.userSettings} vips={this.state.userVIPs} card={this.state.userCard} />
         </div>
 
-        <div className="logged-in-user">
-          <span>{username}@gilded.club</span><span className="down-arrow">&#9662;</span>
-        </div>
 
       </div>
       );
