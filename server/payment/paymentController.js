@@ -6,7 +6,7 @@ var makePayment = function (card, cost, callback) {
     amount: cost,
     currency: 'usd',
     card: card,
-    description: 'Charge for test@example.com'
+    description: 'Gilded.club Payment'
   }, function (error) {
     if (error) {
       console.log(error);
