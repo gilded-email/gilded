@@ -110,7 +110,7 @@ module.exports = {
             } else {
               var compiledHtml = jade.compile(data);
               var email = user.username + '@' + domain;
-              var html = compiledHtml({email: email});
+              var html = compiledHtml({email: email, domain: domain});
               var newUserEmail = {
                 to: user.forwardEmail,
                 from: 'welcome@' + domain,
