@@ -1,18 +1,14 @@
 var fs = require('fs');
 var path = require('path');
 var jade = require('jade');
-var mongoose = require('mongoose');
-var Grid = require('gridfs-stream');
 var formidable = require('formidable');
 var sendgrid = require('sendgrid')(process.env.SENDGRID_USER, process.env.SENDGRID_PASSWORD);
-var db = require('../../db/db.js'); // mongoose.connect object
 var Escrow = require('./emailModel.js');
 var User = require('../user/userModel.js');
 var userController = require('../user/userController.js');
 
 var domain = process.env.DOMAIN;
 var payoutRatio = 0.7;
-Grid.mongo = mongoose.mongo;
 
 var printAsyncResult = function (error, result) {
   if (error) {
@@ -36,6 +32,8 @@ var requestPayment = function (savedEmail) {
       var paymentRequestEmail = {
         to: sender,
         from: 'jenkins@' + domain,
+        fromname: 'Gilded Club',
+        replyto: 'payments@gilded.club',
         subject: 'Payment required to reach ' + savedEmail.recipient + '@' + domain,
         html: html
       };
@@ -64,7 +62,7 @@ module.exports = {
         email.subject = fields.subject;
         email.html = fields.html;
         email.text = fields.text;
-        email.files = [];
+        var attachments = [];
         for (var i = 1; i <= +fields.attachments; i++) {
           var attachmentInfo = JSON.parse(fields['attachment-info']);
           (function (index) {
@@ -75,9 +73,10 @@ module.exports = {
               } else {
                 var attachmentIndex = 'attachment' + index;
                 var filename = attachmentInfo[attachmentIndex].name;
-                email.files.push({filename: filename, content: data});
-                if (email.files.length === +fields.attachments) {
+                attachments.push({filename: filename, content: data});
+                if (attachments.length === +fields.attachments) {
                   req.email = email;
+                  req.attachments = attachments;
                   res.sendStatus(201);
                   next();
                 }
@@ -98,9 +97,10 @@ module.exports = {
         userController.isVip(recipient[0].toLowerCase(), email.from)
           .then(function (forwardAddress) {
             if (forwardAddress === null) {
-              module.exports.store(email, recipient[0].toLowerCase());
+              module.exports.store(email, req.attachments, recipient[0].toLowerCase());
             } else {
               email.to = [forwardAddress];
+              email.files = req.attachments;
               module.exports.sendEmail(email);
             }
           });
@@ -108,13 +108,14 @@ module.exports = {
     });
   },
 
-  store: function (email, recipient, callback) {
+  store: function (email, attachments, recipient, callback) {
     callback = callback || requestPayment;
+    var fileName = attachments[0].filename;
     userController.getRate(recipient)
       .then(function (rate) {
-        Escrow.create({email: JSON.stringify(email), recipient: recipient, cost: rate}, function (error, savedEmail) {
+        Escrow.create({email: JSON.stringify(email), recipient: recipient, cost: rate, attachment: attachments[0].content}, function (error, savedEmail) {
           if (error) {
-            console.log(error);
+            console.log('Escrow storing error: ', error);
           } else {
             callback(savedEmail);
           }
@@ -126,6 +127,7 @@ module.exports = {
     var escrowId = req.params.id;
     Escrow.findOne({_id: escrowId}, function (error, escrow) {
       if (error) {
+        console.log('Find email in escrow error', error);
         res.sendStatus(403);
       } else {
         req.escrow = escrow;
@@ -138,6 +140,7 @@ module.exports = {
     var cost = Math.floor(req.escrow.cost * payoutRatio);
     User.findOneAndUpdate({username: req.escrow.recipient}, {$inc: {balance: cost}}, function (error, user) {
       if (error) {
+        console.log('Updating user entry after escrow error', error);
         res.sendStatus(403);
       } else {
         req.user = user.toJSON();
@@ -149,6 +152,14 @@ module.exports = {
   releaseFromEscrow: function (req, res) {
     var email = JSON.parse(req.escrow.email);
     email.to = [req.user.forwardEmail];
+    email.files = [{filename: 'test.jpg', content: req.escrow.attachment}];
+    delete email.attachment;
+    delete email.filename;
+    delete email.attachments;
+    delete email['attachment-info'];
+    delete email.charsets;
+    delete email.dkim;
+    delete email.envelope;
     module.exports.sendEmail(email);
     Escrow.findOneAndUpdate({_id: req.params.id}, {paid: true}, printAsyncResult);
     res.redirect('/');
