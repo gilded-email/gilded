@@ -1,5 +1,6 @@
 var MarketingModel = require('./marketingModel.js');
 var emailController = require('../email/emailController.js');
+var domain = process.env.DOMAIN;
 
 module.exports = {
   signup: function (req, res) {
