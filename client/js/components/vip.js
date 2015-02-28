@@ -113,14 +113,15 @@ var VIP = React.createClass({
           <Paper className="dashboard-subcontent" zDepth={2}>
             <div className="dashboard-subheading">Add VIP</div>
               <div className="dashboard-subheading-content">
-              <TextField ref="email" className="login-input" onKeyUp={this.onSubmitVIPHandler} floatingLabelText="Add an email address"/>
-              <RaisedButton className="vip-add-button" label="Add VIP" secondary={true} onClick={this.addVipHandler}/>
+                <TextField ref="email" className="login-input" onKeyUp={this.onSubmitVIPHandler} floatingLabelText="Add an email address"/>
+                <RaisedButton className="vip-add-button" label="Add VIP" secondary={true} onClick={this.addVipHandler}/>
               </div>
           </Paper>
           <Paper className="vip-table-container" zDepth={2}>
-
-          <h4>{numberOfVIPsMessage}</h4>
-            <VIPtable data={this.props.vips} />
+            <div className="dashboard-subheading vip-count">{numberOfVIPsMessage}</div>
+            <div className="dashboard-subheading-content">
+              <VIPtable data={this.props.vips} />
+            </div>
           </Paper>
 
         </div>

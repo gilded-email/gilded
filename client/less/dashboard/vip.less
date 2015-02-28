@@ -1,12 +1,6 @@
-.VIP h4 {
-  padding: 1em 0 0 1em;
-  color: white;
-}
-
-
 .vip-table {
   width: 100%;
-  background-color: #fff;
+
   .vip-remove {
     background: none;
     border: none;
@@ -23,17 +17,21 @@
     width: 1em;
   }
 
-  td {
+  tr {
+    display: block;
     padding: 1em;
-    border-bottom: 1px solid #ccc;
+    border-bottom: 1px solid #ddd;
   }
-}
 
-.vip-add-contact {
-  .vip-add-button {
+  tr:last-child {
+    border-bottom: none;
   }
 }
 
 .vip-table-container {
   max-width: 600px;
+}
+
+.vip-count {
+  font-size: 1.5em;
 }

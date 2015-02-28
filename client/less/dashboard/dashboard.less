@@ -1,6 +1,6 @@
 .dash-menu {
   float: left;
-  width: 210px;
+  width: 16em;
   h1 {
     text-transform: uppercase;
     color: #fc0;
@@ -29,14 +29,14 @@
     }
     a.active {
       background-color: rgba(40, 40, 40, 0.3);
+      border-top-right-radius: 2px;
+      border-bottom-right-radius: 2px;
     }
   }
-
-
 }
 
 .dash-content {
-  margin-left: 225px;
+  margin-left: 18em;
   padding: 2em;
 
   .dashboard {
@@ -50,7 +50,6 @@
   }
 
 }
-
 
 .mui-left-nav .mui-left-nav-menu {
   height: 100%;
@@ -81,4 +80,55 @@
 .down-arrow {
   margin-left: 1em;
   display: none;
+}
+
+// Responsive
+.hamburger {
+  display: none;
+}
+
+@media (max-width: 500px) {
+  body {
+    font-size: 12px;
+  }
+  .dash-menu-items, .logged-in-user {
+    display: none;
+  }
+
+  .dash-menu {
+    width: 100%;
+    padding: 0.6em;
+    margin-bottom: 0.5em;
+    background-color: rgba(0, 0, 0, 0.3);
+    h1 {
+      font-size: 3em;
+      margin: 0;
+    }
+  }
+
+  .hamburger {
+    display: block;
+    color: #eee;
+    position: fixed;
+    top: 0.5em;
+    right: 0.5em;
+    font-size: 3em;
+    cursor: pointer;
+  }
+
+  .dash-content {
+    margin-left: 0px;
+    padding: 0.5em;
+  }
+
+  .dashboard {
+    margin: 0;
+    padding: 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .logged-in-user {
+    display: none;
+  }
 }
