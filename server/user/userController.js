@@ -86,7 +86,7 @@ module.exports = {
           console.log(error);
 
           // Send error message to client
-          if (error.err) {
+          if (error) {
             if (error.err.indexOf('$username') > -1) {
               res.status(409).send({
                 error: 'Username already exists'
@@ -134,10 +134,10 @@ module.exports = {
         console.log('user does not exist');
         res.sendStatus(404);
       } else {
-        bcrypt.compare(req.body.password, user.password, function (error, response) {
+        bcrypt.compare(req.body.password, user.password, function (error, result) {
           if (error) {
             console.log(error);
-          } else if (response === false) {
+          } else if (result === false) {
             res.status(422).send('wrong password');
           } else {
             req.user = user.toJSON();
@@ -193,6 +193,28 @@ module.exports = {
         console.log(error);
         res.redirect('/login');
       });
+  },
+
+  checkPassword: function (req, res, next) {
+    if (!req.body.checkPassword) {
+      res.status(400).send('Missing checkPassword');
+    }
+    User.findOne({username: req.cookies.username}, function (error, user) {
+      if (error) {
+        console.log(error);
+        res.status(400).send(error);
+      } else {
+        bcrypt.compare(req.body.checkPassword, user.password, function (error, result) {
+          if (error) {
+            console.log(error);
+          } else if (result === false) {
+            res.status(422).send('wrong password');
+          } else {
+            next();
+          }
+        });
+      }
+    });
   },
 
   changePassword: function (req, res, next) {
