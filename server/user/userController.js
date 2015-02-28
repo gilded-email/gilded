@@ -241,6 +241,10 @@ module.exports = {
   },
 
   addVip: function (req, res, next) {
+    if (!emailValidator.validate(req.body.add)) {
+      res.status(400).send('Invalid email address');
+      return;
+    }
     req.update = {$push: {vipList: {$each: req.body.add}}};
     next();
   },
