@@ -33,7 +33,7 @@ var requestPayment = function (savedEmail) {
         to: sender,
         from: 'jenkins@' + domain,
         fromname: 'Gilded Club',
-        replyto: 'payments@gilded.club',
+        replyto: 'payments@' + domain,
         subject: 'Payment required to reach ' + savedEmail.recipient + '@' + domain,
         html: html
       };
