@@ -13,26 +13,26 @@ var Store = require('../stores/store');
 var ResetPassword = React.createClass({
   mixins: [Router.Navigation, Router.State],
 
-  getInitialState: function (){
+  getInitialState: function () {
     return Store.getResetPasswordDetails();
   },
 
-  componentWillMount: function(){
+  componentWillMount: function () {
     Store.addChangeListener(this._onChange);
   },
 
-  componentWillUnmount: function(){
+  componentWillUnmount: function () {
     Store.removeChangeListener(this._onChange);
   },
 
-  _onChange: function(){
+  _onChange: function () {
     this.setState(this.getInitialState(this));
   },
 
-  componentWillUpdate: function(nextProps, nextState) {
+  componentWillUpdate: function (nextProps, nextState) {
     if (nextState.resetPasswordFailure) {
       this.refs.resetPasswordFailure.show();
-      setTimeout(function() {
+      setTimeout(function () {
         this.refs.resetPasswordFailure.dismiss();
       }.bind(this), 3000);
       Store.resetForgotPasswordDetails();
@@ -43,14 +43,14 @@ var ResetPassword = React.createClass({
   },
 
 
-  handleClick: function(e) {
+  handleClick: function (e) {
     e.preventDefault();
     var password = this.refs.password.getValue();
     var confirmPassword = this.refs.confirmPassword.getValue();
-    var resetToken = window.location.href.split('?')[1];
+    var resetToken = window.location.search.slice(1);
     if (password !== confirmPassword) {
       this.refs.confirmFailure.show();
-      setTimeout(function() {
+      setTimeout(function () {
         this.refs.confirmFailure.dismiss();
       }.bind(this), 3000);
     } else {
@@ -58,15 +58,15 @@ var ResetPassword = React.createClass({
     }
   },
 
-  render: function() {
+  render: function () {
     return (
       <div className="login-container">
         <Paper className="login">
           <div className="login-content">
             <div className="mui-font-style-display-3">Reset Password</div>
             <form>
-              <TextField ref="password" className="login-input" floatingLabelText="Enter new password" />
-              <TextField ref="confirmPassword" className="login-input" floatingLabelText="Confirm new password" />
+              <TextField ref="password" type={"password"} className="login-input" floatingLabelText="Enter new password" />
+              <TextField ref="confirmPassword" type={"password"} className="login-input" floatingLabelText="Confirm new password" />
               <RaisedButton className="login-button" onClick={this.handleClick} label="Reset Password" secondary={true} />
             </form>
           </div>
