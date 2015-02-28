@@ -165,7 +165,6 @@ module.exports = {
     email.to = [req.user.forwardEmail];
     if (req.escrow.attachments.length > 0) {
       email.files = req.escrow.attachments;
-      console.log("Check for buffer", req.escrow.attachments[0].content instanceof Buffer);
     }
     delete email.attachment;
     delete email.filename;
@@ -197,14 +196,12 @@ module.exports = {
   storeAndRetrieveAttachments: function (attachments) {
     var list = [];
     return new BPromise(function (resolve, reject) {
-      if (attachments.length === 0) {
+      if (!attachments) {
         resolve([]);
       } else {
         attachments.forEach(function (attachment) {
-          console.log('Attachment: ', typeof attachment.content);
           list.push({filename: attachment.filename, content: attachment.content});
         });
-        console.log('List: ', list);
         resolve(list);
       }
     });
