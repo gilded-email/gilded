@@ -10,7 +10,7 @@ var _userVIPs = [];
 var _userEmails = {};
 var _userSettings = {
   balance: 0,
-  rate: 100
+  rate: 0
 };
 var _newCard = {
   success: false,
