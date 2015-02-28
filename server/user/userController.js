@@ -12,13 +12,32 @@ var dispatcher = 'jenkins@' + domain;
 
 var User = require('./userModel.js');
 
-var tokenGen = function (username, expiration) {
+var makeHash = function (username, expiration) {
   return new BPromise(function (resolve, reject) {
     bcrypt.hash(process.env.SECRET + username + expiration, null, null, function (error, hash) {
       if (error) {
         reject(error);
       } else {
         resolve(hash);
+      }
+    });
+  });
+};
+
+var checkHash = function (username, expiration, hash) {
+  return new BPromise(function (resolve, reject) {
+    if (expiration < Date.now()) {
+      reject('Expired token');
+    }
+    var checkToken = process.env.SECRET + username + expiration;
+    bcrypt.compare(checkToken, hash, function (error, result) {
+      if (error) {
+        console.log('Compare error: ', error);
+        reject();
+      } else if (!result) {
+        reject('Invalid hash');
+      } else {
+        resolve('Valid hash');
       }
     });
   });
@@ -81,28 +100,27 @@ module.exports = {
               return;
             }
             return;
-          } else {
-
-            // Send welcome email
-            fs.readFile(path.join(__dirname, '/../../views/welcomeEmail.jade'), 'utf8', function (error, data) {
-              if (error) {
-                console.log('Welcome Email error: ', error);
-              } else {
-                var compiledHtml = jade.compile(data);
-                var email = user.username + '@' + domain;
-                var html = compiledHtml({email: email});
-                var newUserEmail = {
-                  to: user.forwardEmail,
-                  from: 'welcome@gilded.club',
-                  subject: 'Welcome to Gilded',
-                  html: html
-                };
-                require('../email/emailController.js').sendEmail(newUserEmail);
-              }
-            });
-            req.user = user.toJSON();
-            next();
           }
+
+          // Send welcome email
+          fs.readFile(path.join(__dirname, '/../../views/welcomeEmail.jade'), 'utf8', function (error, data) {
+            if (error) {
+              console.log('Welcome Email error: ', error);
+            } else {
+              var compiledHtml = jade.compile(data);
+              var email = user.username + '@' + domain;
+              var html = compiledHtml({email: email});
+              var newUserEmail = {
+                to: user.forwardEmail,
+                from: 'welcome@gilded.club',
+                subject: 'Welcome to Gilded',
+                html: html
+              };
+              require('../email/emailController.js').sendEmail(newUserEmail);
+            }
+          });
+          req.user = user.toJSON();
+          next();
         });
       }
     });
@@ -147,18 +165,18 @@ module.exports = {
   },
 
   logout: function (req, res) {
-    res.clearCookie('userExpires');
-    res.clearCookie('userToken');
+    res.clearCookie('expiration');
+    res.clearCookie('token');
     res.status(201).send('logged out');
   },
 
   storeSession: function (req, res, next) {
     var expiration = Date.now() + (1000 * 60 * 60 * 24 * 30);
-    tokenGen(req.body.username.toLowerCase(), expiration)
+    makeHash(req.body.username.toLowerCase(), expiration)
       .then(function (token) {
         res.cookie('username', req.body.username.toLowerCase());
-        res.cookie('userExpires', expiration);
-        res.cookie('userToken', token);
+        res.cookie('expiration', expiration);
+        res.cookie('token', token);
         next();
       })
       .catch(function (error) {
@@ -167,21 +185,14 @@ module.exports = {
   },
 
   checkSession: function (req, res, next) {
-    var checkToken = process.env.SECRET + req.cookies.username + req.cookies.userExpires;
-    bcrypt.compare(checkToken, req.cookies.userToken, function (error, result) {
-      if (error) {
-        console.log('Compare error: ', error);
+    checkHash(req.cookie.username, req.cookie.expiration, req.cookie.token)
+      .then(function () {
+        next();
+      })
+      .catch(function (error) {
+        console.log(error);
         res.redirect('/login');
-      } else if (!result) {
-        res.redirect('/login');
-      } else {
-        if (req.cookies.userExpiration < Date.now()) {
-          res.redirect('/login');
-        } else {
-          next();
-        }
-      }
-    });
+      });
   },
 
   changePassword: function (req, res, next) {
@@ -376,7 +387,7 @@ module.exports = {
         res.status(400).send(error);
       } else {
         var expiration = Date.now() + (1000 * 60 * 60 * 24); // 24 hours
-        tokenGen(username, expiration)
+        makeHash(username, expiration)
           .then(function (hash) {
             var urlToken = base64Url.encode(username + '+' + expiration + '+' + hash);
             var resetUrl = 'https://www' + domain + '/resetpassword/' + urlToken;
@@ -396,26 +407,37 @@ module.exports = {
     });
   },
 
-  handleForgotPassword: function (req, res, urlToken) {
-    var params = base64Url.decode(urlToken).split('+');
+  handleForgotPassword: function (req, res) {
+    var params = base64Url.decode(req.params.urlToken).split('+');
     var username = params[0];
     var expiration = params[1];
-    var checkToken = process.env.SECRET + username + expiration;
     var hash = params[2];
-    bcrypt.compare(checkToken, hash, function (error, result) {
-      if (error) {
-        console.log('Compare error: ', error);
-        // Compare error
-      } else if (!result) {
-        console.log('The hash isn\'t valid');
-      } else {
-        if (req.cookies.userExpiration < Date.now()) {
-          console.log('Your Forgot Password request expired. It only lasts 24 hours. Ask for a new one.');
+    checkHash(username, expiration, hash)
+      .then(function () {
+        res.redirect('/resetpassword');
+      })
+      .catch(function (error) {
+        if (error === 'Expired token') {
+          res.redirect('/resetExpired.html');
         } else {
-          console.log('Good urlToken!');
+          res.redirect('/resetInvalid.html');
         }
-      }
-    });
+      });
+  },
+
+  resetPassword: function (req, res, next) {
+    var params = base64Url.decode(req.params.urlToken).split('+');
+    var username = params[0];
+    var expiration = params[1];
+    var hash = params[2];
+    checkHash(username, expiration, hash)
+      .then(function () {
+        req.cookies.username = username;
+        next();
+      })
+      .catch(function (error) {
+        res.status(400).send(error);
+      });
   },
 
   normalizeInput: function (req, res, next) {
