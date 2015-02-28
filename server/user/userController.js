@@ -114,7 +114,7 @@ module.exports = {
               var newUserEmail = {
                 to: user.forwardEmail,
                 from: 'welcome@' + domain,
-                fromname: 'Welcome to Gilded'
+                fromname: 'Welcome to Gilded',
                 subject: 'Welcome to Gilded',
                 html: html
               };
