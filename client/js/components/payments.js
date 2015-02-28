@@ -125,7 +125,7 @@ var Settings = React.createClass({
             <div className="dashboard-subheading-content">
               <div className="rate-calculation">
                 <p className="rate-current-rate">Your current rate is: {dollarString.fromCents(this.props.settings.rate)}.</p>
-                <p className="rate-you-receive">We'll charge senders {dollarString.fromCents(this.props.settings.rate)} per email, and you'll receive {dollarString.fromCents(this.props.settings.rate * 0.7)} per email.</p>
+                <p className="rate-you-receive">Senders will be charged {dollarString.fromCents(Math.ceil(this.props.settings.rate * 1.029) + 30)} per email, and you'll receive {dollarString.fromCents(this.props.settings.rate * 0.7)} per email.</p>
               </div>
               <TextField ref="newRate" className="new-rate" hintText="$" onKeyUp={this.onSubmitRateHandler} floatingLabelText={dollarString.fromCents(this.props.settings.rate)} />
               <RaisedButton className="new-rate-save" label="Change Rate" secondary={true} onClick={this.changeRate} />
