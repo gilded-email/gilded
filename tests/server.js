@@ -155,7 +155,8 @@ describe('Email Module', function () {
     from: 'Tester Guy <gildedtest@dsernst.com>',
     subject: 'Test Email',
     html: '<h1>Testing</h1>',
-    text: 'Testing'
+    text: 'Testing',
+    attachments: '0'
   };
 
   it('should be able to receive emails', function (done) {
@@ -202,7 +203,7 @@ describe('Email Module', function () {
   it('should be able to store emails, with recipients and cost', function (done) {
     User.findOneAndUpdate({username: 'tests'}, {rate: 500}, function (err, user) {
       var recipient = JSON.parse(emailData.envelope).to[0].split('@')[0];
-      emailController.store(emailData, recipient, function (savedEmail) {
+      emailController.store(emailData, null, recipient, function (savedEmail) {
         stored = savedEmail;
         assert.equal(stored.recipient, recipient);
         assert.equal(stored.cost, 500);
