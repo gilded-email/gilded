@@ -412,8 +412,8 @@ module.exports = {
         var expiration = Date.now() + (1000 * 60 * 60 * 24); // 24 hours
         makeHash(username, expiration)
           .then(function (hash) {
-            var urlToken = base64Url.encode(username + '+' + expiration + '+' + hash);
-            var resetUrl = 'https://www' + domain + '/resetpassword/' + urlToken;
+            var resetToken = base64Url.encode(username + '+' + expiration + '+' + hash);
+            var resetUrl = 'https://www' + domain + '/resetpassword/' + resetToken;
             res.status(201).send('Password reset sent for ' + username);
             require('../email/emailController.js').sendEmail({
               to: user.forwardEmail,
@@ -431,25 +431,25 @@ module.exports = {
   },
 
   handleForgotPassword: function (req, res) {
-    var params = base64Url.decode(req.params.urlToken).split('+');
+    var params = base64Url.decode(req.params.resetToken).split('+');
     var username = params[0];
     var expiration = params[1];
     var hash = params[2];
     checkHash(username, expiration, hash)
       .then(function () {
-        res.redirect('/resetpassword');
+        res.redirect('/app/#/resetpassword?' + req.params.resetToken);
       })
       .catch(function (error) {
         if (error === 'Expired token') {
-          res.redirect('/resetExpired.html');
+          res.redirect('/expired-reset-password-token.html');
         } else {
-          res.redirect('/resetInvalid.html');
+          res.redirect('/invalid-reset-password-token.html');
         }
       });
   },
 
   resetPassword: function (req, res, next) {
-    var params = base64Url.decode(req.params.urlToken).split('+');
+    var params = base64Url.decode(req.params.resetToken).split('+');
     var username = params[0];
     var expiration = params[1];
     var hash = params[2];
