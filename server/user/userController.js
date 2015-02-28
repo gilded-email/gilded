@@ -188,6 +188,7 @@ module.exports = {
   checkSession: function (req, res, next) {
     checkHash(req.cookies.username, req.cookies.expiration, req.cookies.token)
       .then(function () {
+        console.log('in the then');
         next();
       })
       .catch(function (error) {
