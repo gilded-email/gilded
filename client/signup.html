@@ -24,9 +24,12 @@
         <p><a href="/">&#8592; Go back</a> to learn more about <span class="gilded">Gilded</span>.</p>
       </div>
 
-      <div id="thank-you" class="hide">
+      <div id="thank-you" style="display: none;">
         <h2>Thank You!</h2>
-        <span>We'll be sure to keep you posted.</span>
+        <span>We'll be sure to keep you posted.</span><br>
+        <br>
+        <br>
+        <a href="#" id="another">&#8592; Add another</a>
       </div>
     </div>
   </div>
@@ -34,7 +37,7 @@
   <script src="bower_components/jquery/dist/jquery.js"></script>
 
   <script>
-  $(document).ready(function() {
+  $(document).ready(function () {
     $('#signup-form').submit( function (e) {
       e.preventDefault();
       var userEmail = $('#email').val();
@@ -45,14 +48,19 @@
         success: function (resp) {
           console.log(resp);
           $('#email').val('');
-          $('#signup').hide();
-          $('#thank-you').removeClass('hide');
+          $('#signup').toggle();
+          $('#thank-you').toggle();
         },
         error: function (error) {
           console.log(error);
         }
       });
     });
+    $('#another').click(function (e) {
+      e.preventDefault();
+      $('#signup').toggle();
+      $('#thank-you').toggle();
+    })
   });
   </script>
 
