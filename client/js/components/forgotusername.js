@@ -6,6 +6,7 @@ var TextField = mui.TextField;
 var RaisedButton = mui.RaisedButton;
 var Paper = mui.Paper;
 var Snackbar = mui.Snackbar;
+var Link = Router.Link;
 
 var Actions = require('../actions/actions');
 var Store = require('../stores/store');
@@ -62,6 +63,8 @@ var ForgotUsername = React.createClass({
             <form>
               <TextField ref="email" className="login-input" floatingLabelText="Enter your email address" />
               <RaisedButton className="login-button" onClick={this.handleClick} label="Send Verification Email" secondary={true} />
+              <Link className="login-link" to="login">Login</Link><br></br>
+              <Link className="forgotpassword-link" to="forgotpassword">Forgot Password?</Link>
             </form>
           </div>
         </Paper>
