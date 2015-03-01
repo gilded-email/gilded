@@ -55,7 +55,7 @@ var Dashboard = React.createClass({
   },
 
   handleLinkClick: function () {
-    console.log('sdfdsffd');
+    console.log('click');
     document.getElementById('dash-menu-items').className = '';
   },
 
@@ -83,7 +83,7 @@ var Dashboard = React.createClass({
           {this.menuItems.map(function (item, i) {
             return (
               <li key={i}>
-                <Link to={item.route}>{item.text}</Link>
+                <Link to={item.route} onClick={this.handleLinkClick}>{item.text}</Link>
               </li>
               );
           })}
