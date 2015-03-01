@@ -105,7 +105,7 @@ var EmailRow = React.createClass({
           <td onClick={this.viewEmail} className="email-sentDate">{this.props.sentDate}</td>
           <td onClick={this.viewEmail} className="email-cost">{this.props.cost}</td>
           <td onClick={this.viewEmail} className="email-paid">{this.props.paid}</td>
-          <td><RaisedButton className="vip-add-button" label="Add VIP" secondary={true} onClick={this.addToVIPs}/></td>
+          <td className="email-addVip"><RaisedButton className="vip-add-button" label="Add VIP" secondary={true} onClick={this.addToVIPs}/></td>
           <td className="escrow-snackbar">
             <Snackbar ref="duplicateEmail" message="VIP contact already exists" />
             <Snackbar ref="addEmail" message="Contact was added to VIP list" />
