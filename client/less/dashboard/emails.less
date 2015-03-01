@@ -1,4 +1,6 @@
-.emails {
+.emails-table {
+  width: 100%;
+
   table {
     width: 100%;
   }
@@ -69,5 +71,19 @@
       color: #222;
     }
   }
+}
 
+@media (max-width: 500px) {
+
+  .emails-table {
+    th {
+      display: none;
+    }
+    td {
+      width: 100%;
+      display: inline;
+      margin: 0px;
+      padding: 0;
+    }
+  }
 }

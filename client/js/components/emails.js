@@ -1,12 +1,14 @@
 var React = require('react');
 
 var Router = require('react-router');
-var RaisedButton = require('material-ui').RaisedButton;
 
+var mui = require('material-ui');
+var RaisedButton = mui.RaisedButton;
+var Snackbar = mui.Snackbar;
+var Paper = mui.Paper;
 
 var moment = require('moment');
 var dollarString = require('dollar-string');
-var Snackbar = require('material-ui').Snackbar;
 
 var Actions = require('../actions/actions');
 var storeWatchMixin = require('../mixins/StoreWatchMixin');
@@ -118,11 +120,13 @@ var Emails = React.createClass({
 
   render: function () {
     return (
-      <div className="emails">
-        <div className="dashboard">
-          <h1>Emails</h1>
+      <div className="dashboard email">
+        <h1>Emails</h1>
+        <Paper>
+        <div className="emails-table">
           <EmailTable vips={this.props.vips} data={this.props.escrow} />
-        </div>
+          </div>
+        </Paper>
       </div>
     );
   }
