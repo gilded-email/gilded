@@ -1,12 +1,14 @@
 var React = require('react');
 
 var Router = require('react-router');
-var RaisedButton = require('material-ui').RaisedButton;
 
+var mui = require('material-ui');
+var RaisedButton = mui.RaisedButton;
+var Snackbar = mui.Snackbar;
+var Paper = mui.Paper;
 
 var moment = require('moment');
 var dollarString = require('dollar-string');
-var Snackbar = require('material-ui').Snackbar;
 
 var Actions = require('../actions/actions');
 var storeWatchMixin = require('../mixins/StoreWatchMixin');
@@ -103,7 +105,7 @@ var EmailRow = React.createClass({
           <td onClick={this.viewEmail} className="email-sentDate">{this.props.sentDate}</td>
           <td onClick={this.viewEmail} className="email-cost">{this.props.cost}</td>
           <td onClick={this.viewEmail} className="email-paid">{this.props.paid}</td>
-          <td><RaisedButton className="vip-add-button" label="Add VIP" secondary={true} onClick={this.addToVIPs}/></td>
+          <td className="email-addVip"><RaisedButton className="vip-add-button" label="Add VIP" secondary={true} onClick={this.addToVIPs}/></td>
           <td className="escrow-snackbar">
             <Snackbar ref="duplicateEmail" message="VIP contact already exists" />
             <Snackbar ref="addEmail" message="Contact was added to VIP list" />
@@ -118,11 +120,13 @@ var Emails = React.createClass({
 
   render: function () {
     return (
-      <div className="emails">
-        <div className="dashboard">
-          <h1>Emails</h1>
+      <div className="dashboard email">
+        <h1>Emails</h1>
+        <Paper>
+        <div className="emails-table">
           <EmailTable vips={this.props.vips} data={this.props.escrow} />
-        </div>
+          </div>
+        </Paper>
       </div>
     );
   }
