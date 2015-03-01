@@ -209,7 +209,7 @@ body > footer > p {
   margin-bottom: 0px;
 }
 
-.back-to-top {
+.back-to-top, .back-to-top:focus {
   color: #666;
 }
 
