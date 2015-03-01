@@ -18,14 +18,9 @@
   }
 
   table tr {
-    padding-bottom: 1em;
-    border-bottom: 1px solid #ddd;
+    padding-top: 1em;
+    border-top: 1px solid #ddd;
   }
-
-  table tr:last-child {
-    border: none;
-  }
-
 
   td {
     cursor: pointer;
@@ -48,7 +43,7 @@
 
 
 
-.email-page {
+#dash-content .dashboard .email-page {
   background-color: #eee;
 
   .back-to-emails {
@@ -87,7 +82,7 @@
   }
 }
 
-@media (max-width: 500px) {
+@media (max-width: 600px) {
 
   .emails-table {
     th, thead {
@@ -102,13 +97,13 @@
 
     .email-from {
       font-size: 1.2em;
-      width: 100%;
+
       display: block;
     }
 
     .email-subject {
       font-weight: bold;
-      width: 100%;
+
       display: block;
     }
 
@@ -119,6 +114,7 @@
 
     .email-cost {
       margin-left: 18em;
+
     }
     .email-sentDate {
     }
@@ -133,6 +129,10 @@
     }
     tbody tr:hover {
       background: none;
+    }
+
+    table tr:first-child {
+      border: none;
     }
 
 

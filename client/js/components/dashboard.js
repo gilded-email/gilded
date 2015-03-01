@@ -40,7 +40,7 @@ var Dashboard = React.createClass({
     this.setState(Store.getUserData());
   },
 
-  hamburgerHelper: function () {
+  toggleMenu: function () {
     if (document.getElementById('dash-menu-items').className === '') {
       document.getElementById('dash-menu-items').className = 'open-menu';
     } else {
@@ -51,7 +51,14 @@ var Dashboard = React.createClass({
       document.getElementById('dash-content').className = 'open-menu';
     } else {
       document.getElementById('dash-content').className = '';
+      document.getElementById('dash-content').removeEventListener('click', this.toggleMenu);
     }
+  },
+
+  hamburgerHelper: function () {
+    document.getElementById('dash-menu-items').addEventListener('click', this.toggleMenu);
+    document.getElementById('dash-content').addEventListener('click', this.toggleMenu);
+    this.toggleMenu();
   },
 
   handleLinkClick: function () {
