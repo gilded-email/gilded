@@ -60,7 +60,7 @@ module.exports = {
         delete email.headers; //remove headers because sendgrid attaches new ones
         email.to = JSON.parse(fields.envelope).to;
         email.from = fields.from.split('<')[1].split('>')[0];
-        email.subject = fields.subject;
+        email.subject = fields.subject || '(no subject)';
         email.html = fields.html;
         email.text = fields.text;
         if (fields.attachments > 0) {
