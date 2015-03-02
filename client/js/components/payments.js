@@ -112,6 +112,10 @@ var Settings = React.createClass({
 
 
   render: function () {
+    // Disable withdraw if empty balance or no card added
+    var withdrawDisabled = this.emptyBalance || this.getLast4() === null;
+    var withdrawMessage = this.getLast4() === null ? "You need to add a debit card before you can withdraw." : null;
+
     return (
 
       <div className="dashboard">
@@ -122,29 +126,30 @@ var Settings = React.createClass({
 
         <Paper className="dashboard-subcontent" zDepth={2}>
           <div className="dashboard-subheading">Update Rate</div>
-            <div className="dashboard-subheading-content">
-              <div className="rate-calculation">
-                <p className="rate-current-rate">Your current rate is: {dollarString.fromCents(this.props.settings.rate)}.</p>
-                <p className="rate-you-receive">Senders will be charged {dollarString.fromCents(Math.ceil(this.props.settings.rate * 1.029) + 30)} per email, and you'll receive {dollarString.fromCents(this.props.settings.rate * 0.7)} per email.</p>
-              </div>
-              <TextField ref="newRate" className="new-rate" hintText="$" onKeyUp={this.onSubmitRateHandler} floatingLabelText={dollarString.fromCents(this.props.settings.rate)} />
-              <RaisedButton className="new-rate-save" label="Change Rate" secondary={true} onClick={this.changeRate} />
+          <div className="dashboard-subheading-content">
+            <div className="rate-calculation">
+              <p className="rate-current-rate">Your current rate is: {dollarString.fromCents(this.props.settings.rate)}.</p>
+              <p className="rate-you-receive">Senders will be charged {dollarString.fromCents(Math.ceil(this.props.settings.rate * 1.029) + 30)} per email, and you'll receive {dollarString.fromCents(this.props.settings.rate * 0.7)} per email.</p>
             </div>
+            <TextField ref="newRate" className="new-rate" hintText="$" onKeyUp={this.onSubmitRateHandler} floatingLabelText={dollarString.fromCents(this.props.settings.rate)} />
+            <RaisedButton className="new-rate-save" label="Change Rate" secondary={true} onClick={this.changeRate} />
+          </div>
         </Paper>
 
         <Paper className="dashboard-subcontent" zDepth={2}>
           <div className="dashboard-subheading withdraw">Current Balance</div>
-            <div className="dashboard-subheading-content withdraw-balance">
-              {this.getBalance()}
-              <div className="withdraw-button">
-                <RaisedButton label="Withdraw" onClick={this.withdraw} disabled={this.emptyBalance} secondary={!this.emptyBalance} />
-              </div>
+          <div className="dashboard-subheading-content withdraw-balance">
+            <span className="withdraw-message">{withdrawMessage}</span>
+            <span className="balance-amount">{this.getBalance()}</span>
+            <div className="withdraw-button">
+              <RaisedButton label="Withdraw" onClick={this.withdraw} disabled={withdrawDisabled} secondary={!withdrawDisabled} />
             </div>
+          </div>
         </Paper>
 
         <Paper className="dashboard-subcontent" zDepth={2}>
           <div className="dashboard-subheading">Debit Card Info</div>
-            <div className="dashboard-subheading-content">
+          <div className="dashboard-subheading-content">
             <div className="payment-card-info">{this.getLast4()}</div>
               <TextField ref="cardHolderName" className="cardholdername-input" hintText="John Doe" floatingLabelText="Card Holder Name" />
               <TextField ref="cardNumber" className="cardnumber-input" hintText="4242424242424242" floatingLabelText="Card Number" />
