@@ -60,15 +60,15 @@ var VIP = React.createClass({
 
   mixins: [storeWatchMixin(getInitialState)],
 
-  componentWillUpdate: function(nextProps) { //TODO: bug/does not show snackbar with
+  componentWillUpdate: function (nextProps) { //TODO: bug/does not show snackbar with
     if (nextProps.vips.length > this.props.vips.length && this.props.vips[0] !== undefined) {
       this.refs.addEmail.show();
-      setTimeout(function() {
+      setTimeout(function () {
         this.refs.addEmail.dismiss();
       }.bind(this), 1000);
     } else if (nextProps.vips.length < this.props.vips.length) {
       this.refs.removeEmail.show();
-      setTimeout(function() {
+      setTimeout(function () {
         this.refs.removeEmail.dismiss();
       }.bind(this), 1000);
     }
@@ -81,12 +81,12 @@ var VIP = React.createClass({
     var validated = validator.validate(this.refs.email.getValue());
     if (!validated) {
       this.refs.invalidEmail.show();
-      setTimeout(function() {
+      setTimeout(function () {
         this.refs.invalidEmail.dismiss();
       }.bind(this), 1000);
     } else if (this.props.vips.indexOf(this.refs.email.getValue()) > -1){
       this.refs.duplicateEmail.show();
-      setTimeout(function() {
+      setTimeout(function () {
         this.refs.duplicateEmail.dismiss();
       }.bind(this), 1000);
     } else {
@@ -102,7 +102,7 @@ var VIP = React.createClass({
     }
   },
 
-  render: function() {
+  render: function () {
     var numberOfVIPsMessage = this.props.vips.length > 0 ? 'You have ' + this.props.vips.length + ' contacts in your VIP list.' : 'Your VIP list is empty.';
 
     return (
@@ -113,6 +113,7 @@ var VIP = React.createClass({
           <Paper className="dashboard-subcontent" zDepth={2}>
             <div className="dashboard-subheading">Add VIP</div>
               <div className="dashboard-subheading-content">
+                <p className="vip-description">VIPs can send directly to your inbox, without paying.</p>
                 <TextField ref="email" className="login-input" onKeyUp={this.onSubmitVIPHandler} floatingLabelText="Add an email address"/>
                 <RaisedButton className="vip-add-button" label="Add VIP" secondary={true} onClick={this.addVipHandler}/>
               </div>
