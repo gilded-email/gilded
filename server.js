@@ -45,7 +45,7 @@ app.put('/api/user/settings/email', user.checkSession, user.updateForwardEmail, 
 app.post('/api/logout', user.logout);
 app.post('/api/user/vipList', user.checkSession, user.addVip, user.update);
 app.put('/api/user/vipList', user.checkSession, user.removeVip, user.update);
-app.post('/api/join', user.join, user.storeSession, email.fetchEscrows);
+app.post('/api/join', user.join, user.storeSession, email.welcomeEmail, email.fetchEscrows);
 app.post('/api/login', user.login, user.storeSession, email.fetchEscrows);
 app.get('/api/user/dashboard', user.checkSession, user.getUser, email.fetchEscrows);
 app.post('/api/user/withdraw', user.checkSession, user.withdraw, user.update);

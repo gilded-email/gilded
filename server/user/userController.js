@@ -118,11 +118,12 @@ module.exports = {
                 subject: 'Welcome to Gilded',
                 html: html
               };
+              req.user = user.toJSON();
+              req.welcomeEmail = newUserEmail;
+              next();
               require('../email/emailController.js').sendEmail(newUserEmail);
             }
           });
-          req.user = user.toJSON();
-          next();
         });
       }
     });
