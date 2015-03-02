@@ -179,7 +179,7 @@ module.exports = {
   },
 
   fetchEscrows: function (req, res) {
-    Escrow.find({recipient: 'tests'}, function (error, emails) {
+    Escrow.find({recipient: req.user.username}, function (error, emails) {
       if (error) {
         console.log(error);
         res.status(400).send(error);
