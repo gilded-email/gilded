@@ -1,5 +1,7 @@
 var React = require('react');
 var cookie = require('cookie');
+var dollarString = require('dollar-string');
+
 var Router = require('react-router');
 var Link = Router.Link;
 var RouteHandler = Router.RouteHandler;
@@ -76,6 +78,7 @@ var Dashboard = React.createClass({
 
   render: function() {
     var username = cookie.parse(document.cookie).username;
+    var balance = 'Balance: ' + dollarString.fromCents(this.state.userSettings.balance);
     return (
       <div>
 
@@ -99,13 +102,13 @@ var Dashboard = React.createClass({
         </div>
 
         <div className="logged-in-user">
-          <span>{username}@gilded.club</span><span className="down-arrow">&#9662;</span>
+          <span className="user-at-gilded">{username}@gilded.club</span><span className="down-arrow">&#9662;</span>
+          <span className="user-balance">{balance}</span>
         </div>
 
         <div id="dash-content">
           <RouteHandler escrow={this.state.userEmails} settings={this.state.userSettings} vips={this.state.userVIPs} card={this.state.userCard} />
         </div>
-
 
       </div>
       );
