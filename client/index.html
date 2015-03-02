@@ -122,7 +122,7 @@
     <!-- /END THE FEATURETTES -->
     <!-- FOOTER -->
     <footer>
-      <p class="pull-right"><a href="#" class="back-to-top">Back to top</a></p>
+      <p class="pull-right"><a href="#" onClick="scrollToTop();return false" class="back-to-top">Back to top</a></p>
       <p>&copy; 2015 Gilded Club, Inc.</p>
     </footer>
     <!-- Bootstrap core JavaScript
@@ -138,7 +138,8 @@
         speed : 0.25
       });
       $(function(){$("a[href*=#]:not([href=#])").click(function(){if(location.pathname.replace(/^\//,"")==this.pathname.replace(/^\//,"")&&location.hostname==this.hostname){var t=$(this.hash);if(t=t.length?t:$("[name="+this.hash.slice(1)+"]"),t.length)return $("html,body").animate({scrollTop:t.offset().top},600),!1}})});
-      console.log('     ,     ,            \/)              \/)        \r\n       ___  __     _   \/\/ __   _  _   _(\/         \r\n    \/_(_)_(_\/ (_  (_(_(\/_\/ (__(\/_(_(_(_(_ (_\/_ o  \r\n .-\/                                     .-\/      \r\n(_\/                                     (_\/       ')
+      console.log('     ,     ,            \/)              \/)        \r\n       ___  __     _   \/\/ __   _  _   _(\/         \r\n    \/_(_)_(_\/ (_  (_(_(\/_\/ (__(\/_(_(_(_(_ (_\/_ o  \r\n .-\/                                     .-\/      \r\n(_\/                                     (_\/       ');
+        var timeOut;function scrollToTop(){if(document.body.scrollTop!=0||document.documentElement.scrollTop!=0){window.scrollBy(0,-50);timeOut=setTimeout('scrollToTop()',4)}else clearTimeout(timeOut)}
     </script>
   </body>
 </html>
