@@ -27,18 +27,43 @@ var Dashboard = React.createClass({
     }
     return Store.getUserData();
   },
+
   componentWillMount: function () {
     Store.addChangeListener(this._onChange);
   },
+
   componentWillUnmount: function () {
     Store.removeChangeListener(this._onChange);
   },
+
   _onChange: function () {
     this.setState(Store.getUserData());
   },
 
-  handleClickEvent: function (e, key, payload) {
-    this.transitionTo(payload.route);
+  toggleMenu: function () {
+    if (document.getElementById('dash-menu-items').className === '') {
+      document.getElementById('dash-menu-items').className = 'open-menu';
+    } else {
+      document.getElementById('dash-menu-items').className = '';
+    }
+
+    if (document.getElementById('dash-content').className === '') {
+      document.getElementById('dash-content').className = 'open-menu';
+    } else {
+      document.getElementById('dash-content').className = '';
+      document.getElementById('dash-content').removeEventListener('click', this.toggleMenu);
+    }
+  },
+
+  hamburgerHelper: function () {
+    document.getElementById('dash-menu-items').addEventListener('click', this.toggleMenu);
+    document.getElementById('dash-content').addEventListener('click', this.toggleMenu);
+    this.toggleMenu();
+  },
+
+  handleLinkClick: function () {
+    console.log('click');
+    document.getElementById('dash-menu-items').className = '';
   },
 
   menuItems: [
@@ -55,24 +80,29 @@ var Dashboard = React.createClass({
       <div>
 
         <div className="dash-menu">
-          <h1>Gilded</h1>
-          <span className="hamburger">&#9776;</span>
-          <ul className="dash-menu-items">
+
+          <div className="menu-head">
+            <h1>Gilded</h1>
+            <span className="hamburger" onClick={this.hamburgerHelper}>&#9776;</span>
+          </div>
+
+          <ul id="dash-menu-items">
           {this.menuItems.map(function (item, i) {
             return (
               <li key={i}>
-                <Link to={item.route}>{item.text}</Link>
+                <Link to={item.route} onClick={this.handleLinkClick}>{item.text}</Link>
               </li>
               );
           })}
           </ul>
+
         </div>
 
         <div className="logged-in-user">
           <span>{username}@gilded.club</span><span className="down-arrow">&#9662;</span>
         </div>
 
-        <div className="dash-content">
+        <div id="dash-content">
           <RouteHandler escrow={this.state.userEmails} settings={this.state.userSettings} vips={this.state.userVIPs} card={this.state.userCard} />
         </div>
 
