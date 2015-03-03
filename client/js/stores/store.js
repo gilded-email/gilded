@@ -38,13 +38,6 @@ var _userResetPassword = {
   resetPasswordFailure: false
 };
 
-/*eslint-disable */
-var fakeEmails = [
-  {"_id":"1","email":"{\"to\":[\"you@gilded.club\"],\"from\":\"welcome@gilded.club\",\"subject\":\"Welcome to Gilded\",\"html\":\"<h2>Welcome to Gilded!</h2><p>Thanks for signing up with Gilded.</p><p>This is where you'll see all incoming email.</p><p>Enjoy!</p>\",\"text\":\"Thanks for signing up with Gilded. Enjoy!\"}","recipient":"welcome","__v":0,"cost":0,"paid":false,"sentDate":"2015-02-02T00:12:34.567Z"},
-];
-/*eslint-enable */
-
-
 var _logUserIn = function(res) {
   if (!res.body && res.text === 'wrong password') {
     _userErrors.login = true;
@@ -52,7 +45,7 @@ var _logUserIn = function(res) {
     _userErrors.signupError = res.body.error;
   } else if (res.body) {
     var userData = res.body;
-    _userEmails = fakeEmails; // userData.escrow;
+    _userEmails = userData.escrow;
     _userVIPs = userData.user.vipList;
     _userSettings = {
       balance: userData.user.balance,
@@ -70,8 +63,7 @@ var _logUserOut = function() {
 };
 
 var _updateDashboardInfo = function(userData) {
-  // Concating Fake Data for testing
-  _userEmails = userData.escrow.concat(fakeEmails);
+  _userEmails = userData.escrow;
   _userVIPs = userData.user.vipList;
   _userSettings = {
     balance: userData.user.balance,
