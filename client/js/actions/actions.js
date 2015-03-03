@@ -60,13 +60,8 @@ var AppActions = {
 
 // Account Settings
 
-  updatePassword: function (password) {
-    AppDispatcher.handleViewAction({
-      actionType: AppConstants.UPDATE_PASSWORD,
-      password: password
-    });
-
-    APIUtils.updatePassword(password);
+  updatePassword: function (oldPassword, newPassword) {
+    APIUtils.updatePassword(oldPassword, newPassword);
   },
 
   updateForwardEmail: function (newForwardEmail) {
