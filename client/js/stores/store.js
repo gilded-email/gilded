@@ -38,6 +38,11 @@ var _userResetPassword = {
   resetPasswordFailure: false
 };
 
+var _userChangePassword = {
+  status: null,
+  text: null
+};
+
 /*eslint-disable */
 var fakeEmails = [
   {"_id":"1","email":"{\"to\":[\"you@gilded.club\"],\"from\":\"welcome@gilded.club\",\"subject\":\"Welcome to Gilded\",\"html\":\"<h2>Welcome to Gilded!</h2><p>Thanks for signing up with Gilded.</p><p>This is where you'll see all incoming email.</p><p>Enjoy!</p>\",\"text\":\"Thanks for signing up with Gilded. Enjoy!\"}","recipient":"welcome","__v":0,"cost":0,"paid":false,"sentDate":"2015-02-02T00:12:34.567Z"},
@@ -90,10 +95,6 @@ var _updateUserEmail = function(email) {
   _userSettings.forwardEmail = email;
 };
 
-var _updateUserPassword = function(password) {
-  _userSettings.password = password;
-};
-
 var _updateUserRate = function(rate) {
   _userSettings.rate = rate;
 };
@@ -111,6 +112,13 @@ var _addCard = function (status, last4) {
 
 var _updateBalance = function (balance) {
   _userSettings.balance = balance;
+};
+
+var _updatePassword = function (status, text) {
+  _userChangePassword  = {
+    status: status,
+    text: text
+  };
 };
 
 var _forgottenUsernameEmailVerification = function (forgotUsername) {
@@ -166,6 +174,17 @@ var AppStore = _.extend({}, EventEmitter.prototype, {
     info.userSettings = _userSettings;
     info.userCard = _newCard;
     return info;
+  },
+
+  getUserChangePassword: function () {
+    return _userChangePassword;
+  },
+
+  resetUserChangePassword: function() {
+    var _userChangePassword = {
+      status: null,
+      text: null
+    };
   },
 
   getForgotUsernameDetails: function() {
@@ -237,7 +256,7 @@ var AppStore = _.extend({}, EventEmitter.prototype, {
         break;
 
       case AppConstants.UPDATE_USER_PASSWORD:
-        _updateUserPassword(payload.action.password);
+        _updatePassword(payload.action.status, payload.action.text);
         break;
 
       case AppConstants.UPDATE_USER_RATE:
@@ -278,7 +297,6 @@ var AppStore = _.extend({}, EventEmitter.prototype, {
         _resetPasswordConfirmation(payload.action.resetPassword);
         break;
     }
-
     AppStore.emitChange();
 
     return true;

@@ -91,16 +91,19 @@ var apiUtils = {
       });
   },
 
-  updatePassword: function (password) {
+  updatePassword: function (oldPassword, newPassword) {
     request
       .put(API_ROOT + 'user/settings/password')
-      .send({password: password})
+      .send({
+        oldPassword: oldPassword,
+        password: newPassword
+      })
       .end(function (error, res) {
         if (error) {
           console.log('password update error: ', error);
           return error;
         }
-        serverActions.updateUserPassword(res.body);
+        serverActions.updateUserPassword(res);
       });
   },
 
