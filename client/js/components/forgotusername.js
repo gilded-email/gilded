@@ -62,7 +62,7 @@ var ForgotUsername = React.createClass({
             <div className="mui-font-style-display-3">Forgot Username?</div>
             <form>
               <TextField ref="email" className="login-input" floatingLabelText="Enter your email address" />
-              <RaisedButton className="login-button" onClick={this.handleClick} label="Send Verification Email" secondary={true} />
+              <RaisedButton className="login-button" onClick={this.handleClick} label="Send Reminder Email" secondary={true} />
               <Link className="login-link" to="login">Login</Link><br></br>
               <Link className="forgotpassword-link" to="forgotpassword">Forgot Password?</Link>
             </form>
