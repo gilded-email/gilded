@@ -41,10 +41,15 @@ module.exports = {
     });
   },
 
-  updateUserPassword: function (userData) {
+  updateUserPassword: function (res) {
+    if (res.status === 201) {
+      res.text = "User password successfully changed"
+    }
+
     AppDispatcher.handleViewAction({
       actionType: AppConstants.UPDATE_USER_PASSWORD,
-      password: userData.password
+      status: res.status,
+      text: res.text
     });
   },
 
