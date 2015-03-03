@@ -42,7 +42,7 @@ module.exports = {
   },
 
   updateUserPassword: function (res) {
-    if (res.status >= 200 && res.status <= 300) {
+    if (res.status === 201) {
       res.text = "User password successfully changed"
     }
 
