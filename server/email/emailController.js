@@ -134,6 +134,22 @@ module.exports = {
       });
   },
 
+  welcomeEmail: function (req, res, next) {
+    var welcomeEmail = {
+      recipient: req.user.username,
+      email: JSON.stringify(req.welcomeEmail),
+      cost: 0
+    };
+    Escrow.create(welcomeEmail, function (error) {
+      if (error) {
+        console.log('Welcome email not created: ', error);
+        next();
+      } else {
+        next();
+      }
+    });
+  },
+
   findEmailInEscrow: function (req, res, next) {
     var escrowId = req.params.id;
     Escrow.findOne({_id: escrowId}, function (error, escrow) {
