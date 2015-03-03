@@ -199,15 +199,15 @@ module.exports = {
   },
 
   checkPassword: function (req, res, next) {
-    if (!req.body.checkPassword) {
-      res.status(400).send('Missing checkPassword in body');
+    if (!req.body.oldPassword) {
+      res.status(400).send('Must enter current password');
     }
     User.findOne({username: req.cookies.username}, function (error, user) {
       if (error) {
         console.log(error);
         res.status(400).send(error);
       } else {
-        bcrypt.compare(req.body.checkPassword, user.password, function (error, result) {
+        bcrypt.compare(req.body.oldPassword, user.password, function (error, result) {
           if (error) {
             console.log(error);
           } else if (result === false) {
