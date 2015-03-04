@@ -47,7 +47,7 @@ var ResetPassword = React.createClass({
     e.preventDefault();
     var password = this.refs.password.getValue();
     var confirmPassword = this.refs.confirmPassword.getValue();
-    var resetToken = window.location.search.slice(1);
+    var resetToken = window.location.href.split('?')[1];
     if (password !== confirmPassword) {
       this.refs.confirmFailure.show();
       setTimeout(function () {
