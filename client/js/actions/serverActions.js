@@ -43,7 +43,7 @@ module.exports = {
 
   updateUserPassword: function (res) {
     if (res.status === 201) {
-      res.text = "User password successfully changed"
+      res.text = 'User password successfully changed';
     }
 
     AppDispatcher.handleViewAction({

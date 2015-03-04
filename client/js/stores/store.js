@@ -114,7 +114,7 @@ var _updateBalance = function (balance) {
 };
 
 var _updatePassword = function (status, text) {
-  _userChangePassword  = {
+  _userChangePassword = {
     status: status,
     text: text
   };
@@ -180,7 +180,7 @@ var AppStore = _.extend({}, EventEmitter.prototype, {
   },
 
   resetUserChangePassword: function() {
-    var _userChangePassword = {
+    _userChangePassword = {
       status: null,
       text: null
     };

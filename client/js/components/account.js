@@ -9,12 +9,7 @@ var Snackbar = mui.Snackbar;
 
 var Actions = require('../actions/actions');
 var Store = require('../stores/store.js');
-var storeWatchMixin = require('../mixins/StoreWatchMixin');
 
-
-var getInitialState = function() {
-  return Store.getUserChangePassword();
-};
 
 var Settings = React.createClass({
 
@@ -54,18 +49,18 @@ var Settings = React.createClass({
   },
 
   showSnackbar: function() {
-    this.refs.newPasswordSnackbar.show()
+    this.refs.newPasswordSnackbar.show();
     setTimeout(function() {
       this.refs.newPasswordSnackbar.dismiss();
       Store.resetUserChangePassword();
     }.bind(this), 500);
   },
 
-  componentDidUpdate: function(prevProps, prevState) {
+  componentDidUpdate: function(prevProps) {
     if (this.state.text) {
       this.showSnackbar();
     }
-    if (prevProps != this.props && prevProps.settings.forwardEmail !== undefined) {
+    if (prevProps !== this.props && prevProps.settings.forwardEmail !== undefined) {
       this.refs.newForwardEmail.show();
       setTimeout(function() {
         this.refs.newForwardEmail.dismiss();
