@@ -114,7 +114,7 @@ var Settings = React.createClass({
   render: function () {
     // Disable withdraw if empty balance or no card added
     var withdrawDisabled = this.emptyBalance || this.getLast4() === null;
-    var withdrawMessage = this.getLast4() === null ? "You need to add a debit card before you can withdraw." : null;
+    var withdrawMessage = this.getLast4() === null ? 'You need to add a debit card before you can withdraw.' : null;
 
     return (
 

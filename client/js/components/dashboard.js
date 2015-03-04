@@ -26,6 +26,9 @@ var Dashboard = React.createClass({
   getInitialState: function () {
     if (Store.isUserLoggedIn()) {
       Actions.getDashboardInfo();
+      setTimeout(function() {
+        this.getInitialState();
+      }.bind(this), 10000);
     }
     return Store.getUserData();
   },
