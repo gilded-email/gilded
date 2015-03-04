@@ -73,24 +73,27 @@ var Signup = React.createClass({
 
 
   render: function() {
-    console.log(this.refs.username);
     return (
       <div className="signup-container">
         <Paper zDepth={4} className="signup">
           <div className="signup-content">
             <div className="mui-font-style-display-3">Sign Up</div>
+
             <form>
               <TextField ref="email" className="signup-input" floatingLabelText="Current email address" />
+
               <div className="username-container">
                 <TextField ref="username" className="signup-input" floatingLabelText="Choose your username" />
                 <span className="username-at-gilded">@gilded.club</span>
               </div>
+
               <TextField ref="password" type={"password"} className="signup-input" floatingLabelText="Create a password" />
 
               <RaisedButton onClick={this.handleClick} className="signup-button" label="Join the Club" secondary={true} />
 
               <Link className="login-link" to="login">Already a member? Log in here.</Link>
             </form>
+
           </div>
         </Paper>
         <Snackbar ref="signupFailure" message={this.state.errorMessage} />
