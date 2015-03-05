@@ -87,7 +87,7 @@ body {
   background-color: rgba(0, 0, 0, 0);
   border-radius: 5px;
   transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
-  color: #fe0;
+  color: #fc0;
 }
 
 
@@ -244,7 +244,7 @@ body > footer > p {
 }
 
 .back-to-top:hover {
-  color: #fe0;
+  color: #fc0;
 }
 
 /* RESPONSIVE CSS
