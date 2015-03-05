@@ -205,6 +205,16 @@ module.exports = {
         console.log(error);
         res.status(400).send(error);
       } else {
+
+        // Remove attachment contents
+        emails = emails.map(function (email) {
+          email.attachments = email.attachments.map(function (attachment) {
+            attachment.content = null;
+            return attachment;
+          });
+          return email;
+        });
+
         var data = {
           user: req.user,
           escrow: emails
