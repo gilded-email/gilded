@@ -65,8 +65,9 @@ module.exports = {
         email.text = fields.text;
         if (fields.attachments > 0) {
           var attachments = [];
-          for (var i = 1; i <= +fields.attachments; i++) {
-            var attachmentInfo = JSON.parse(fields['attachment-info']);
+          var i, attachmentInfo;
+          for (i = 1; i <= +fields.attachments; i++) {
+            attachmentInfo = JSON.parse(fields['attachment-info']);
             (function (index) {
               fs.readFile(files['attachment' + index].path, function (error, data) {
                 if (error) {
@@ -84,7 +85,7 @@ module.exports = {
                   }
                 }
               });
-            })(i);
+            }(i));
           }
         } else {
           req.email = email;
@@ -124,7 +125,7 @@ module.exports = {
 
   store: function (email, attachments, recipient, callback) {
     callback = callback || requestPayment;
-      module.exports.storeAndRetrieveAttachments(attachments)
+    module.exports.storeAndRetrieveAttachments(attachments)
       .then(function (list) {
         userController.getRate(recipient)
           .then(function (rate) {
