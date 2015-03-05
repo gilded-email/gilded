@@ -10,6 +10,8 @@ var validator = require('email-validator');
 
 var Actions = require('../actions/actions');
 
+
+
 var getInitialState = function () {
   var currentVIPs = Store.getUserVIPs();
   return {
@@ -78,6 +80,8 @@ var VIP = React.createClass({
 
   addVipHandler: function (e) {
     e.preventDefault();
+    console.log('i got clicked');
+    console.log('processenv', process.env);
     var validated = validator.validate(this.refs.email.getValue());
     if (!validated) {
       this.refs.invalidEmail.show();
