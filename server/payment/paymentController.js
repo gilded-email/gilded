@@ -34,7 +34,7 @@ module.exports = {
 
   paymentRequest: function (req, res) {
     var cost = Math.ceil((req.cost * 1.029) + 30);
-    res.render('payment', {name: 'Gilded Club Payment', amount: cost, paid: req.paid});
+    res.render('payment', {name: 'Gilded Club Payment', amount: cost, paid: req.paid, stripePromise: process.env.STRIPE_PROMISE});
   },
 
   verification: function (req, res, next) {
