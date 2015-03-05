@@ -36,6 +36,7 @@ app.set('view engine', 'jade');
 app.post('/signup', marketing.signup);
 
 app.post('/api/inbound', email.receive, email.verify);
+app.post('/api/outbound', user.checkSession, email.compose);
 app.get('/api/escrow/', user.checkSession, email.fetchEscrows);
 app.post('/api/user/settings/card', user.checkSession, user.addCard, user.update);
 app.put('/api/user/settings/rate', user.checkSession, user.changeRate, user.update);
