@@ -29,7 +29,8 @@ var requestPayment = function (savedEmail) {
       console.log('Welcome Email error: ', error);
     } else {
       var compiledHtml = jade.compile(data);
-      var html = compiledHtml({recipient: savedEmail.recipient, cost: cost, subject: JSON.parse(savedEmail.email).subject, body: JSON.parse(savedEmail.email).html, url: paymentUrl, from: sender, domain: domain});
+      var body = JSON.parse(savedEmail.email).html || JSON.parse(savedEmail.email).text;
+      var html = compiledHtml({recipient: savedEmail.recipient, cost: cost, subject: JSON.parse(savedEmail.email).subject, body: body, url: paymentUrl, from: sender, domain: domain});
       var paymentRequestEmail = {
         to: sender,
         from: 'jenkins@' + domain,

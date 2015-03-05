@@ -25,6 +25,7 @@ var Email = React.createClass({
     email.paid = escrow.paid ? 'Paid' : 'Unpaid';
     email.cost = dollarString.fromCents(escrow.cost);
     email.sentDate = moment(escrow.sentDate).format('lll');
+    email.body = email.html || email.text;
     return email;
   },
 
@@ -58,7 +59,7 @@ var Email = React.createClass({
             </div>
 
             <div className="email-message">
-              <span className="email-html" dangerouslySetInnerHTML={{__html: email.html}} />
+              <span className="email-html" dangerouslySetInnerHTML={{__html: email.body}} />
             </div>
 
           </div>
