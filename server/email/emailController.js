@@ -226,6 +226,18 @@ module.exports = {
         resolve(list);
       }
     });
+  },
+
+  compose: function (req, res) {
+    var email = {
+      to: req.body.to,
+      from: req.cookies.username + '@' + domain,
+      // fromname: '',
+      subject: req.body.subject,
+      text: req.body.text
+    };
+    module.exports.sendEmail(email);
+
   }
 
 };
