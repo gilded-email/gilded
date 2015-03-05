@@ -216,16 +216,14 @@ module.exports = {
   },
 
   storeAndRetrieveAttachments: function (attachments) {
-    var list = [];
     return new BPromise(function (resolve, reject) {
-      if (!attachments) {
-        resolve([]);
-      } else {
+      var list = [];
+      if (attachments) {
         attachments.forEach(function (attachment) {
           list.push({filename: attachment.filename, content: attachment.content});
         });
-        resolve(list);
       }
+      resolve(list);
     });
   }
 
