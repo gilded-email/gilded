@@ -2,7 +2,7 @@ var request = require('superagent');
 var google = require('googleapis');
 
 var OAuth2 = google.auth.OAuth2;
-var oauth2Client = new OAuth2(process.env.GOOGLE_CLIENT_ID, process.env.GOOGLE_CLIENT_SECRET, 'http://' + process.env.DOMAIN + '/oauth2callback');
+var oauth2Client = new OAuth2(process.env.GOOGLE_CLIENT_ID, process.env.GOOGLE_CLIENT_SECRET, 'http://localhost:8080' + '/oauth2callback');
 
 google.options({ auth: oauth2Client });
 
