@@ -84,9 +84,10 @@ body {
 }
 
 .nav > li > a:hover {
-  background-color: rgba(238, 238, 238, 0.3);
+  background-color: rgba(0, 0, 0, 0);
   border-radius: 5px;
   transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+  color: #fe0;
 }
 
 
@@ -195,6 +196,10 @@ span.viptext {
   opacity: .7;
 }
 
+.gold {
+  color: #fc0;
+}
+
 
 /* Featurettes
 ------------------------- */
@@ -239,7 +244,7 @@ body > footer > p {
 }
 
 .back-to-top:hover {
-  color: #BBB;
+  color: #fe0;
 }
 
 /* RESPONSIVE CSS
