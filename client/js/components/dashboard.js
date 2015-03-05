@@ -1,13 +1,12 @@
 var React = require('react');
 var cookie = require('cookie');
 var dollarString = require('dollar-string');
-
 var Router = require('react-router');
-var Link = Router.Link;
-var RouteHandler = Router.RouteHandler;
-
 var Actions = require('../actions/actions');
 var Store = require('../stores/store');
+
+var RouteHandler = Router.RouteHandler;
+var Link = Router.Link;
 
 var Authentication = {
   statics: {
@@ -89,7 +88,7 @@ var Dashboard = React.createClass({
 
           <div className="menu-head">
             <h1>Gilded</h1>
-            <span className="hamburger" onClick={this.hamburgerHelper}>&#9776;</span>
+            <span className="hamburger" onClick={this.hamburgerHelper}></span>
           </div>
 
           <ul id="dash-menu-items">
