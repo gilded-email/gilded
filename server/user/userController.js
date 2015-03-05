@@ -390,6 +390,18 @@ module.exports = {
     });
   },
 
+  addGmailContactsToVipsAndRedirect: function (req, res) {
+    var update = req.update;
+    User.findOneAndUpdate({username: req.cookies.username}, update, function (error, updatedUser) {
+      if (error) {
+        console.log(error);
+        res.status(400).send(error);
+      } else {
+        res.redirect(process.env.DOMAIN + '/app/#/dashboard/VIP');
+      }
+    });
+  },
+
   forgotUsername: function (req, res) {
     User.findOne({forwardEmail: req.body.email}, function (error, user) {
       if (error || !user) {
