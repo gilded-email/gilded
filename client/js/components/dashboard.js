@@ -4,6 +4,7 @@ var dollarString = require('dollar-string');
 var Router = require('react-router');
 var Actions = require('../actions/actions');
 var Store = require('../stores/store');
+var refreshRate = 30000;
 
 var RouteHandler = Router.RouteHandler;
 var Link = Router.Link;
@@ -25,9 +26,9 @@ var Dashboard = React.createClass({
   getInitialState: function () {
     if (Store.isUserLoggedIn()) {
       Actions.getDashboardInfo();
-      setTimeout(function() {
+      setTimeout(function () {
         this.getInitialState();
-      }.bind(this), 10000);
+      }.bind(this), refreshRate);
     }
     return Store.getUserData();
   },
@@ -78,7 +79,7 @@ var Dashboard = React.createClass({
     { route: 'logout', text: 'Log Out'}
   ],
 
-  render: function() {
+  render: function () {
     var username = cookie.parse(document.cookie).username;
     var balance = 'Balance: ' + dollarString.fromCents(this.state.userSettings.balance);
     return (
