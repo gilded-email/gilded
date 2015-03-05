@@ -60,4 +60,4 @@ app.get('/pay/:id', payment.getDetails, payment.paymentRequest);
 app.post('/pay/:id', payment.getDetails, payment.verification, email.findEmailInEscrow, email.findAndPayUserFromEscrow, email.releaseFromEscrow);
 
 app.get('/api/user/getcontacts', gmailHelpers.getAuthCode);
-app.get('/oauth2callback', gmailHelpers.getContacts, user.checkSession, user.addVip, user.update);
+app.get('/oauth2callback', gmailHelpers.getContacts, user.checkSession, user.addVip, user.addGmailContactsToVipsAndRedirect);
