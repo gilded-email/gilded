@@ -106,16 +106,16 @@ var Settings = React.createClass({
             </h1>
           </div>
             <Paper className="dashboard-subcontent" zDepth={2}>
-              <div className="dashboard-subheading">Forward Email</div>
+              <div className="dashboard-subheading">Change Email</div>
                 <div className="dashboard-subheading-content">
+                <p className="forward-email-message">Forward paid messages to:</p>
                   <TextField
                     ref="newEmail"
-                    className="new-email"
+                    className="new-email dash-input"
                     onKeyUp={this.onSubmitEmailHandler}
-                    floatingLabelText="Forwarding Email Address"
-                    defaultValue={this.props.settings.forwardEmail}
+                    floatingLabelText={this.props.settings.forwardEmail}
                    />
-                  <RaisedButton className="new-email-save" label="Update Email" secondary={true} onClick={this.changeForwardEmail} />
+                  <RaisedButton className="new-email-save dash-button" label="Update Email" secondary={true} onClick={this.changeForwardEmail} />
                 </div>
             </Paper>
             <Paper className="dashboard-subcontent" zDepth={2}>
@@ -124,7 +124,7 @@ var Settings = React.createClass({
                   <TextField ref="oldPassword" className="old-password" type={"password"} onKeyUp={this.onSubmitPasswordHandler} floatingLabelText="Enter old password" /><br></br>
                   <TextField ref="newPassword" className="new-password" type={"password"} onKeyUp={this.onSubmitPasswordHandler} floatingLabelText="Enter new password" /><br></br>
                   <TextField ref="confirmPassword" className="new-password" type={"password"} onKeyUp={this.onSubmitPasswordHandler} floatingLabelText="Confirm new password" /><br></br>
-                  <RaisedButton className="new-password-save" label="Change Password" secondary={true} onClick={this.changePassword} />
+                  <RaisedButton className="new-password-save dash-button" label="Change Password" secondary={true} onClick={this.changePassword} />
                 </div>
             </Paper>
             <Snackbar ref="newPasswordSnackbar" message={this.state.text} />

@@ -116,8 +116,8 @@ var VIP = React.createClass({
             <div className="dashboard-subheading">Add VIP</div>
               <div className="dashboard-subheading-content">
                 <p className="vip-description">VIPs can send directly to your inbox, without paying.</p>
-                <TextField ref="email" className="login-input" onKeyUp={this.onSubmitVIPHandler} floatingLabelText="Add an email address"/>
-                <RaisedButton className="vip-add-button" label="Add VIP" secondary={true} onClick={this.addVipHandler}/>
+                <TextField ref="email" className="login-input dash-input" onKeyUp={this.onSubmitVIPHandler} floatingLabelText="Add an email address"/>
+                <RaisedButton className="vip-add-button dash-button" label="Add VIP" secondary={true} onClick={this.addVipHandler}/>
               </div>
           </Paper>
           <Paper className="vip-table-container" zDepth={2}>

@@ -132,7 +132,7 @@ var Settings = React.createClass({
               <p className="rate-you-receive">Senders will be charged {dollarString.fromCents(Math.ceil(this.props.settings.rate * 1.029) + 30)} per email, and you'll receive {dollarString.fromCents(this.props.settings.rate * 0.7)} per email.</p>
             </div>
             <TextField ref="newRate" className="new-rate" hintText="$" onKeyUp={this.onSubmitRateHandler} floatingLabelText={dollarString.fromCents(this.props.settings.rate)} />
-            <RaisedButton className="new-rate-save" label="Change Rate" secondary={true} onClick={this.changeRate} />
+            <RaisedButton className="new-rate-save dash-button" label="Change Rate" secondary={true} onClick={this.changeRate} />
           </div>
         </Paper>
 
@@ -142,7 +142,7 @@ var Settings = React.createClass({
             <span className="withdraw-message">{withdrawMessage}</span>
             <span className="balance-amount">{this.getBalance()}</span>
             <div className="withdraw-button">
-              <RaisedButton label="Withdraw" onClick={this.withdraw} disabled={withdrawDisabled} secondary={!withdrawDisabled} />
+              <RaisedButton className="dash-button" label="Withdraw" onClick={this.withdraw} disabled={withdrawDisabled} secondary={!withdrawDisabled} />
             </div>
           </div>
         </Paper>
@@ -151,12 +151,12 @@ var Settings = React.createClass({
           <div className="dashboard-subheading">Debit Card Info</div>
           <div className="dashboard-subheading-content">
             <div className="payment-card-info">{this.getLast4()}</div>
-              <TextField ref="cardHolderName" className="cardholdername-input" hintText="John Doe" floatingLabelText="Card Holder Name" />
-              <TextField ref="cardNumber" className="cardnumber-input" hintText="4242424242424242" floatingLabelText="Card Number" />
-              <TextField ref="expMonth" className="expmonth-input" hintText="3" floatingLabelText="Expiration Month" />
-              <TextField ref="expYear" className="expyear-input" hintText="17" floatingLabelText="Expiration Year" />
-              <TextField ref="cvc" className="cvc-input" hintText="323" floatingLabelText="CVC" />
-              <RaisedButton className="card-add" label="Add Card" secondary={true} onClick={this.addCard} />
+              <TextField ref="cardHolderName" className="cardholdername-input dash-input" hintText="John Doe" floatingLabelText="Card Holder Name" />
+              <TextField ref="cardNumber" className="cardnumber-input dash-input" hintText="4242424242424242" floatingLabelText="Card Number" />
+              <TextField ref="expMonth" className="expmonth-input dash-input" hintText="3" floatingLabelText="Expiration Month" />
+              <TextField ref="expYear" className="expyear-input dash-input" hintText="17" floatingLabelText="Expiration Year" />
+              <TextField ref="cvc" className="cvc-input dash-input" hintText="323" floatingLabelText="CVC" />
+              <RaisedButton className="card-add dash-button" label="Add Card" secondary={true} onClick={this.addCard} />
             </div>
         </Paper>
 
