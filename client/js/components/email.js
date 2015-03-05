@@ -21,11 +21,15 @@ var Email = React.createClass({
     var emailId = this.getParams().emailId;
     var escrow = this.props.escrow[emailId]; //.userData.escrow[this.getParams().emailId].email);
     var email = JSON.parse(escrow.email);
+    email.attached = escrow.attachments.map(function (attachment) {
+      return attachment.filename;
+    });
     email.emailId = emailId;
     email.paid = escrow.paid ? 'Paid' : 'Unpaid';
     email.cost = dollarString.fromCents(escrow.cost);
     email.sentDate = moment(escrow.sentDate).format('lll');
     email.body = email.html || email.text;
+    email.attached = email.attachments > 0 ? 'Attachments: ' + email.attached.join(', ') : '';
     return email;
   },
 
@@ -60,6 +64,7 @@ var Email = React.createClass({
 
             <div className="email-message">
               <span className="email-html" dangerouslySetInnerHTML={{__html: email.body}} />
+              <br /><span className="email-to">{email.attached}</span>
             </div>
 
           </div>
