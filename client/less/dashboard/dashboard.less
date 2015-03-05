@@ -156,12 +156,21 @@
 
   .hamburger {
     display: block;
-    color: #eee;
     position: fixed;
-    top: 0.5em;
-    left: 0.5em;
-    font-size: 3em;
+    top: 1.5em;
+    left: 1em;
     cursor: pointer;
+    color: #fff;
+    height: 2.5em;
+    width: 2.5em;
+    background: linear-gradient(
+      to bottom,
+      #eee, #eee 20%,
+      rgba(0,0,0,0) 20%, rgba(0,0,0,0) 40%,
+      #eee 40%, #eee 60%,
+      rgba(0,0,0,0) 60%, rgba(0,0,0,0) 80%,
+      #eee 80%, #eee 100%
+    );
   }
 
   #dash-content {
