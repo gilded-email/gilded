@@ -10,6 +10,8 @@ var validator = require('email-validator');
 
 var Actions = require('../actions/actions');
 
+
+
 var getInitialState = function () {
   var currentVIPs = Store.getUserVIPs();
   return {
