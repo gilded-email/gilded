@@ -29,7 +29,12 @@ var requestPayment = function (savedEmail) {
       console.log('Welcome Email error: ', error);
     } else {
       var compiledHtml = jade.compile(data);
-      var html = compiledHtml({recipient: savedEmail.recipient, cost: cost, subject: JSON.parse(savedEmail.email).subject, body: JSON.parse(savedEmail.email).html, url: paymentUrl, from: sender, domain: domain});
+      var body = JSON.parse(savedEmail.email).html || JSON.parse(savedEmail.email).text;
+      var attached = savedEmail.attachments.map(function (attachment) {
+        return attachment.filename;
+      });
+      var attachments = JSON.parse(savedEmail.email).attachments > 0 ? 'Attachments: ' + attached.join(', ') : '';
+      var html = compiledHtml({recipient: savedEmail.recipient, cost: cost, subject: JSON.parse(savedEmail.email).subject, body: body, url: paymentUrl, from: sender, domain: domain, attachments: attachments});
       var paymentRequestEmail = {
         to: sender,
         from: 'jenkins@' + domain,
@@ -205,7 +210,6 @@ module.exports = {
         console.log(error);
         res.status(400).send(error);
       } else {
-
         // Remove attachment contents
         emails = emails.map(function (email) {
           email.attachments = email.attachments.map(function (attachment) {
