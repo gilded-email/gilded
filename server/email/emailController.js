@@ -209,7 +209,7 @@ module.exports = {
           user: req.user,
           escrow: emails
         };
-        res.status(201).send(data);
+        res.status(200).send(data);
       }
     });
   },
