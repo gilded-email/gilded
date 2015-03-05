@@ -114,12 +114,16 @@ var VIP = React.createClass({
             <div className="dashboard-subheading">Add VIP</div>
               <div className="dashboard-subheading-content">
                 <p className="vip-description">VIPs can send directly to your inbox, without paying.</p>
-                <div className="vip-import-contacts">
-                  <RaisedButton className="vip-add-gmail-contacts-button" label="Import" secondary={true} linkButton={true} href="http:/localhost:8080/api/user/getcontacts"/>
-                </div>
                 <div className="vip-add-section">
                   <TextField ref="email" className="login-input dash-input" onKeyUp={this.onSubmitVIPHandler} floatingLabelText="Add an email address"/>
                   <RaisedButton className="vip-add-button dash-button" label="Add VIP" secondary={true} onClick={this.addVipHandler}/>
+                </div>
+                <div className="vip-import-contacts">
+                 <p>Import contacts from:
+                   <a className="gmail-image"href="http:/gilded.club/api/user/getcontacts">
+                     <img src="../assets/gmail.png"/>
+                   </a>
+                  </p>
                 </div>
               </div>
           </Paper>
