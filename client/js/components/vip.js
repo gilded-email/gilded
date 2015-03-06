@@ -116,8 +116,8 @@ var VIP = React.createClass({
                   <RaisedButton className="vip-add-button dash-button" label="Add VIP" secondary={true} onClick={this.addVipHandler}/>
                 </div>
                 <div className="vip-import-contacts">
-                 <p>Import contacts from:
-                   <a className="gmail-image"href="http:/gilded.club/api/user/getcontacts">
+                 <p>Import contacts:
+                   <a className="gmail-image" href="http://gilded.club/api/user/getgmailcontacts">
                      <img src="../assets/gmail.png"/>
                    </a>
                   </p>
