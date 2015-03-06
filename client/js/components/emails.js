@@ -11,11 +11,6 @@ var moment = require('moment');
 var dollarString = require('dollar-string');
 
 var Actions = require('../actions/actions');
-var storeWatchMixin = require('../mixins/StoreWatchMixin');
-
-var getInitialState = function () {
-  return null;
-};
 
 var EmailTable = React.createClass({
   emailData: function () {
@@ -116,8 +111,6 @@ var EmailRow = React.createClass({
 });
 
 var Emails = React.createClass({
-  mixins: [storeWatchMixin(getInitialState)],
-
   render: function () {
     return (
       <div className="dashboard email">

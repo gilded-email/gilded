@@ -1,4 +1,5 @@
 var React = require('react');
+var validator = require('email-validator');
 var mui = require('material-ui');
 var TextField = mui.TextField;
 var RaisedButton = mui.RaisedButton;
@@ -6,11 +7,7 @@ var Paper = mui.Paper;
 var Snackbar = mui.Snackbar;
 var storeWatchMixin = require('../mixins/StoreWatchMixin');
 var Store = require('../stores/store');
-var validator = require('email-validator');
-
 var Actions = require('../actions/actions');
-
-
 
 var getInitialState = function () {
   var currentVIPs = Store.getUserVIPs();
@@ -75,8 +72,6 @@ var VIP = React.createClass({
       }.bind(this), 1000);
     }
   },
-
-
 
   addVipHandler: function (e) {
     e.preventDefault();

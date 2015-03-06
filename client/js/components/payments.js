@@ -1,23 +1,16 @@
 var React = require('react');
-var Actions = require('../actions/actions');
-var storeWatchMixin = require('../mixins/StoreWatchMixin');
-var Store = require('../stores/store');
-var mui = require('material-ui');
-var TextField = mui.TextField;
-var RaisedButton = mui.RaisedButton;
-var Dialog = mui.Dialog;
-var Paper = mui.Paper;
-var Snackbar = mui.Snackbar;
 var dollarString = require('dollar-string');
+var mui = require('material-ui');
+var Actions = require('../actions/actions');
+var Store = require('../stores/store');
 
-var getInitialState = function () {
-  return null;
-};
+var Paper = mui.Paper;
+var Dialog = mui.Dialog;
+var Snackbar = mui.Snackbar;
+var RaisedButton = mui.RaisedButton;
+var TextField = mui.TextField;
 
-var Settings = React.createClass({
-
-  mixins: [storeWatchMixin(getInitialState)],
-
+var PaymentSettings = React.createClass({
   getDefaultProps: function () {
     return {
       settings: {
@@ -42,7 +35,6 @@ var Settings = React.createClass({
         this.refs.cardFailure.dismiss();
       }.bind(this), 1000);
     }
-
   },
 
   getLast4: function () {
@@ -82,7 +74,6 @@ var Settings = React.createClass({
       this.changeRate(e);
     }
   },
-
 
 // Withdraw
 
@@ -165,13 +156,11 @@ var Settings = React.createClass({
         </Dialog>
         <Snackbar ref="cardSuccess" message="Card successfully added!" />
         <Snackbar ref="cardFailure" message="Card failed to save." />
-        <Snackbar ref="cardFailure" message="Card failed to save." />
 
       </div>
 
     );
-
   }
 });
 
-module.exports = Settings;
+module.exports = PaymentSettings;
