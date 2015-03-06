@@ -18,7 +18,7 @@ html
                   span(class="icon-bar")
                   span(class="icon-bar")
                   span(class="icon-bar")
-                a(class="navbar-brand", href="#") GILDED
+                span(class="navbar-brand") GILDED
               div(id="navbar", class="navbar-collapse collapse")
                 ul(class="nav navbar-nav")
                   li
@@ -36,7 +36,7 @@ html
       div(class="container")
         div(class="jumbotron")
           div(class="container")
-            h1(class="text-center") Welcome
+            h1(class="text-center gold") Welcome
             p Your recipient's inbox is protected. In order to reach them, they are requesting a fee.
             p Don't worry, we are holding your message in escrow for a week. It will be immediately forwarded to them once payment is complete.
           div(class="payment")
@@ -44,3 +44,5 @@ html
                 script(src="https://checkout.stripe.com/checkout.js", class="stripe-button", data-key="#{stripePromise}", data-amount!= amount, data-name="Gilded Club", data-description!= '$' + (amount/100).toFixed(2), data-image="/assets/icon-128x128.png", data-bitcoin="true")
     script(src="../bower_components/jquery/dist/jquery.min.js")
     script(src="../bower_components/bootstrap/dist/js/bootstrap.min.js")
+
+
