@@ -64,7 +64,7 @@ var Email = React.createClass({
 
             <div className="email-message">
               <span className="email-html" dangerouslySetInnerHTML={{__html: email.body}} />
-              <br /><span className="email-to">{email.attached}</span>
+              <br /><span className="email-to"><strong><em>{email.attached}</em></strong> </span>
             </div>
 
           </div>
