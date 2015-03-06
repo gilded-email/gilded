@@ -11,7 +11,7 @@ var Actions = require('../actions/actions');
 var Store = require('../stores/store.js');
 
 
-var Settings = React.createClass({
+var AccountSettings = React.createClass({
 
   getInitialState: function() {
     return Store.getUserChangePassword();
@@ -127,11 +127,11 @@ var Settings = React.createClass({
                   <RaisedButton className="new-password-save" label="Change Password" secondary={true} onClick={this.changePassword} />
                 </div>
             </Paper>
-            <Snackbar ref="newPasswordSnackbar" message={this.state.text} />
+            <Snackbar ref="newPasswordSnackbar" message={this.state.text ? this.state.txt : ''} />
             <Snackbar ref="newForwardEmail" message="Your forwarding email has successfully been changed" />
         </div>
     );
   }
 });
 
-module.exports = Settings;
+module.exports = AccountSettings;

@@ -7,15 +7,8 @@ var dollarString = require('dollar-string');
 var mui = require('material-ui');
 var Paper = mui.Paper;
 
-var storeWatchMixin = require('../mixins/StoreWatchMixin');
-
-
-var getInitialState = function () {
-  return null;
-};
-
 var Email = React.createClass({
-  mixins: [Router.State, storeWatchMixin(getInitialState)],
+  mixins: [Router.State],
 
   getEmailData: function () {
     var emailId = this.getParams().emailId;
