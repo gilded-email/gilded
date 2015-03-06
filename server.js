@@ -10,7 +10,7 @@ var user = require('./server/user/userController.js');
 var email = require('./server/email/emailController.js');
 var payment = require('./server/payment/paymentController.js');
 var marketing = require('./server/marketing/marketingController.js');
-var gmailHelpers = require('./server/gmail/gmailHelpers.js');
+var gmailHelpers = require('./server/APIUtils/gmailHelpers.js');
 
 // var privateKey = fs.readFileSync('./key.pem');
 // var certificate = fs.readFileSync('./server.crt');
@@ -59,5 +59,5 @@ app.put('/resetpassword/:resetToken', user.resetPassword, user.changePassword, u
 app.get('/pay/:id', payment.getDetails, payment.paymentRequest);
 app.post('/pay/:id', payment.getDetails, payment.verification, email.findEmailInEscrow, email.findAndPayUserFromEscrow, email.releaseFromEscrow);
 
-app.get('/api/user/getcontacts', gmailHelpers.getAuthCode);
-app.get('/oauth2callback', gmailHelpers.getContacts, user.checkSession, user.addVip, user.update);
+app.get('/api/user/getgmailcontacts', gmailHelpers.getAuthCode);
+app.get('/oauth2callback/gmail', gmailHelpers.getContacts, user.checkSession, user.addVip, user.addGmailContactsToVipsAndRedirect);
