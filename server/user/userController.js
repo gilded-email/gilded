@@ -397,7 +397,7 @@ module.exports = {
         console.log(error);
         res.status(400).send(error);
       } else {
-        res.redirect(process.env.DOMAIN + '/app/#/dashboard/VIP');
+        res.redirect('https://' + process.env.DOMAIN + '/app/#/dashboard/VIP');
       }
     });
   },
