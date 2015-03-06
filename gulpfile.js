@@ -11,6 +11,7 @@ var livereload = require('gulp-livereload');
 var nodemon = require('gulp-nodemon');
 var eslint = require('gulp-eslint');
 var ga = require('gulp-ga');
+var jade = require('gulp-jade');
 
 gulp.task('clean', function () {
   del.sync([
@@ -91,6 +92,16 @@ gulp.task('watch', ['build'], function () {
   gulp.watch(['./*.js', './server/**/*.js'], ['lint-server']);
 });
 
+gulp.task('templates', function() {
+  var YOUR_LOCALS = {};
+
+  gulp.src(['./views/faq.jade', './views/privacypolicy.jade'])
+    .pipe(jade({
+      locals: YOUR_LOCALS
+    }))
+    .pipe(gulp.dest('./dist/'))
+});
+
 gulp.task('run', ['build'], function () {
   nodemon({
     script: 'server.js',
@@ -107,6 +118,6 @@ gulp.task('run', ['build'], function () {
 
 gulp.task('lint', ['lint-server', 'lint-client']);
 
-gulp.task('build', ['clean', 'compile', 'lint', 'assets', 'less', 'css', 'html']);
+gulp.task('build', ['clean', 'compile', 'lint', 'assets', 'less', 'css', 'html', 'templates']);
 
 gulp.task('default', ['build', 'watch', 'run']);
