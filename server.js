@@ -1,8 +1,6 @@
 require('dotenv').load();
-// var fs = require('fs');
 var path = require('path');
 var http = require('http');
-// var https = require('https');
 var express = require('express');
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
@@ -12,19 +10,13 @@ var payment = require('./server/payment/paymentController.js');
 var marketing = require('./server/marketing/marketingController.js');
 var gmailHelpers = require('./server/APIUtils/gmailHelpers.js');
 
-// var privateKey = fs.readFileSync('./key.pem');
-// var certificate = fs.readFileSync('./server.crt');
-// var credentials = {key: privateKey, cert: certificate};
-
 var app = express();
 
 app.set('httpPort', process.env.PORT || 8080);
-// app.set('httpsPort', 3000);
 app.set('host', process.env.HOST || 'localhost');
 
 http.createServer(app).listen(app.get('httpPort'));
-// https.createServer(credentials, app).listen(app.get('httpsPort'));
-console.log('Server is listening on http://' + app.get('host') + ':' + app.get('httpPort')); // + ' and https://' + app.get('host') + ':' + app.get('httpsPort'));
+console.log('Server is listening on http://' + app.get('host') + ':' + app.get('httpPort'));
 
 app.use(cookieParser());
 app.use(bodyParser.json());
