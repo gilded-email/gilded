@@ -127,7 +127,7 @@ var AccountSettings = React.createClass({
                   <RaisedButton className="new-password-save dash-button" label="Change Password" secondary={true} onClick={this.changePassword} />
                 </div>
             </Paper>
-            <Snackbar ref="newPasswordSnackbar" message={this.state.text ? this.state.txt : ''} />
+            <Snackbar ref="newPasswordSnackbar" message={this.state.text ? this.state.text : ''} />
             <Snackbar ref="newForwardEmail" message="Your forwarding email has successfully been changed" />
         </div>
     );
