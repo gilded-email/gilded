@@ -9,6 +9,7 @@ var email = require('./server/email/emailController.js');
 var payment = require('./server/payment/paymentController.js');
 var marketing = require('./server/marketing/marketingController.js');
 var gmailHelpers = require('./server/APIUtils/gmailHelpers.js');
+var yahooHelpers = require('./server/APIUtils/yahooHelpers.js');
 
 var app = express();
 
@@ -52,5 +53,7 @@ app.get('/pay/:id', payment.getDetails, payment.paymentRequest);
 app.post('/pay/:id', payment.getDetails, payment.verification, email.findEmailInEscrow, email.findAndPayUserFromEscrow, email.releaseFromEscrow);
 
 app.get('/api/user/getgmailcontacts', gmailHelpers.getAuthCode);
-app.get('/oauth2callback/gmail', gmailHelpers.getContacts, user.checkSession, user.addVip, user.addGmailContactsToVipsAndRedirect);
+app.get('/oauth2callback/gmail', gmailHelpers.getContacts, user.checkSession, user.addVip, user.addEmailContactsToVipsAndRedirect);
 
+app.get('/api/user/getyahoocontacts', yahooHelpers.getRequestToken, yahooHelpers.getUserAuth);
+app.get('/oauth2callback/yahoo', yahooHelpers.getAccessToken, yahooHelpers.getContacts, user.checkSession, user.addVip, user.addEmailContactsToVipsAndRedirect);
