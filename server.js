@@ -53,3 +53,4 @@ app.post('/pay/:id', payment.getDetails, payment.verification, email.findEmailIn
 
 app.get('/api/user/getgmailcontacts', gmailHelpers.getAuthCode);
 app.get('/oauth2callback/gmail', gmailHelpers.getContacts, user.checkSession, user.addVip, user.addGmailContactsToVipsAndRedirect);
+

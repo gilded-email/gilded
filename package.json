@@ -74,6 +74,7 @@
     "react-tools": "^0.12.2",
     "reactify": "^1.0.0",
     "request": "~2.53.0",
-    "vinyl-source-stream": "^1.0.0"
+    "vinyl-source-stream": "^1.0.0",
+    "gulp-jade": "~1.0.0"
   }
 }
