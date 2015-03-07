@@ -95,7 +95,7 @@ gulp.task('watch', ['build'], function () {
 gulp.task('templates', function() {
   var YOUR_LOCALS = {};
 
-  gulp.src(['./views/faq.jade', './views/privacypolicy.jade'])
+  gulp.src(['./views/faq.jade', './views/privacypolicy.jade', './views/contact-us.jade'])
     .pipe(jade({
       locals: YOUR_LOCALS
     }))
