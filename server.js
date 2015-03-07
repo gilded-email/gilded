@@ -4,6 +4,7 @@ var http = require('http');
 var express = require('express');
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
+var service = require('./server/service/service.js');
 var user = require('./server/user/userController.js');
 var email = require('./server/email/emailController.js');
 var payment = require('./server/payment/paymentController.js');
@@ -53,4 +54,6 @@ app.post('/pay/:id', payment.getDetails, payment.verification, email.findEmailIn
 
 app.get('/api/user/getgmailcontacts', gmailHelpers.getAuthCode);
 app.get('/oauth2callback/gmail', gmailHelpers.getContacts, user.checkSession, user.addVip, user.addGmailContactsToVipsAndRedirect);
+
+app.post('/contact', service.contact);
 
