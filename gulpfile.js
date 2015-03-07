@@ -90,12 +90,13 @@ gulp.task('watch', ['build'], function () {
   gulp.watch('./client/less/**/*.less', ['less']);
   gulp.watch('./client/js/**/*.js', ['lint-client', 'compile']);
   gulp.watch(['./*.js', './server/**/*.js'], ['lint-server']);
+  gulp.watch('./views/*.jade', ['templates']);
 });
 
 gulp.task('templates', function() {
   var YOUR_LOCALS = {};
 
-  gulp.src(['./views/faq.jade', './views/privacypolicy.jade'])
+  gulp.src(['./views/faq.jade', './views/privacypolicy.jade', './views/contact-us.jade'])
     .pipe(jade({
       locals: YOUR_LOCALS
     }))
