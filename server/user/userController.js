@@ -390,7 +390,7 @@ module.exports = {
     });
   },
 
-  addGmailContactsToVipsAndRedirect: function (req, res) {
+  addEmailContactsToVipsAndRedirect: function (req, res) {
     var update = req.update;
     User.findOneAndUpdate({username: req.cookies.username}, update, function (error, updatedUser) {
       if (error) {
