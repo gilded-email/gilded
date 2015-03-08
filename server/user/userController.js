@@ -141,7 +141,7 @@ module.exports = {
           if (error) {
             console.log(error);
           } else if (result === false) {
-            res.status(422).send('wrong password');
+            res.status(422).send('Wrong password');
           } else {
             req.user = user.toJSON();
             next();
@@ -211,7 +211,7 @@ module.exports = {
           if (error) {
             console.log(error);
           } else if (result === false) {
-            res.status(422).send('wrong password');
+            res.status(422).send('Wrong password');
           } else {
             next();
           }
