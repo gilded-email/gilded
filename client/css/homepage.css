@@ -239,11 +239,11 @@ body > footer > p {
   margin-bottom: 0px;
 }
 
-.back-to-top, .back-to-top:focus {
+body > footer > p > a, body > footer > p > a:focus {
   color: #666;
 }
 
-.back-to-top:hover {
+body > footer > p > a:hover {
   color: #fc0;
 }
 
