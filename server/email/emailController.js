@@ -108,7 +108,7 @@ module.exports = {
       recipient = recipient.split('@');
       if (recipient[1] === domain) {
         if (['admin', 'jenkins', 'welcome', 'payment'].indexOf(recipient[0]) !== -1) {
-          email.to = ['gilded-admin@dsernst.com', 'neil.lokare@gmail.com', 'brenard@gmail.com', 'csreyes92@gmail.com'];
+          email.to = ['gildedclub@gmail.com'];
           module.exports.sendEmail(email);
           return;
         }
