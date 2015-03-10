@@ -25,7 +25,7 @@ div(class="container")
       $.ajax({
       method: 'POST',
       url: '/contact',
-      data: JSON.stringify(data),
+      data: data,
       success: function (res) {
       $('.message').show();
       },
