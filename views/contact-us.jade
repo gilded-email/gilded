@@ -6,6 +6,12 @@ div(class="container")
     h1(style="margin-top: 130px;") Contact Us
     form
       .form-group
+        label(for='name') Name
+        input#name.form-control(type='text', placeholder='Enter your name')
+      .form-group
+        label(for='sender') Email
+        input#sender.form-control(type='email', placeholder='Enter your email')
+      .form-group
         label(for='subject') Subject
         input#subject.form-control(type='text', placeholder='Enter your subject')
       .form-group
@@ -19,13 +25,15 @@ div(class="container")
       $('button').on('click', function (e) {
       e.preventDefault();
       var data = {
+      name: $('#name').val(),
+      sender: $('#sender').val(),
       subject: $('#subject').val(),
       message: $('#message').val()
       }
       $.ajax({
       method: 'POST',
       url: '/contact',
-      data: JSON.stringify(data),
+      data: data,
       success: function (res) {
       $('.message').show();
       },
